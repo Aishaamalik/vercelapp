@@ -18,7 +18,9 @@ const CustomDrawerContent = (props) => {
           <Text style={styles.name}>Angela Mayer</Text>
           <Text style={styles.status}>Verified user · Membership</Text>
         </View>
-      </View>
+      </View>      
+      <Text style={styles.sectionTitle}>Main</Text>
+
       <DrawerItemList {...props} />
       <Text style={styles.sectionTitle}>Others</Text>
       <DrawerItem
@@ -75,6 +77,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontSize: 16,
     fontWeight: 'bold',
+    color: 'black',
   },
   switchContainer: {
     flexDirection: 'row',
