@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import Icon from 'react-native-vector-icons/Feather';
+import { useNavigation } from '@react-navigation/native';  
 
 const { width, height } = Dimensions.get('window');
 
@@ -10,30 +11,31 @@ const slides = [
     number: 1,
     title: 'Best travel destinations in the world.',
     description: 'Ready for an Adventure? Explore the Globe Finest Outing Destinations for Unforgettable Experiences and Endless Discoveries! From serene natural wonders to vibrant cultural',
-    image: require('../screens/Assets/Mainscreen/splash1.webp'),
+    image: require('../Assets/Mainscreen/splash1.webp'),
   },
   {
     number: 2,
     title: 'Meet the needs of the outing',
     description: 'Embark on an Adventure: Discover the Worlds Top Outing Destinations for Unforgettable Experiences and Memories!',
-    image: require('../screens/Assets/Mainscreen/splash2.webp'),
+    image: require('../Assets/Mainscreen/splash2.webp'),
   },
   {
     number: 3,
     title: 'Go on adventures getaway with a smile',
     description: 'Prepare for Exploration: Unveil the Ultimate Outing Destinations Around the Globe for Unforgettable Adventures and Discoveries!',
-    image: require('../screens/Assets/Mainscreen/splash3.webp'),
+    image: require('../Assets/Mainscreen/splash3.webp'),
   },
   {
     number: 4,
     title: 'We are here to make your visit easier',
     description: 'Unlock Unforgettable Experiences: Journey to the Best Outing Places Across the Globe for Adventures That Last a Lifetime!',
-    image: require('../screens/Assets/Mainscreen/splash4.jpeg'),
+    image: require('../Assets/Mainscreen/splash4.jpeg'),
   },
 ];
 
 const SliderScreen = () => {
   const [activeSlide, setActiveSlide] = useState(0);
+  const navigation = useNavigation();
 
   const renderItem = ({ item }) => (
     <View style={styles.slide}>
@@ -45,7 +47,7 @@ const SliderScreen = () => {
         {item.number === 4 && (
           <TouchableOpacity 
             style={styles.getStartedButton} 
-            onPress={() => setActiveSlide(3)} 
+            onPress={() => navigation.navigate('Screen1')} 
           >
             <Text style={styles.getStartedButtonText}>Get Started</Text>
           </TouchableOpacity>
