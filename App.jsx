@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import MainScreen from './screens/MainScreen'
+import MainScreen from './screens/SliderScreen'
 
 const App = () => {
   return (

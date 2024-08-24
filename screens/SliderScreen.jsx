@@ -7,23 +7,27 @@ const { width, height } = Dimensions.get('window');
 
 const slides = [
   {
+    number: 1,
     title: 'Best travel destinations in the world.',
-    description: 'Semper in cursus magna et eu varius nunc..',
+    description: 'Ready for an Adventure? Explore the Globe Finest Outing Destinations for Unforgettable Experiences and Endless Discoveries! From serene natural wonders to vibrant cultural',
     image: require('../screens/Assets/Mainscreen/splash1.webp'),
   },
   {
-    title: 'Discover Hidden Gems.',
-    description: 'Uncover the hidden gems of the world, from secluded beaches to secret mountain trails. Your adventure is just beginning!',
+    number: 2,
+    title: 'Meet the needs of the outing',
+    description: 'Embark on an Adventure: Discover the Worlds Top Outing Destinations for Unforgettable Experiences and Memories!',
     image: require('../screens/Assets/Mainscreen/splash2.webp'),
   },
   {
-    title: 'Adventure Awaits.',
-    description: 'Gear up for an adventure of a lifetime. Whether you seek thrill or tranquility, the world has something special for you.',
+    number: 3,
+    title: 'Go on adventures getaway with a smile',
+    description: 'Prepare for Exploration: Unveil the Ultimate Outing Destinations Around the Globe for Unforgettable Adventures and Discoveries!',
     image: require('../screens/Assets/Mainscreen/splash3.webp'),
   },
   {
-    title: 'Explore the Unseen.',
-    description: 'Step off the beaten path and explore the unseen. Discover places that are less traveled and more treasured.',
+    number: 4,
+    title: 'We are here to make your visit easier',
+    description: 'Unlock Unforgettable Experiences: Journey to the Best Outing Places Across the Globe for Adventures That Last a Lifetime!',
     image: require('../screens/Assets/Mainscreen/splash4.jpeg'),
   },
 ];
@@ -37,6 +41,15 @@ const SliderScreen = () => {
       <View style={styles.textContainer}>
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.description}>{item.description}</Text>
+
+        {item.number === 4 && (
+          <TouchableOpacity 
+            style={styles.getStartedButton} 
+            onPress={() => setActiveSlide(3)} 
+          >
+            <Text style={styles.getStartedButtonText}>Get Started</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
@@ -49,6 +62,7 @@ const SliderScreen = () => {
         sliderWidth={width}
         itemWidth={width}
         onSnapToItem={(index) => setActiveSlide(index)}
+        firstItem={activeSlide} 
       />
       <Pagination
         dotsLength={slides.length}
@@ -59,10 +73,15 @@ const SliderScreen = () => {
         inactiveDotOpacity={0.4}
         inactiveDotScale={0.6}
       />
-      <TouchableOpacity style={styles.skipButton}>
-        <Icon name="arrow-left" size={24} color="white" />
-      </TouchableOpacity>
-      <Text style={styles.skipText}>Skip</Text>
+      
+      {(activeSlide === 0 || activeSlide === 1 || activeSlide === 2) && (
+        <>
+          <TouchableOpacity style={styles.skipButton} onPress={() => setActiveSlide(3)}>
+            <Icon name="arrow-right" size={24} color="white" />
+          </TouchableOpacity>
+          <Text style={styles.skipText}>Skip</Text>
+        </>
+      )}
     </View>
   );
 };
@@ -74,39 +93,34 @@ const styles = StyleSheet.create({
   },
   slide: {
     width: width,
-    height: height * 0.75, 
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: 50, 
+    height: height,
   },
   image: {
     width: '100%',
-    height: '100%', 
-    borderBottomLeftRadius: 100,
-    borderBottomRightRadius: 100,
+    height: '50%',
+    borderBottomLeftRadius: 50,
+    borderBottomRightRadius: 50,
   },
   textContainer: {
     width: '100%',
+    height: '50%',
     paddingHorizontal: 20,
     paddingVertical: 10,
     backgroundColor: 'white',
-    borderTopLeftRadius: 50,
-    borderTopRightRadius: 50,
     alignItems: 'center',
-    position: 'absolute',
-    bottom: -100,
+    justifyContent: 'center',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: 10,
-    color: '#007AFF', 
+    color: 'black',
   },
   description: {
     fontSize: 16,
     textAlign: 'center',
-    color: 'gray',
+    color: 'black',
     marginBottom: 20,
   },
   paginationContainer: {
@@ -141,6 +155,18 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 30,
     left: 80,
+  },
+  getStartedButton: {
+    marginTop: 20,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    backgroundColor: '#007AFF',
+    borderRadius: 25,
+  },
+  getStartedButtonText: {
+    fontSize: 16,
+    color: 'white',
+    textAlign: 'center',
   },
 });
 
