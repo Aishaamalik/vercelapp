@@ -1,4 +1,3 @@
-// CustomDrawerContent.js
 import React from 'react';
 import { View, Text, StyleSheet, Image, Switch } from 'react-native';
 import { DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
