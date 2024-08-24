@@ -15,7 +15,7 @@ const SplashScreen = ({ navigation }) => {
     ).start();
 
     setTimeout(() => {
-      navigation.replace('Slider'); 
+      navigation.replace('Screen1'); 
     }, 3500); 
   }, [navigation, spinValue]);
 
