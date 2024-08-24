@@ -42,7 +42,7 @@ const DrawerNavigator = () => {
         name="Overview"
         component={OverviewReal}
         options={{
-          drawerLabel: () => <DrawerLabel label="Overall Real" />,
+          drawerLabel: () => <DrawerLabel label="Overview" />,
           drawerIcon: (props) => (
             <IconWithCircle name="document-text-outline" {...props} />
           ),
