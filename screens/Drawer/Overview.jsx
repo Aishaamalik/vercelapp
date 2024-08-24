@@ -16,7 +16,7 @@ const TravelScreen = ({ navigation }) => {
         />
         <View style={styles.headerIcons}>
           <Icon name="moon" size={25} color="white" style={styles.icon} />
-          <Icon name="person" size={25} color="white" />
+          <Icon name="person" size={25} color="white" onPress={() => navigation.navigate('Buttontabs')} />
         </View>
       </View>
       <Image

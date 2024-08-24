@@ -1,4 +1,3 @@
-// App.js
 import 'react-native-gesture-handler';
 import * as React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
