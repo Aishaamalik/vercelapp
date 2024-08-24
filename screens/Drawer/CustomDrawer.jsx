@@ -2,9 +2,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, Switch } from 'react-native';
 import { DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
+import { useNavigation } from '@react-navigation/native'; 
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const CustomDrawerContent = (props) => {
+  const navigation = useNavigation();
   const [isDarkMode, setIsDarkMode] = React.useState(false);
 
   return (
@@ -28,7 +30,7 @@ const CustomDrawerContent = (props) => {
         icon={({ color, size }) => (
           <Icon name="grid-outline" color={color} size={size} />
         )}
-        onPress={() => {}}
+        onPress={() => navigation.navigate('Component')}
       />
       <DrawerItem
         label="Settings"
