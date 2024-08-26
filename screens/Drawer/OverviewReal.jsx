@@ -10,24 +10,29 @@ const categories = [
 ];
 
 const services = [
-  { name: 'Airport', image: require('../Assets/Icons/airport.png') },
-  { name: 'Taxi', image: require('../Assets/Icons/taxi.png') },
-  { name: 'Hotel', image: require('../Assets/Icons/3-stars.png') },
-  { name: 'Villa', image: require('../Assets/Icons/new-house.png') },
-  { name: 'Cafe', image: require('../Assets/Icons/cafe.png') },
-  { name: 'Luggage', image: require('../Assets/Icons/bag.png') },
-  { name: 'Ship', image: require('../Assets/Icons/cruise.png') },
-  { name: 'Camera', image: require('../Assets/Icons/camera.png') },
+  { name: 'Airport', image: require('../Assets/Icons/airport.png'), screen: 'Airport' },
+  { name: 'Taxi', image: require('../Assets/Icons/taxi.png'), screen: 'Taxi' },
+  { name: 'Hotel', image: require('../Assets/Icons/3-stars.png'), screen: 'Hotel' },
+  { name: 'Villa', image: require('../Assets/Icons/new-house.png'), screen: 'Villa' },
+  { name: 'Cafe', image: require('../Assets/Icons/cafe.png'), screen: 'Cafe' },
+  { name: 'Luggage', image: require('../Assets/Icons/bag.png'), screen: 'Luggage' },
+  { name: 'Ship', image: require('../Assets/Icons/cruise.png'), screen: 'Ship' },
+  { name: 'Camera', image: require('../Assets/Icons/camera.png'), screen: 'Camera' },
 ];
 
 const OverviewScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
+  const handleServicePress = (screen) => {
+    navigation.navigate(screen);
+    setModalVisible(false); 
+  };
+
   const renderServiceItem = ({ item }) => (
-    <View style={styles.serviceItem}>
+    <TouchableOpacity onPress={() => handleServicePress(item.screen)} style={styles.serviceItem}>
       <Image source={item.image} style={styles.serviceImage} />
       <Text style={styles.serviceName}>{item.name}</Text>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
@@ -149,7 +154,6 @@ const styles = StyleSheet.create({
   location: {
     fontSize: 14,
     color: 'black',
-
   },
   profileIcons: {
     flexDirection: 'row',
@@ -220,7 +224,7 @@ const styles = StyleSheet.create({
   },
   columnWrapper: {
     justifyContent: 'space-between',
-    marginBottom: 10, // Add some space between rows
+    marginBottom: 10, 
   },
   closeButton: {
     marginTop: 15,

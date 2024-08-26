@@ -8,6 +8,15 @@ import SliderScreen from './WelcomeScreens/Slider';
 import Component from './Drawer/Component';
 import ButtomNavigator from './Buttom/ButtomNavigator';
 import SettingScreen from './Drawer/SettingScreen';
+import Airport from './Categories/Airport';
+import Cafe from './Categories/Cafe';
+import Camera from './Categories/Camera';
+import Hotel from './Categories/Hotel';
+import Luggage from './Categories/Luggage';
+import Rental from './Categories/Rental';
+import Ship from './Categories/Ship';
+import Taxi from './Categories/Taxi';
+import Villa from './Categories/Villa';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
@@ -38,6 +47,18 @@ const AppNavigator = () => {
                     }}
                 />
                 <Stack.Screen name='Buttontabs' component={ButtomNavigator} options={{ headerShown: false }} />
+                <Stack.Screen name='Airport' component={Airport}/>
+                <Stack.Screen name='Cafe' component={Cafe}/>
+                <Stack.Screen name='Camera' component={Camera}/>
+                <Stack.Screen name='Hotel' component={Hotel}/>
+                <Stack.Screen name='Luggage' component={Luggage}/>
+                <Stack.Screen name='Rental' component={Rental}/>
+                <Stack.Screen name='Ship' component={Ship}/>
+                <Stack.Screen name='Taxi' component={Taxi}/>
+                <Stack.Screen name='Villa' component={Villa}/>
+
+
+
             </Stack.Navigator>
         </NavigationContainer>
     );
