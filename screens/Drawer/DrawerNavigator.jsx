@@ -32,8 +32,8 @@ const DrawerNavigator = () => {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       initialRouteName="Main"
       screenOptions={{
-        drawerActiveTintColor: '#000', 
-        drawerInactiveTintColor: '#000',
+        drawerActiveTintColor: '#000', // Black color for active drawer item
+        drawerInactiveTintColor: '#000', // Black color for inactive drawer item
         drawerActiveBackgroundColor: 'transparent', 
         drawerInactiveBackgroundColor: 'transparent',
       }}
@@ -44,7 +44,7 @@ const DrawerNavigator = () => {
         options={{
           drawerLabel: () => <DrawerLabel label="Overview" />,
           drawerIcon: (props) => (
-            <IconWithCircle name="document-text-outline" {...props} />
+            <IconWithCircle name="document-text-outline" size={24} />
           ),
         }}
       />
@@ -54,7 +54,7 @@ const DrawerNavigator = () => {
         options={{
           drawerLabel: () => <DrawerLabel label="Pages" />,
           drawerIcon: (props) => (
-            <IconWithCircle name="folder-outline" {...props} />
+            <IconWithCircle name="folder-outline" size={24} />
           ),
         }}
       />
@@ -81,8 +81,8 @@ const styles = StyleSheet.create({
   },
   drawerLabel: {
     fontSize: 16,
-    color: '#000',
-    marginLeft: 16,
+    color: 'black', 
+    fontWeight: '500',
   },
 });
 

@@ -18,7 +18,7 @@ const ComponentsScreen = ({ navigation }) => {
         useNativeDriver: true,
       }),
       Animated.timing(opacity, {
-        toValue: 3, 
+        toValue: 1, 
         duration: 200,
         useNativeDriver: true,
       }),
@@ -45,6 +45,9 @@ const ComponentsScreen = ({ navigation }) => {
         </View>
 
         <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Splash')}>
+          <View style={styles.iconContainer}>
+            <Icon name="sparkles" size={24} color="white" />
+          </View>
           <Text style={styles.menuItemText}>Splash Screen</Text>
         </TouchableOpacity>
       </Animated.View>
@@ -83,6 +86,15 @@ const styles = StyleSheet.create({
     padding: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
+  },
+  iconContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#2196F3',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10,
   },
   menuItemText: {
     fontSize: 18,

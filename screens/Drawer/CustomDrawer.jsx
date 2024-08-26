@@ -27,8 +27,11 @@ const CustomDrawerContent = (props) => {
       <DrawerItem
         label="Components"
         icon={({ color, size }) => (
-          <Icon name="grid-outline" color={color} size={size} />
+          <View style={styles.iconContainer}>
+            <Icon name="grid-outline" color="#fff" size={size * 1} />
+          </View>
         )}
+        labelStyle={styles.drawerLabel}
         onPress={() => {
           navigation.navigate('Component');    
         }}
@@ -36,14 +39,19 @@ const CustomDrawerContent = (props) => {
       <DrawerItem
         label="Settings"
         icon={({ color, size }) => (
-          <Icon name="settings-outline" color={color} size={size} />
+          <View style={styles.iconContainer}>
+            <Icon name="settings-outline" color="#fff" size={size * 1} />
+          </View>
         )}
+        labelStyle={styles.drawerLabel}
         onPress={() => {
           navigation.navigate('Settings');    
         }}
       />
       <View style={styles.switchContainer}>
-        <Icon name="moon-outline" size={25} color="#007AFF" />
+        <View style={styles.iconContainer}>
+          <Icon name="moon-outline" size={28} color="#fff" />
+        </View>
         <Text style={styles.switchLabel}>Switch To Dark Mode</Text>
         <Switch
           value={isDarkMode}
@@ -92,8 +100,20 @@ const styles = StyleSheet.create({
   switchLabel: {
     flex: 1,
     marginLeft: 15,
-    fontSize: 16,
+    fontSize: 16, // Updated font size to 16
     color: 'black',
+  },
+  iconContainer: {
+    width: 35,
+    height: 35,
+    backgroundColor: '#007AFF', 
+    borderRadius: 18, 
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  drawerLabel: {
+    fontSize: 16, // Set font size to 16
+    color: 'black', // Set color to black
   },
 });
 
