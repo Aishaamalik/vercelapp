@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, FlatList, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const categories = [
@@ -9,7 +9,27 @@ const categories = [
   { title: 'More', icon: require('../Assets/Icons/application.png') },
 ];
 
+const services = [
+  { name: 'Airport', image: require('../Assets/Icons/airport.png') },
+  { name: 'Taxi', image: require('../Assets/Icons/taxi.png') },
+  { name: 'Hotel', image: require('../Assets/Icons/3-stars.png') },
+  { name: 'Villa', image: require('../Assets/Icons/new-house.png') },
+  { name: 'Cafe', image: require('../Assets/Icons/cafe.png') },
+  { name: 'Luggage', image: require('../Assets/Icons/bag.png') },
+  { name: 'Ship', image: require('../Assets/Icons/cruise.png') },
+  { name: 'Camera', image: require('../Assets/Icons/camera.png') },
+];
+
 const OverviewScreen = ({ navigation }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const renderServiceItem = ({ item }) => (
+    <View style={styles.serviceItem}>
+      <Image source={item.image} style={styles.serviceImage} />
+      <Text style={styles.serviceName}>{item.name}</Text>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -48,15 +68,45 @@ const OverviewScreen = ({ navigation }) => {
 
       <View style={styles.categories}>
         {categories.map((category, index) => (
-          <View key={index} style={styles.category}>
+          <TouchableOpacity
+            key={index}
+            style={styles.category}
+            onPress={() => category.title === 'More' && setModalVisible(true)}
+          >
             <Image
-              source={category.icon} 
+              source={category.icon}
               style={styles.categoryIcon}
             />
             <Text style={styles.categoryText}>{category.title}</Text>
-          </View>
+          </TouchableOpacity>
         ))}
       </View>
+
+      <Modal
+        visible={modalVisible}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.bottomSheetHeading}>All Services</Text>
+            <FlatList
+              data={services}
+              renderItem={renderServiceItem}
+              keyExtractor={(item) => item.name}
+              numColumns={4}
+              columnWrapperStyle={styles.columnWrapper}
+            />
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -94,11 +144,10 @@ const styles = StyleSheet.create({
   greeting: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: 'black',
   },
   location: {
     fontSize: 14,
-    color: 'black',
+    color: '#888',
   },
   profileIcons: {
     flexDirection: 'row',
@@ -134,6 +183,50 @@ const styles = StyleSheet.create({
   },
   categoryText: {
     fontSize: 14,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 16,
+    height: '50%',
+  },
+  bottomSheetHeading: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: 'black',
+  },
+  serviceItem: {
+    flex: 1,
+    alignItems: 'center',
+    margin: 10,
+  },
+  serviceImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+  },
+  serviceName: {
+    fontSize: 12,
+    textAlign: 'center',
+  },
+  columnWrapper: {
+    justifyContent: 'space-between',
+    marginBottom: 10, // Add some space between rows
+  },
+  closeButton: {
+    marginTop: 15,
+    alignItems: 'center',
+  },
+  closeButtonText: {
+    fontSize: 16,
+    color: '#2196F3',
   },
 });
 
