@@ -30,8 +30,7 @@ const CustomDrawerContent = (props) => {
           <Icon name="grid-outline" color={color} size={size} />
         )}
         onPress={() => {
-          navigation.navigate('Component');  // Navigate to the desired screen
-          props.navigation.closeDrawer();           // Close the drawer after navigating
+          navigation.navigate('Component');    
         }}
       />
       <DrawerItem

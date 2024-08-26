@@ -40,7 +40,7 @@ const ComponentsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'transparent', // Transparent background
+    backgroundColor: 'white', 
   },
   header: {
     flexDirection: 'row',
