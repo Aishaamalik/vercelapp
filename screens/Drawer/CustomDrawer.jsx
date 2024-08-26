@@ -38,7 +38,9 @@ const CustomDrawerContent = (props) => {
         icon={({ color, size }) => (
           <Icon name="settings-outline" color={color} size={size} />
         )}
-        onPress={() => {}}
+        onPress={() => {
+          navigation.navigate('Settings');    
+        }}
       />
       <View style={styles.switchContainer}>
         <Icon name="moon-outline" size={25} color="#007AFF" />
