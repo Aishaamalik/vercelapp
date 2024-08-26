@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, FlatList, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import FrequentVisits from './FrequentVisits';
+import TourGuide from './TourGuide';
+import Onbudgetour from './Onbudgetour';
 
 const categories = [
   { title: 'Airport', icon: require('../Assets/Icons/airport.png') },
@@ -112,6 +115,21 @@ const OverviewScreen = ({ navigation }) => {
           </View>
         </View>
       </Modal>
+
+      <View style={styles.sectionContainer1}>
+        <Text style={styles.sectionHeading}>Frequently Visited</Text>
+        <FrequentVisits/>
+      </View>
+
+      <View style={styles.sectionContainer2}>
+        <Text style={styles.sectionHeading}>Tour Guide</Text>
+        <TourGuide/>
+      </View>
+
+      <View style={styles.sectionContainer3}>
+        <Text style={styles.sectionHeading}>On Budget Tour</Text>
+        <Onbudgetour/>
+      </View>
     </View>
   );
 };
@@ -233,6 +251,26 @@ const styles = StyleSheet.create({
   closeButtonText: {
     fontSize: 16,
     color: '#2196F3',
+  },
+  sectionContainer1: {
+    flex:1,
+    padding: 20,
+    marginVertical: 10,
+  },
+  sectionContainer2: {
+    padding: 15,
+  },
+  sectionContainer3: {
+    padding: 15,
+  },
+  sectionHeading: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: 'black',
+  },
+  sectionList: {
+    marginTop: 10,
   },
 });
 
