@@ -32,16 +32,18 @@ const DrawerNavigator = () => {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       initialRouteName="Main"
       screenOptions={{
-        drawerActiveTintColor: '#000', // Black color for active drawer item
-        drawerInactiveTintColor: '#000', // Black color for inactive drawer item
+        drawerActiveTintColor: '#000', 
+        drawerInactiveTintColor: '#000', 
         drawerActiveBackgroundColor: 'transparent', 
         drawerInactiveBackgroundColor: 'transparent',
+        headerShown: false,
       }}
     >
       <Drawer.Screen
         name="Overview"
         component={OverviewReal}
         options={{
+          headerShown: false,
           drawerLabel: () => <DrawerLabel label="Overview" />,
           drawerIcon: (props) => (
             <IconWithCircle name="document-text-outline" size={24} />
