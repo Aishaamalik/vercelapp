@@ -1,13 +1,12 @@
-// OverviewScreen.js
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const categories = [
-  { title: 'Airport', icon: 'https://via.placeholder.com/40' },
-  { title: 'Rental', icon: 'https://via.placeholder.com/40' },
-  { title: 'Hotel', icon: 'https://via.placeholder.com/40' },
-  { title: 'More', icon: 'https://via.placeholder.com/40' },
+  { title: 'Airport', icon: require('../Assets/Icons/airport.png') },
+  { title: 'Rental', icon: require('../Assets/Icons/car-rental.png') },
+  { title: 'Hotel', icon: require('../Assets/Icons/3-stars.png') },
+  { title: 'More', icon: require('../Assets/Icons/application.png') },
 ];
 
 const OverviewScreen = ({ navigation }) => {
@@ -23,10 +22,9 @@ const OverviewScreen = ({ navigation }) => {
         </View>
       </View>
 
-      {/* Profile Section */}
       <View style={styles.profileSection}>
         <Image
-          source={{ uri: 'https://via.placeholder.com/60' }}
+          source={require('../Assets/Profile/pic1.jpeg')}
           style={styles.profileImage}
         />
         <View>
@@ -39,7 +37,6 @@ const OverviewScreen = ({ navigation }) => {
         </View>
       </View>
 
-      {/* Search Bar */}
       <View style={styles.searchBar}>
         <Icon name="search" size={20} color="#aaa" />
         <TextInput
@@ -49,12 +46,11 @@ const OverviewScreen = ({ navigation }) => {
         <Icon name="options" size={20} color="#aaa" />
       </View>
 
-      {/* Categories */}
       <View style={styles.categories}>
         {categories.map((category, index) => (
           <View key={index} style={styles.category}>
             <Image
-              source={{ uri: category.icon }}
+              source={category.icon} 
               style={styles.categoryIcon}
             />
             <Text style={styles.categoryText}>{category.title}</Text>
@@ -98,10 +94,11 @@ const styles = StyleSheet.create({
   greeting: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: 'black',
   },
   location: {
     fontSize: 14,
-    color: '#888',
+    color: 'black',
   },
   profileIcons: {
     flexDirection: 'row',
