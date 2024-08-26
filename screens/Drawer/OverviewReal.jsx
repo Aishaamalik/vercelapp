@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, FlatList, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Icon1 from 'react-native-vector-icons/Feather';
 import FrequentVisits from './FrequentVisits';
 import TourGuide from './TourGuide';
 import Onbudgetour from './Onbudgetour';
@@ -28,7 +29,7 @@ const OverviewScreen = ({ navigation }) => {
 
   const handleServicePress = (screen) => {
     navigation.navigate(screen);
-    setModalVisible(false); 
+    setModalVisible(false);
   };
 
   const renderServiceItem = ({ item }) => (
@@ -45,8 +46,8 @@ const OverviewScreen = ({ navigation }) => {
           <Icon name="menu" size={24} color="white" />
         </TouchableOpacity>
         <View style={styles.headerIcons}>
-          <Icon name="moon" size={24} color="white" style={styles.headerIcon} />
-          <Icon name="person" size={24} color="white" style={styles.headerIcon} />
+          <Icon1 name="moon" size={24} color="white" style={styles.headerIcon} />
+          <Icon name="person-outline" size={24} color="white" style={styles.headerIcon} />
         </View>
       </View>
 
@@ -60,8 +61,8 @@ const OverviewScreen = ({ navigation }) => {
           <Text style={styles.location}>Netherlands</Text>
         </View>
         <View style={styles.profileIcons}>
-          <Icon name="notifications" size={24} color="black" style={styles.profileIcon} />
-          <Icon name="chatbox" size={24} color="black" style={styles.profileIcon} />
+          <Icon1 name="bell" size={24} color="black" style={styles.profileIcon} />
+          <Icon1 name="message-square" size={24} color="black" style={styles.profileIcon} />
         </View>
       </View>
 
@@ -116,19 +117,19 @@ const OverviewScreen = ({ navigation }) => {
         </View>
       </Modal>
 
+      <Text style={styles.sectionHeading}>Frequently Visited</Text>
       <View style={styles.sectionContainer1}>
-        <Text style={styles.sectionHeading}>Frequently Visited</Text>
-        <FrequentVisits/>
+        <FrequentVisits />
       </View>
 
+      <Text style={styles.sectionHeading}>Tour Guide</Text>
       <View style={styles.sectionContainer2}>
-        <Text style={styles.sectionHeading}>Tour Guide</Text>
-        <TourGuide/>
+        <TourGuide />
       </View>
 
+      <Text style={styles.sectionHeading}>On Budget Tour</Text>
       <View style={styles.sectionContainer3}>
-        <Text style={styles.sectionHeading}>On Budget Tour</Text>
-        <Onbudgetour/>
+        <Onbudgetour />
       </View>
     </View>
   );
@@ -242,7 +243,7 @@ const styles = StyleSheet.create({
   },
   columnWrapper: {
     justifyContent: 'space-between',
-    marginBottom: 10, 
+    marginBottom: 10,
   },
   closeButton: {
     marginTop: 15,
@@ -253,9 +254,9 @@ const styles = StyleSheet.create({
     color: '#2196F3',
   },
   sectionContainer1: {
-    flex:1,
-    padding: 20,
-    marginVertical: 10,
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'black',
   },
   sectionContainer2: {
     padding: 15,
@@ -267,6 +268,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+    marginTop: 10,
+    marginLeft: 10,
     color: 'black',
   },
   sectionList: {

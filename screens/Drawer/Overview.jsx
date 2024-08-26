@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, SafeAreaView, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Icon1 from 'react-native-vector-icons/Feather';
 
 const { height } = Dimensions.get('window');
 
@@ -15,8 +16,8 @@ const TravelScreen = ({ navigation }) => {
           onPress={() => navigation.openDrawer()} 
         />
         <View style={styles.headerIcons}>
-          <Icon name="moon" size={25} color="white" style={styles.icon} />
-          <Icon name="person" size={25} color="white" onPress={() => navigation.navigate('Buttontabs')} />
+          <Icon1 name="moon" size={25} color="white" style={styles.icon} />
+          <Icon name="person-outline" size={25} color="white" onPress={() => navigation.navigate('Buttontabs')} />
         </View>
       </View>
       <Image

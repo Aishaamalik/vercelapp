@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const data = [
   {
     id: '1',
-    image: require('../Assets/visits/tahitibeach.jpeg'), 
+    image: require('../Assets/visits/tahitibeach.jpeg'),
     title: 'Tahiti Beach',
     location: 'Polynesia, French',
     price: '$235',
@@ -15,6 +15,26 @@ const data = [
   },
   {
     id: '2',
+    image: require('../Assets/visits/lucismountain.jpeg'),
+    title: 'St. Lucia Mountain',
+    location: 'South America',
+    price: '$235',
+    rating: '4.4',
+    reviews: '41',
+    favorite: false,
+  },
+  {
+    id: '3',
+    image: require('../Assets/visits/tahitibeach.jpeg'),
+    title: 'Tahiti Beach',
+    location: 'Polynesia, French',
+    price: '$235',
+    rating: '4.4',
+    reviews: '32',
+    favorite: true,
+  },
+  {
+    id: '4',
     image: require('../Assets/visits/lucismountain.jpeg'),
     title: 'St. Lucia Mountain',
     location: 'South America',
@@ -48,13 +68,13 @@ const FrequentVisitScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-
       <FlatList
         data={data}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.contentContainer}
-        numColumns={2}
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
       />
     </View>
   );
@@ -65,24 +85,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#2196F3',
-    paddingHorizontal: 10,
-    paddingVertical: 15,
-  },
-  headerTitle: {
-    fontSize: 20,
-    color: 'white',
-    marginLeft: 10,
-  },
   contentContainer: {
-    padding: 10,
+    paddingHorizontal: 10,
   },
   card: {
-    flex: 1,
-    margin: 10,
+    width: 200,
+    height: 290,
+    marginRight: 5,
     backgroundColor: 'white',
     borderRadius: 10,
     overflow: 'hidden',
@@ -103,7 +112,8 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    margin: 10,
+    margin: 5,
+    color: 'black',
   },
   cardLocation: {
     flexDirection: 'row',
@@ -123,7 +133,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: 10,
-    marginBottom: 10,
   },
   cardRatingText: {
     marginLeft: 5,
