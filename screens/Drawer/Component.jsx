@@ -1,20 +1,24 @@
 import React, { useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Animated, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const ComponentsScreen = ({ navigation }) => {
-  const translateX = useRef(new Animated.Value(300)).current;
+  const screenWidth = Dimensions.get('window').width;
+  const containerWidth = screenWidth * 0.7; 
+  const initialTranslateX = containerWidth; 
+
+  const translateX = useRef(new Animated.Value(initialTranslateX)).current;
   const opacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     Animated.parallel([
       Animated.timing(translateX, {
-        toValue: 0,
+        toValue: 0, 
         duration: 1000,
         useNativeDriver: true,
       }),
       Animated.timing(opacity, {
-        toValue: 1,
+        toValue: 3, 
         duration: 200,
         useNativeDriver: true,
       }),
@@ -22,25 +26,43 @@ const ComponentsScreen = ({ navigation }) => {
   }, [translateX, opacity]);
 
   return (
-    <Animated.View style={[styles.container, { transform: [{ translateX }], opacity }]}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-back" size={24} color="white" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Components</Text>
-      </View>
+    <View style={styles.outerContainer}>
+      <Animated.View
+        style={[
+          styles.container,
+          { 
+            transform: [{ translateX }],
+            opacity,
+            position: 'absolute',
+          },
+        ]}
+      >
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Icon name="arrow-back" size={24} color="white" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Components</Text>
+        </View>
 
-      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Splash')}>
-        <Text style={styles.menuItemText}>Splash Screen</Text>
-      </TouchableOpacity>
-    </Animated.View>
+        <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Splash')}>
+          <Text style={styles.menuItemText}>Splash Screen</Text>
+        </TouchableOpacity>
+      </Animated.View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  outerContainer: {
     flex: 1,
-    backgroundColor: 'white', 
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    backgroundColor: 'transparent',
+  },
+  container: {
+    width: '70%', 
+    height: '100%',
+    backgroundColor: 'white',
   },
   header: {
     flexDirection: 'row',

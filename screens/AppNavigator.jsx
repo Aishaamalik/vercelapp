@@ -16,6 +16,7 @@ const AppNavigator = () => {
             <Stack.Navigator
                 screenOptions={{
                     headerShown: false,
+                    
                 }}>
                 <Stack.Screen name='Splash' component={Splashscreen} options={{ headerShown: false }} />
                 <Stack.Screen name='Slider' component={SliderScreen} options={{ headerShown: false }} />
@@ -25,7 +26,7 @@ const AppNavigator = () => {
                     component={Component} 
                     options={{ 
                         headerShown: false, 
-                        presentation: 'transparentModal' // Add this line
+                        presentation: 'transparentModal' 
                     }} 
                 />
                 <Stack.Screen name='Buttontabs' component={ButtomNavigator} options={{ headerShown: false }} />
