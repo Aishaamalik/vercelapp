@@ -1,12 +1,28 @@
-// ComponentsScreen.js
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import React, { useRef, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const ComponentsScreen = ({ navigation }) => {
+  const translateX = useRef(new Animated.Value(300)).current;
+  const opacity = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(translateX, {
+        toValue: 0,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, [translateX, opacity]);
+
   return (
-    <View style={styles.container}>
-      {/* Header */}
+    <Animated.View style={[styles.container, { transform: [{ translateX }], opacity }]}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-back" size={24} color="white" />
@@ -15,17 +31,16 @@ const ComponentsScreen = ({ navigation }) => {
       </View>
 
       <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Splash')}>
-        
         <Text style={styles.menuItemText}>Splash Screen</Text>
       </TouchableOpacity>
-    </View>
+    </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'transparent', // Transparent background
   },
   header: {
     flexDirection: 'row',
@@ -46,11 +61,6 @@ const styles = StyleSheet.create({
     padding: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
-  },
-  menuIcon: {
-    width: 40,
-    height: 40,
-    marginRight: 10,
   },
   menuItemText: {
     fontSize: 18,
