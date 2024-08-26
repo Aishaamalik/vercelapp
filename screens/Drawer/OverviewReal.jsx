@@ -144,10 +144,12 @@ const styles = StyleSheet.create({
   greeting: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: 'black',
   },
   location: {
     fontSize: 14,
-    color: '#888',
+    color: 'black',
+
   },
   profileIcons: {
     flexDirection: 'row',
