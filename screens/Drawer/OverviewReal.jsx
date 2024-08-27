@@ -79,14 +79,12 @@ const OverviewScreen = ({ navigation }) => {
       <Text style={styles.serviceName}>{item.name}</Text>
     </TouchableOpacity>
   );
+
   const renderItem = ({ item }) => (
     <View style={styles.cardContainer}>
-      <View style={styles.imageContainer}>
-        <Image source={item.image} style={styles.cardImage} />
-        <View style={styles.ratingContainer}>
-          <Icon name="star" size={16} color="#FFD700" />
-          <Text style={styles.ratingText}>{item.rating}</Text>
-        </View>
+      <Image source={item.image} style={styles.cardImage} /><View style={styles.ratingContainer}>
+        <Icon name="star" size={16} color="#FFD700" />
+        <Text style={styles.ratingText}>{item.rating}</Text>
       </View>
       <View style={styles.cardContent}>
         <Text style={styles.cardName}>{item.name}</Text>
@@ -98,7 +96,6 @@ const OverviewScreen = ({ navigation }) => {
       </View>
     </View>
   );
-  
 
   return (
     <ScrollView style={styles.container}>
@@ -126,7 +123,7 @@ const OverviewScreen = ({ navigation }) => {
 
       <View style={styles.searchBar}>
         <Icon name="search" size={20} color="black" />
-        <TextInput placeholder="Search..." style={styles.searchInput} placeholderTextColor={'black'}/>
+        <TextInput placeholder="Search..." style={styles.searchInput} placeholderTextColor={'black'} />
         <Icon name="options" size={20} color="black" />
       </View>
 
@@ -195,6 +192,7 @@ const OverviewScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.sectionContainer}>
+        {/* Add content for "On Budget Tour" if needed */}
       </View>
     </ScrollView>
   );
@@ -258,37 +256,37 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 10,
     fontSize: 16,
-    color:'black',
   },
   categories: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
+    marginHorizontal: 15,
     marginVertical: 10,
   },
   category: {
     alignItems: 'center',
+    width: 70,
   },
   categoryIcon: {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
   },
   categoryText: {
-    fontSize: 14,
-    color: 'black',
     marginTop: 5,
+    fontSize: 12,
+    color: 'black',
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-end',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
     backgroundColor: 'white',
-    borderRadius: 10,
-    width: '90%',
     padding: 20,
-    alignItems: 'center',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    maxHeight: '80%',
   },
   bottomSheetHeading: {
     fontSize: 18,
@@ -298,22 +296,10 @@ const styles = StyleSheet.create({
   columnWrapper: {
     justifyContent: 'space-between',
   },
-  serviceItem: {
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  serviceImage: {
-    width: 40,
-    height: 40,
-  },
-  serviceName: {
-    fontSize: 14,
-    marginTop: 5,
-  },
   closeButton: {
     marginTop: 20,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    alignItems: 'center',
+    padding: 10,
     backgroundColor: '#2196F3',
     borderRadius: 5,
   },
@@ -324,25 +310,25 @@ const styles = StyleSheet.create({
   sectionHeading: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginHorizontal: 15,
+    marginLeft: 15,
     marginVertical: 10,
-    color:'black',
-  },
-  sectionLabel: {
-    color: '#2196F3',
+    color: 'black',
   },
   sectionContainer: {
-    marginHorizontal: 15,
-    marginBottom: 20,
+    paddingHorizontal: 15,
   },
   headerSectionRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginHorizontal: 15,
-    marginVertical: 10,
+    paddingHorizontal: 15,
+  },
+  sectionLabel: {
+    fontSize: 14,
+    color: '#2196F3',
   },
   cardContainer: {
+    flexDirection: 'row', 
     backgroundColor: 'white',
     borderRadius: 10,
     marginRight: 15,
@@ -352,18 +338,19 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
     overflow: 'hidden',
-    width: 150,
+    width: 300,
     marginBottom: 20,
-  },
-  imageContainer: {
-    position: 'relative',
+    padding: 10, 
   },
   cardImage: {
-    width: '100%',
-    height: 120,
+    width: 100,
+    height: 100,
+    borderRadius: 10,
   },
   cardContent: {
-    padding: 10,
+    flex: 1,
+    paddingLeft: 10,
+    justifyContent: 'center',
   },
   cardName: {
     fontSize: 16,
@@ -386,8 +373,8 @@ const styles = StyleSheet.create({
   },
   ratingContainer: {
     position: 'absolute',
-    top: 100, 
-    right: 50, 
+    top: 90, 
+    right: 210, 
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.9)',
@@ -398,9 +385,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#FFD700',
     marginLeft: 5,
-  },
-  contentContainer: {
-    paddingLeft: 10,
   },
 });
 
