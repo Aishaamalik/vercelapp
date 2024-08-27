@@ -117,9 +117,19 @@ const VacationDetailsScreen = ({ route, navigation }) => {
           </TouchableOpacity>
         </View>
 
+        
         <View style={styles.container1}>
-        <Text style={styles.sectionTitle}>Location</Text>
+          <Text>Container 1</Text>
         </View>
+        
+        <View style={styles.location}>
+          <Text style={styles.sectionTitle}>Location</Text>
+        </View>
+
+        <View style={styles.container2}>
+          <Text>Container 2</Text>
+        </View>
+
       </ScrollView>
 
       <View style={styles.footer}>
@@ -138,9 +148,27 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
+
   container1: {
-    flex: 3,
-    backgroundColor: 'yellow',
+    width: '100%', 
+    height: 100, 
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 10,
+  },
+  container2: {
+    width: '100%', 
+    height: 150, 
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 10,
+
+  },
+  budgetSection:{
+    flex:1,
+  },
+  location:{
+    flex:1,
   },
   header: {
     position: 'absolute',
@@ -171,7 +199,6 @@ const styles = StyleSheet.create({
     height: 250,
   },
   detailsContainer: {
-    flex: 1,
     backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,

@@ -7,7 +7,7 @@ const reviews = [
     id: '1',
     name: 'Jhone Kenoady',
     date: '23 Nov 2022',
-    rating: 5,
+    rating: 1,
     comment: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.',
     images: [
       require('../Assets/visits/ledadubeach.jpeg'),
@@ -19,7 +19,7 @@ const reviews = [
     id: '2',
     name: 'Jhone Kenoady 2',
     date: '23 Nov 2022',
-    rating: 5,
+    rating: 3,
     comment: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.',
     images: [
       require('../Assets/visits/ledadubeach.jpeg'),
@@ -34,8 +34,8 @@ const reviews = [
     rating: 5,
     comment: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.',
     images: [
-        require('../Assets/visits/ledadubeach.jpeg'),
-        require('../Assets/visits/ledadubeach.jpeg'),
+      require('../Assets/visits/ledadubeach.jpeg'),
+      require('../Assets/visits/ledadubeach.jpeg'),
     ],
   },
 ];
