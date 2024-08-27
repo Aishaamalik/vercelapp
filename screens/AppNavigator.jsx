@@ -17,6 +17,8 @@ import Rental from './Categories/Rental';
 import Ship from './Categories/Ship';
 import Taxi from './Categories/Taxi';
 import Villa from './Categories/Villa';
+import TourGuideScreen from './Drawer/TourGuide';
+import HotelListScreen from './Drawer/Hotellist';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
@@ -56,6 +58,8 @@ const AppNavigator = () => {
                 <Stack.Screen name='Ship' component={Ship}/>
                 <Stack.Screen name='Taxi' component={Taxi}/>
                 <Stack.Screen name='Villa' component={Villa}/>
+                <Stack.Screen name='TourGuide' component={TourGuideScreen}/>
+                <Stack.Screen name='HotelList' component={HotelListScreen}/>
 
 
 

@@ -122,11 +122,22 @@ const OverviewScreen = ({ navigation }) => {
         <FrequentVisits />
       </View>
 
-      <Text style={styles.sectionHeading}>Tour Guide</Text>
+      <View style={styles.headerSectionRow}>
+        <Text style={styles.sectionHeading}>Tour Guide</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('TourGuide')}>
+          <Text style={styles.sectionLabel}>See All</Text>
+        </TouchableOpacity>
+      </View>
       <View style={styles.sectionContainer2}>
       </View>
 
-      <Text style={styles.sectionHeading}>On Budget Tour</Text>
+      <View style={styles.headerSectionRow}>
+        <Text style={styles.sectionHeading}>On Budget Tour</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('HotelList')}>
+          <Text style={styles.sectionLabel}>See All</Text>
+        </TouchableOpacity>
+      </View>
+
       <View style={styles.sectionContainer3}>
         <Onbudgetour />
       </View>
@@ -259,19 +270,28 @@ const styles = StyleSheet.create({
   sectionContainer2: {
     flex: 1,
     padding: 15,
-    marginBottom:12,
-    flexDirection:'column'
+    marginBottom: 12,
+    flexDirection: 'column'
   },
   sectionContainer3: {
     flex: 1,
     padding: 10,
   },
+  headerSectionRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: 15,
+    marginVertical: 10,
+  },
   sectionHeading: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginHorizontal: 15,
-    marginVertical: 10,
-    color:'black',
+    color: 'black',
+  },
+  sectionLabel: {
+    fontSize: 16,
+    color: 'blue',
   },
 });
 

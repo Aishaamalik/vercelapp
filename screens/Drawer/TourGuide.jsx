@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const data = [
@@ -21,7 +21,7 @@ const data = [
   },
   {
     id: '3',
-    image: require('../Assets/Tourguide/p3.jpg'), 
+    image: require('../Assets/Tourguide/p3.jpg'),
     name: 'Emilia Ricardo',
     price: '$25 (1 Day)',
     location: 'Polynesia, French',
@@ -66,7 +66,12 @@ const TourGuideScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Tour Guide</Text>
+      <View style={styles.headerContainer}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Icon name="arrow-back-outline" size={30} color="#000" />
+        </TouchableOpacity>
+        <Text style={styles.header}>Hotels</Text>
+      </View>
       <FlatList
         data={data}
         renderItem={renderItem}
@@ -82,14 +87,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  heading: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'black',
-    padding: 10,
-  },
   contentContainer: {
     padding: 10,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 20,
   },
   card: {
     flexDirection: 'row',
@@ -103,6 +107,13 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 10,
+  },
+  header: {
+    flex: 1,
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color:'black',
   },
   cardContent: {
     flex: 1,
