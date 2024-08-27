@@ -188,10 +188,6 @@ const styles = StyleSheet.create({
   starIcon: {
     marginLeft: 10,
   },
-  ratingText: {
-    marginLeft: 5,
-    color: 'black',
-  },
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -282,6 +278,22 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  
+  ratingContainer: {
+    position: 'absolute',
+    top: 90,
+    right: 210,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.9)',
+    borderRadius: 20,
+    padding: 5,
+  },
+  ratingText: {
+    fontSize: 14,
+    color: '#FFD700',
+    marginLeft: 5,
   },
 });
 
