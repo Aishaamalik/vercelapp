@@ -54,7 +54,7 @@ const FrequentVisitScreen = ({ navigation }) => {
       </TouchableOpacity>
       <Text style={styles.cardTitle}>{item.title}</Text>
       <View style={styles.cardLocation}>
-        <Icon name="location-outline" size={16} color="#aaa" />
+        <Icon name="location-outline" size={16} color="black" />
         <Text style={styles.cardLocationText}>{item.location}</Text>
       </View>
       <Text style={styles.cardPrice}>{item.price}</Text>
@@ -119,15 +119,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: 10,
+    color: 'black',
   },
   cardLocationText: {
     marginLeft: 5,
-    color: '#aaa',
+    color: 'black',
   },
   cardPrice: {
     fontSize: 16,
     fontWeight: 'bold',
     margin: 10,
+    color: 'black',
   },
   cardRating: {
     flexDirection: 'row',
@@ -136,11 +138,11 @@ const styles = StyleSheet.create({
   },
   cardRatingText: {
     marginLeft: 5,
-    color: '#f9a825',
+    color: 'black',
   },
   cardReviews: {
     marginLeft: 5,
-    color: '#aaa',
+    color: 'black',
   },
 });
 

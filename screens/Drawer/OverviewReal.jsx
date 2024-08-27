@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, FlatList, Modal } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, FlatList, Modal, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon1 from 'react-native-vector-icons/Feather';
 import FrequentVisits from './FrequentVisits';
@@ -40,7 +40,7 @@ const OverviewScreen = ({ navigation }) => {
   );
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
           <Icon name="menu" size={24} color="white" />
@@ -124,14 +124,13 @@ const OverviewScreen = ({ navigation }) => {
 
       <Text style={styles.sectionHeading}>Tour Guide</Text>
       <View style={styles.sectionContainer2}>
-        <TourGuide />
       </View>
 
       <Text style={styles.sectionHeading}>On Budget Tour</Text>
       <View style={styles.sectionContainer3}>
         <Onbudgetour />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -255,25 +254,24 @@ const styles = StyleSheet.create({
   },
   sectionContainer1: {
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: 'black',
+    padding: 10,
   },
   sectionContainer2: {
+    flex: 1,
     padding: 15,
+    marginBottom:12,
+    flexDirection:'column'
   },
   sectionContainer3: {
-    padding: 15,
+    flex: 1,
+    padding: 10,
   },
   sectionHeading: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 10,
-    marginTop: 10,
-    marginLeft: 10,
-    color: 'black',
-  },
-  sectionList: {
-    marginTop: 10,
+    marginHorizontal: 15,
+    marginVertical: 10,
+    color:'black',
   },
 });
 
