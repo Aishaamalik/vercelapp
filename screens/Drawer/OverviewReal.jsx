@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, FlatList, Modal, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, FlatList, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon1 from 'react-native-vector-icons/Feather';
 import FrequentVisits from './FrequentVisits';
@@ -65,6 +65,57 @@ const guide = [
   },
 ];
 
+const hotels = [
+  {
+    id: '1',
+    name: 'Ledadu Beach',
+    duration: '3 days 2 nights',
+    location: 'Australia',
+    price: '$20/Person',
+    image: require('../Assets/visits/ledadubeach.jpeg'),
+  },
+  {
+    id: '2',
+    name: 'Endigada Beach',
+    duration: '5 days 4 nights',
+    location: 'India',
+    price: '$18/Person',
+    image: require('../Assets/visits/endigadabeach.jpeg'),
+  },
+  {
+    id: '3',
+    name: 'Doreen Tower',
+    duration: '5 days 4 nights',
+    location: 'USA',
+    price: '$14/Person',
+    image: require('../Assets/visits/tower.jpeg'),
+  },
+  {
+    id: '4',
+    name: 'Royal Palace',
+    duration: '5 days 4 nights',
+    location: 'India',
+    price: '$21/Person',
+    image: require('../Assets/visits/royalpalace.jpeg'),
+  },
+  {
+    id: '5',
+    name: 'Ignition Mall',
+    duration: '5 days 4 nights',
+    location: 'China',
+    price: '$17/Person',
+    image: require('../Assets/visits/mall.jpeg'),
+  },
+  {
+    id: '6',
+    name: 'Endigada Hotel',
+    duration: '5 days 4 nights',
+    location: 'Australia',
+    price: '$20/Person',
+    image: require('../Assets/visits/hotel.jpeg'),
+  },
+];
+
 const OverviewScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -80,9 +131,10 @@ const OverviewScreen = ({ navigation }) => {
     </TouchableOpacity>
   );
 
-  const renderItem = ({ item }) => (
+  const renderGuideItem = ({ item }) => (
     <View style={styles.cardContainer}>
-      <Image source={item.image} style={styles.cardImage} /><View style={styles.ratingContainer}>
+      <Image source={item.image} style={styles.cardImage} />
+      <View style={styles.ratingContainer}>
         <Icon name="star" size={16} color="#FFD700" />
         <Text style={styles.ratingText}>{item.rating}</Text>
       </View>
@@ -97,104 +149,111 @@ const OverviewScreen = ({ navigation }) => {
     </View>
   );
 
+  const renderHotelItem = ({ item }) => (
+    <View style={styles.itemContainer1}>
+      <Image source={item.image} style={styles.image1} />
+      <View style={styles.textContainer1}>
+        <Text style={styles.name1}>{item.name}</Text>
+        <Text style={styles.duration1}>{item.duration}</Text>
+        <View style={styles.locationContainer1}>
+          <Icon name="location-outline" size={14} color="#555" />
+          <Text style={styles.location1}>{item.location}</Text>
+        </View>
+      </View>
+      <Text style={styles.price1}>{item.price}</Text>
+    </View>
+  );
+
+  const renderCategoryItem = ({ item }) => (
+    <TouchableOpacity
+      key={item.title}
+      style={styles.category}
+      onPress={() => item.title === 'More' && setModalVisible(true)}
+    >
+      <Image source={item.icon} style={styles.categoryIcon} />
+      <Text style={styles.categoryText}>{item.title}</Text>
+    </TouchableOpacity>
+  );
+
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-          <Icon name="menu" size={24} color="white" />
-        </TouchableOpacity>
-        <View style={styles.headerIcons}>
-          <Icon1 name="moon" size={24} color="white" style={styles.headerIcon} />
-          <Icon name="person-outline" size={24} color="white" style={styles.headerIcon} />
-        </View>
-      </View>
+    <FlatList
+      ListHeaderComponent={() => (
+        <>
+          <View style={styles.header}>
+            <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+              <Icon name="menu" size={24} color="white" />
+            </TouchableOpacity>
+            <View style={styles.headerIcons}>
+              <Icon1 name="moon" size={24} color="white" style={styles.headerIcon} />
+              <Icon name="person-outline" size={24} color="white" style={styles.headerIcon} />
+            </View>
+          </View>
 
-      <View style={styles.profileSection}>
-        <Image source={require('../Assets/Profile/pic1.jpeg')} style={styles.profileImage} />
-        <View>
-          <Text style={styles.greeting}>Hi, Andy</Text>
-          <Text style={styles.location}>Netherlands</Text>
-        </View>
-        <View style={styles.profileIcons}>
-          <Icon1 name="bell" size={24} color="black" style={styles.profileIcon} />
-          <Icon1 name="message-square" size={24} color="black" style={styles.profileIcon} />
-        </View>
-      </View>
+          <View style={styles.profileSection}>
+            <Image source={require('../Assets/Profile/pic1.jpeg')} style={styles.profileImage} />
+            <View>
+              <Text style={styles.greeting}>Hi, Andy</Text>
+              <Text style={styles.location}>Netherlands</Text>
+            </View>
+            <View style={styles.profileIcons}>
+              <Icon1 name="bell" size={24} color="black" style={styles.profileIcon} />
+              <Icon1 name="message-square" size={24} color="black" style={styles.profileIcon} />
+            </View>
+          </View>
 
-      <View style={styles.searchBar}>
-        <Icon name="search" size={20} color="black" />
-        <TextInput placeholder="Search..." style={styles.searchInput} placeholderTextColor={'black'} />
-        <Icon name="options" size={20} color="black" />
-      </View>
+          <View style={styles.searchBar}>
+            <Icon name="search" size={20} color="black" />
+            <TextInput placeholder="Search..." style={styles.searchInput} placeholderTextColor={'black'} />
+            <Icon name="options" size={20} color="black" />
+          </View>
 
-      <View style={styles.categories}>
-        {categories.map((category, index) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.category}
-            onPress={() => category.title === 'More' && setModalVisible(true)}
-          >
-            <Image source={category.icon} style={styles.categoryIcon} />
-            <Text style={styles.categoryText}>{category.title}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+          <View style={styles.categories}>
+            {categories.map((category) => renderCategoryItem({ item: category }))}
+          </View>
 
-      <Modal
-        visible={modalVisible}
-        transparent={true}
-        animationType="slide"
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.bottomSheetHeading}>All Services</Text>
-            <FlatList
-              data={services}
-              renderItem={renderServiceItem}
-              keyExtractor={(item) => item.name}
-              numColumns={4}
-              columnWrapperStyle={styles.columnWrapper}
-            />
-            <TouchableOpacity style={styles.closeButton} onPress={() => setModalVisible(false)}>
-              <Text style={styles.closeButtonText}>Close</Text>
+          <Text style={styles.sectionHeading}>Frequently Visited</Text>
+          <View style={styles.sectionContainer}>
+            <FrequentVisits />
+          </View>
+
+          <View style={styles.headerSectionRow}>
+            <Text style={styles.sectionHeading}>Tour Guide</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('TourGuide')}>
+              <Text style={styles.sectionLabel}>See All</Text>
             </TouchableOpacity>
           </View>
-        </View>
-      </Modal>
 
-      <Text style={styles.sectionHeading}>Frequently Visited</Text>
-      <View style={styles.sectionContainer}>
-        <FrequentVisits />
-      </View>
+          <View style={styles.sectionContainer}>
+            <FlatList
+              data={guide}
+              renderItem={renderGuideItem}
+              keyExtractor={(item) => item.id}
+              horizontal
+              contentContainerStyle={styles.contentContainer}
+              showsHorizontalScrollIndicator={false}
+            />
+          </View>
 
-      <View style={styles.headerSectionRow}>
-        <Text style={styles.sectionHeading}>Tour Guide</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('TourGuide')}>
-          <Text style={styles.sectionLabel}>See All</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.sectionContainer}>
-        <FlatList
-          data={guide}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id.toString()}
-          horizontal
-          contentContainerStyle={styles.contentContainer}
-          showsHorizontalScrollIndicator={false}
-        />
-      </View>
+          <View style={styles.headerSectionRow}>
+            <Text style={styles.sectionHeading}>On Budget Tour</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('HotelList')}>
+              <Text style={styles.sectionLabel}>See All</Text>
+            </TouchableOpacity>
+          </View>
 
-      <View style={styles.headerSectionRow}>
-        <Text style={styles.sectionHeading}>On Budget Tour</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('HotelList')}>
-          <Text style={styles.sectionLabel}>See All</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.sectionContainer}>
-        {/* Add content for "On Budget Tour" if needed */}
-      </View>
-    </ScrollView>
+          <View style={styles.sectionContainer}>
+            <FlatList
+              data={hotels}
+              renderItem={renderHotelItem}
+              keyExtractor={item => item.id}
+              contentContainerStyle={styles.listContainer}
+              showsVerticalScrollIndicator={false}
+            />
+          </View>
+        </>
+      )}
+      data={[]} 
+    />
   );
 };
 
@@ -328,7 +387,7 @@ const styles = StyleSheet.create({
     color: '#2196F3',
   },
   cardContainer: {
-    flexDirection: 'row', 
+    flexDirection: 'row',
     backgroundColor: 'white',
     borderRadius: 10,
     marginRight: 15,
@@ -340,7 +399,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     width: 300,
     marginBottom: 20,
-    padding: 10, 
+    padding: 10,
   },
   cardImage: {
     width: 100,
@@ -373,8 +432,8 @@ const styles = StyleSheet.create({
   },
   ratingContainer: {
     position: 'absolute',
-    top: 90, 
-    right: 210, 
+    top: 90,
+    right: 210,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.9)',
@@ -385,6 +444,47 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#FFD700',
     marginLeft: 5,
+  },
+  // The On Budget Tour
+
+  itemContainer1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+  image1: {
+    width: 90,
+    height: 90,
+    borderRadius: 10,
+  },
+  textContainer1: {
+    flex: 1,
+    marginLeft: 16,
+  },
+  name1: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  duration1: {
+    color: 'black',
+    marginVertical: 4,
+  },
+  locationContainer1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  location1: {
+    color: 'black',
+    marginLeft: 4,
+  },
+  price1: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'black',
   },
 });
 
