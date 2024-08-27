@@ -90,12 +90,13 @@ const styles = StyleSheet.create({
   },
   card: {
     width: 200,
-    height: 290,
+    height: 300,
     marginRight: 5,
     backgroundColor: 'white',
     borderRadius: 10,
     overflow: 'hidden',
     elevation: 3,
+    marginBottom: 5,
   },
   cardImage: {
     width: '100%',

@@ -21,6 +21,7 @@ const services = [
   { name: 'Ship', image: require('../Assets/Icons/cruise.png'), screen: 'Ship' },
   { name: 'Camera', image: require('../Assets/Icons/camera.png'), screen: 'Camera' },
 ];
+
 const guide = [
   {
     id: '1',
@@ -63,6 +64,7 @@ const guide = [
     rating: '4.0',
   },
 ];
+
 const OverviewScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -78,22 +80,25 @@ const OverviewScreen = ({ navigation }) => {
     </TouchableOpacity>
   );
   const renderItem = ({ item }) => (
-    <View style={styles.card1}>
-      <Image source={item.image} style={styles.cardImage1} />
-      <View style={styles.cardContent1}>
-        <Text style={styles.cardName1}>{item.name}</Text>
-        <Text style={styles.cardDetails1}>{item.price} ({item.duration})</Text>
-        <View style={styles.cardLocation1}>
-          <Icon name="location-outline" size={16} color="#aaa" />
-          <Text style={styles.cardLocationText1}>{item.location}</Text>
+    <View style={styles.cardContainer}>
+      <View style={styles.imageContainer}>
+        <Image source={item.image} style={styles.cardImage} />
+        <View style={styles.ratingContainer}>
+          <Icon name="star" size={16} color="#FFD700" />
+          <Text style={styles.ratingText}>{item.rating}</Text>
         </View>
       </View>
-      <View style={styles.ratingContainer1}>
-        <Icon name="star" size={16} color="#FFD700" />
-        <Text style={styles.ratingText1}>{item.rating}</Text>
+      <View style={styles.cardContent}>
+        <Text style={styles.cardName}>{item.name}</Text>
+        <Text style={styles.cardDetails}>{item.price}</Text>
+        <View style={styles.cardLocation}>
+          <Icon name="location-outline" size={16} color="#aaa" />
+          <Text style={styles.cardLocationText}>{item.location}</Text>
+        </View>
       </View>
     </View>
   );
+  
 
   return (
     <ScrollView style={styles.container}>
@@ -108,10 +113,7 @@ const OverviewScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.profileSection}>
-        <Image
-          source={require('../Assets/Profile/pic1.jpeg')}
-          style={styles.profileImage}
-        />
+        <Image source={require('../Assets/Profile/pic1.jpeg')} style={styles.profileImage} />
         <View>
           <Text style={styles.greeting}>Hi, Andy</Text>
           <Text style={styles.location}>Netherlands</Text>
@@ -123,12 +125,9 @@ const OverviewScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.searchBar}>
-        <Icon name="search" size={20} color="#aaa" />
-        <TextInput
-          placeholder="Search..."
-          style={styles.searchInput}
-        />
-        <Icon name="options" size={20} color="#aaa" />
+        <Icon name="search" size={20} color="black" />
+        <TextInput placeholder="Search..." style={styles.searchInput} placeholderTextColor={'black'}/>
+        <Icon name="options" size={20} color="black" />
       </View>
 
       <View style={styles.categories}>
@@ -138,10 +137,7 @@ const OverviewScreen = ({ navigation }) => {
             style={styles.category}
             onPress={() => category.title === 'More' && setModalVisible(true)}
           >
-            <Image
-              source={category.icon}
-              style={styles.categoryIcon}
-            />
+            <Image source={category.icon} style={styles.categoryIcon} />
             <Text style={styles.categoryText}>{category.title}</Text>
           </TouchableOpacity>
         ))}
@@ -163,10 +159,7 @@ const OverviewScreen = ({ navigation }) => {
               numColumns={4}
               columnWrapperStyle={styles.columnWrapper}
             />
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={() => setModalVisible(false)}
-            >
+            <TouchableOpacity style={styles.closeButton} onPress={() => setModalVisible(false)}>
               <Text style={styles.closeButtonText}>Close</Text>
             </TouchableOpacity>
           </View>
@@ -174,7 +167,7 @@ const OverviewScreen = ({ navigation }) => {
       </Modal>
 
       <Text style={styles.sectionHeading}>Frequently Visited</Text>
-      <View style={styles.sectionContainer1}>
+      <View style={styles.sectionContainer}>
         <FrequentVisits />
       </View>
 
@@ -184,16 +177,15 @@ const OverviewScreen = ({ navigation }) => {
           <Text style={styles.sectionLabel}>See All</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.sectionContainer2}>
-      <FlatList
-        data={guide}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
-        horizontal
-        contentContainerStyle={styles.contentContainer1}
-        showsHorizontalScrollIndicator={false}
-      />
-
+      <View style={styles.sectionContainer}>
+        <FlatList
+          data={guide}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id.toString()}
+          horizontal
+          contentContainerStyle={styles.contentContainer}
+          showsHorizontalScrollIndicator={false}
+        />
       </View>
 
       <View style={styles.headerSectionRow}>
@@ -202,8 +194,7 @@ const OverviewScreen = ({ navigation }) => {
           <Text style={styles.sectionLabel}>See All</Text>
         </TouchableOpacity>
       </View>
-
-      <View style={styles.sectionContainer3}>
+      <View style={styles.sectionContainer}>
       </View>
     </ScrollView>
   );
@@ -258,19 +249,21 @@ const styles = StyleSheet.create({
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f1f1f1',
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    margin: 15,
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    marginHorizontal: 15,
   },
   searchInput: {
     flex: 1,
     marginLeft: 10,
+    fontSize: 16,
+    color:'black',
   },
   categories: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    padding: 15,
+    marginVertical: 10,
   },
   category: {
     alignItems: 'center',
@@ -278,68 +271,69 @@ const styles = StyleSheet.create({
   categoryIcon: {
     width: 40,
     height: 40,
-    marginBottom: 5,
   },
   categoryText: {
     fontSize: 14,
+    color: 'black',
+    marginTop: 5,
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
     backgroundColor: 'white',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 16,
-    height: '50%',
+    borderRadius: 10,
+    width: '90%',
+    padding: 20,
+    alignItems: 'center',
   },
   bottomSheetHeading: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 10,
-    color: 'black',
-  },
-  serviceItem: {
-    flex: 1,
-    alignItems: 'center',
-    margin: 10,
-  },
-  serviceImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-  },
-  serviceName: {
-    fontSize: 12,
-    textAlign: 'center',
+    marginBottom: 15,
   },
   columnWrapper: {
     justifyContent: 'space-between',
-    marginBottom: 10,
+  },
+  serviceItem: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  serviceImage: {
+    width: 40,
+    height: 40,
+  },
+  serviceName: {
+    fontSize: 14,
+    marginTop: 5,
   },
   closeButton: {
-    marginTop: 15,
-    alignItems: 'center',
+    marginTop: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: '#2196F3',
+    borderRadius: 5,
   },
   closeButtonText: {
+    color: 'white',
     fontSize: 16,
+  },
+  sectionHeading: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginHorizontal: 15,
+    marginVertical: 10,
+    color:'black',
+  },
+  sectionLabel: {
     color: '#2196F3',
   },
-  sectionContainer1: {
-    flex: 1,
-    padding: 10,
-  },
-  sectionContainer2: {
-    flex: 1,
-    padding: 15,
-    marginBottom: 12,
-    flexDirection: 'column'
-  },
-  sectionContainer3: {
-    flex: 1,
-    padding: 10,
+  sectionContainer: {
+    marginHorizontal: 15,
+    marginBottom: 20,
   },
   headerSectionRow: {
     flexDirection: 'row',
@@ -348,93 +342,66 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     marginVertical: 10,
   },
-  sectionHeading: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'black',
-  },
-  sectionLabel: {
-    fontSize: 16,
-    color: 'blue',
-  },
-  tourGuideCard: {
-    flexDirection: 'row',
+  cardContainer: {
     backgroundColor: 'white',
     borderRadius: 10,
-    padding: 10,
-    margin: 10,
-    alignItems: 'center',
+    marginRight: 15,
     elevation: 3,
-  },
-  tourGuideImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 10,
-    marginRight: 10,
-  },
-  tourGuideContent: {
-    flex: 1,
-  },
-  tourGuideName: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: 'black',
-  },
-  tourGuidePrice: {
-    fontSize: 14,
-    color: 'black',
-  },
-  contentContainer1: {
-    paddingHorizontal: 10,
-  },
-  card1: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
     overflow: 'hidden',
-    elevation: 3,
-    marginVertical: 10,
-    marginRight: 10,
-    padding: 10,
     width: 150,
+    marginBottom: 20,
   },
-  cardImage1: {
-    width: 100,
-    height: 100,
-    borderRadius: 10,
+  imageContainer: {
+    position: 'relative',
   },
-  cardContent1: {
-    alignItems: 'center',
-    marginTop: 10,
+  cardImage: {
+    width: '100%',
+    height: 120,
   },
-  cardName1: {
+  cardContent: {
+    padding: 10,
+  },
+  cardName: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: 'black',
   },
-  cardDetails1: {
+  cardDetails: {
     fontSize: 14,
-    color: '#777',
-    marginVertical: 5,
+    color: '#555',
   },
-  cardLocation1: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  cardLocationText1: {
-    marginLeft: 5,
-    color: '#aaa',
-  },
-  ratingContainer1: {
+  cardLocation: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 5,
   },
-  ratingText1: {
+  cardLocationText: {
+    fontSize: 12,
+    color: '#aaa',
     marginLeft: 5,
+  },
+  ratingContainer: {
+    position: 'absolute',
+    top: 100, 
+    right: 50, 
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.9)',
+    borderRadius: 20,
+    padding: 5,
+  },
+  ratingText: {
     fontSize: 14,
-    fontWeight: 'bold',
-    color: '#000',
+    color: '#FFD700',
+    marginLeft: 5,
+  },
+  contentContainer: {
+    paddingLeft: 10,
   },
 });
+
 export default OverviewScreen;
