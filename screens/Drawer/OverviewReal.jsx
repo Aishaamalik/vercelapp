@@ -213,7 +213,7 @@ const OverviewScreen = ({ navigation }) => {
 
           <Text style={styles.sectionHeading}>Frequently Visited</Text>
           <View style={styles.sectionContainer}>
-            <FrequentVisits />
+          <FrequentVisits  />
           </View>
 
           <View style={styles.headerSectionRow}>

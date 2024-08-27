@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -45,9 +46,14 @@ const data = [
   },
 ];
 
-const FrequentVisitScreen = ({ navigation }) => {
+const FrequentVisitScreen = () => {
+  const navigation = useNavigation();
+  const handlePress = () => {
+    navigation.navigate('VecationDetails');
+  };
+
   const renderItem = ({ item }) => (
-    <View style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={() => handlePress(item)}>
       <Image source={item.image} style={styles.cardImage} />
       <TouchableOpacity style={styles.favoriteIcon}>
         <Icon name={item.favorite ? 'heart' : 'heart-outline'} size={24} color={item.favorite ? 'red' : 'black'} />
@@ -63,7 +69,7 @@ const FrequentVisitScreen = ({ navigation }) => {
         <Text style={styles.cardRatingText}>{item.rating}</Text>
         <Text style={styles.cardReviews}>({item.reviews})</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
@@ -83,7 +89,6 @@ const FrequentVisitScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
   },
   contentContainer: {
     paddingHorizontal: 10,
