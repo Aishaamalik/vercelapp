@@ -9,6 +9,11 @@ const reviews = [
     date: '23 Nov 2022',
     rating: 5,
     comment: 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.',
+    images: [
+      require('../Assets/visits/ledadubeach.jpeg'),
+      require('../Assets/visits/ledadubeach.jpeg'),
+      require('../Assets/visits/ledadubeach.jpeg'),
+    ],
   },
   {
     id: '2',

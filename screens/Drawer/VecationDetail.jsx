@@ -53,7 +53,7 @@ const VacationDetailsScreen = ({ route, navigation }) => {
       <Image source={item.image} style={styles.cardImage} />
       <View style={styles.ratingContainer}>
         <Icon name="star" size={16} color="#FFD700" />
-        <Text style={styles.ratingText}>{item.rating}</Text>
+        <Text style={styles.ratingText1}>{item.rating}</Text>
       </View>
       <View style={styles.cardContent}>
         <Text style={styles.cardName}>{item.name}</Text>
@@ -300,6 +300,24 @@ const styles = StyleSheet.create({
   seeAllText: {
     color: '#0077b6',
     fontWeight: 'bold',
+  },
+  ratingText:{
+    color:'black',
+  },
+  ratingContainer: {
+    position: 'absolute',
+    top: 90,
+    right: 210,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.9)',
+    borderRadius: 20,
+    padding: 5,
+  },
+  ratingText1: {
+    fontSize: 14,
+    color: '#FFD700',
+    marginLeft: 5,
   },
 });
 
