@@ -109,8 +109,17 @@ const VacationDetailsScreen = ({ route, navigation }) => {
             showsHorizontalScrollIndicator={false}
           />
         </View>
-        <Text style={styles.sectionTitle}>On Budget Tour</Text>
+        
+        <View style={styles.budgetSection}>
+          <Text style={styles.sectionTitle}>On Budget Tour</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Review')} style={styles.seeAllButton}>
+            <Text style={styles.seeAllText}>See All</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.container1}>
         <Text style={styles.sectionTitle}>Location</Text>
+        </View>
       </ScrollView>
 
       <View style={styles.footer}>
@@ -128,6 +137,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+  },
+  container1: {
+    flex: 3,
+    backgroundColor: 'yellow',
   },
   header: {
     position: 'absolute',
@@ -265,35 +278,28 @@ const styles = StyleSheet.create({
   },
   price1: {
     fontSize: 16,
-    color: 'gray',
-    marginright:90,
+    color: '#555',
   },
   bookButton: {
-    backgroundColor: '#E0A75E',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
+    backgroundColor: '#0077b6',
+    padding: 10,
+    borderRadius: 20,
   },
   bookButtonText: {
     color: 'white',
-    fontSize: 16,
     fontWeight: 'bold',
   },
-  
-  ratingContainer: {
+  seeAllButton: {
     position: 'absolute',
-    top: 90,
-    right: 210,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.9)',
-    borderRadius: 20,
-    padding: 5,
+    right: 0,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 5,
+    marginTop: 10,
   },
-  ratingText: {
-    fontSize: 14,
-    color: '#FFD700',
-    marginLeft: 5,
+  seeAllText: {
+    color: '#0077b6',
+    fontWeight: 'bold',
   },
 });
 
