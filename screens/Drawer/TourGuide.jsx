@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const data = [
+const data1 = [
   {
     id: '1',
     image: require('../Assets/Tourguide/p1.jpg'),
@@ -73,7 +73,7 @@ const TourGuideScreen = ({ navigation }) => {
         <Text style={styles.header}>Hotels</Text>
       </View>
       <FlatList
-        data={data}
+        data={data1}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.contentContainer}

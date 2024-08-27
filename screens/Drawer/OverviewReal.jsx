@@ -3,8 +3,6 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, FlatList, M
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon1 from 'react-native-vector-icons/Feather';
 import FrequentVisits from './FrequentVisits';
-import TourGuide from './TourGuide';
-import Onbudgetour from './Onbudgetour';
 
 const categories = [
   { title: 'Airport', icon: require('../Assets/Icons/airport.png') },
@@ -23,7 +21,48 @@ const services = [
   { name: 'Ship', image: require('../Assets/Icons/cruise.png'), screen: 'Ship' },
   { name: 'Camera', image: require('../Assets/Icons/camera.png'), screen: 'Camera' },
 ];
-
+const guide = [
+  {
+    id: '1',
+    image: require('../Assets/Tourguide/p1.jpg'),
+    name: 'Alenzo Endera',
+    price: '$25 (1 Day)',
+    location: 'Polynesia, French',
+    rating: '4.0',
+  },
+  {
+    id: '2',
+    image: require('../Assets/Tourguide/p2.jpg'),
+    name: 'Jhone Kenoady',
+    price: '$25 (1 Day)',
+    location: 'Polynesia, French',
+    rating: '4.0',
+  },
+  {
+    id: '3',
+    image: require('../Assets/Tourguide/p3.jpg'),
+    name: 'Emilia Ricardo',
+    price: '$25 (1 Day)',
+    location: 'Polynesia, French',
+    rating: '4.0',
+  },
+  {
+    id: '4',
+    image: require('../Assets/Tourguide/p4.jpg'),
+    name: 'Alexa Bigford',
+    price: '$25 (1 Day)',
+    location: 'Polynesia, French',
+    rating: '4.0',
+  },
+  {
+    id: '5',
+    image: require('../Assets/Tourguide/p5.jpg'),
+    name: 'Alenzo Endera',
+    price: '$25 (1 Day)',
+    location: 'Polynesia, French',
+    rating: '4.0',
+  },
+];
 const OverviewScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -37,6 +76,23 @@ const OverviewScreen = ({ navigation }) => {
       <Image source={item.image} style={styles.serviceImage} />
       <Text style={styles.serviceName}>{item.name}</Text>
     </TouchableOpacity>
+  );
+  const renderItem = ({ item }) => (
+    <View style={styles.card1}>
+      <Image source={item.image} style={styles.cardImage1} />
+      <View style={styles.cardContent1}>
+        <Text style={styles.cardName1}>{item.name}</Text>
+        <Text style={styles.cardDetails1}>{item.price} ({item.duration})</Text>
+        <View style={styles.cardLocation1}>
+          <Icon name="location-outline" size={16} color="#aaa" />
+          <Text style={styles.cardLocationText1}>{item.location}</Text>
+        </View>
+      </View>
+      <View style={styles.ratingContainer1}>
+        <Icon name="star" size={16} color="#FFD700" />
+        <Text style={styles.ratingText1}>{item.rating}</Text>
+      </View>
+    </View>
   );
 
   return (
@@ -129,6 +185,15 @@ const OverviewScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.sectionContainer2}>
+      <FlatList
+        data={guide}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id.toString()}
+        horizontal
+        contentContainerStyle={styles.contentContainer1}
+        showsHorizontalScrollIndicator={false}
+      />
+
       </View>
 
       <View style={styles.headerSectionRow}>
@@ -139,7 +204,6 @@ const OverviewScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.sectionContainer3}>
-        <Onbudgetour />
       </View>
     </ScrollView>
   );
@@ -293,6 +357,84 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'blue',
   },
+  tourGuideCard: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 10,
+    margin: 10,
+    alignItems: 'center',
+    elevation: 3,
+  },
+  tourGuideImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 10,
+    marginRight: 10,
+  },
+  tourGuideContent: {
+    flex: 1,
+  },
+  tourGuideName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  tourGuidePrice: {
+    fontSize: 14,
+    color: 'black',
+  },
+  contentContainer1: {
+    paddingHorizontal: 10,
+  },
+  card1: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    overflow: 'hidden',
+    elevation: 3,
+    marginVertical: 10,
+    marginRight: 10,
+    padding: 10,
+    width: 150,
+  },
+  cardImage1: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+  },
+  cardContent1: {
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  cardName1: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  cardDetails1: {
+    fontSize: 14,
+    color: '#777',
+    marginVertical: 5,
+  },
+  cardLocation1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  cardLocationText1: {
+    marginLeft: 5,
+    color: '#aaa',
+  },
+  ratingContainer1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 5,
+  },
+  ratingText1: {
+    marginLeft: 5,
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#000',
+  },
 });
-
 export default OverviewScreen;
