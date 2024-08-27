@@ -48,8 +48,15 @@ const data = [
 
 const FrequentVisitScreen = () => {
   const navigation = useNavigation();
-  const handlePress = () => {
-    navigation.navigate('VecationDetails');
+  const handlePress = (item) => {
+    navigation.navigate('VecationDetails', {
+      image: item.image,
+      title: item.title,
+      location: item.location,
+      price: item.price,
+      rating: item.rating,
+      reviews: item.reviews,
+    });
   };
 
   const renderItem = ({ item }) => (
@@ -79,7 +86,7 @@ const FrequentVisitScreen = () => {
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.contentContainer}
-        horizontal={true}
+        horizontal
         showsHorizontalScrollIndicator={false}
       />
     </View>
@@ -125,7 +132,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: 10,
-    color: 'black',
   },
   cardLocationText: {
     marginLeft: 5,

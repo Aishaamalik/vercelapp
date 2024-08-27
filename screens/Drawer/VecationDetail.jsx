@@ -1,8 +1,71 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const VacationDetailsScreen = ({ navigation }) => {
+const guide = [
+  {
+    id: '1',
+    image: require('../Assets/Tourguide/p1.jpg'),
+    name: 'Alenzo Endera',
+    price: '$25 (1 Day)',
+    location: 'Polynesia, French',
+    rating: '4.0',
+  },
+  {
+    id: '2',
+    image: require('../Assets/Tourguide/p2.jpg'),
+    name: 'Jhone Kenoady',
+    price: '$25 (1 Day)',
+    location: 'Polynesia, French',
+    rating: '4.0',
+  },
+  {
+    id: '3',
+    image: require('../Assets/Tourguide/p3.jpg'),
+    name: 'Emilia Ricardo',
+    price: '$25 (1 Day)',
+    location: 'Polynesia, French',
+    rating: '4.0',
+  },
+  {
+    id: '4',
+    image: require('../Assets/Tourguide/p4.jpg'),
+    name: 'Alexa Bigford',
+    price: '$25 (1 Day)',
+    location: 'Polynesia, French',
+    rating: '4.0',
+  },
+  {
+    id: '5',
+    image: require('../Assets/Tourguide/p5.jpg'),
+    name: 'Alenzo Endera',
+    price: '$25 (1 Day)',
+    location: 'Polynesia, French',
+    rating: '4.0',
+  },
+];
+
+const VacationDetailsScreen = ({ route, navigation }) => {
+  const { image, title, location, price, rating, reviews, favorite } = route.params;
+
+  const renderGuideItem = ({ item }) => (
+    <View style={styles.cardContainer}>
+      <Image source={item.image} style={styles.cardImage} />
+      <View style={styles.ratingContainer}>
+        <Icon name="star" size={16} color="#FFD700" />
+        <Text style={styles.ratingText}>{item.rating}</Text>
+      </View>
+      <View style={styles.cardContent}>
+        <Text style={styles.cardName}>{item.name}</Text>
+        <Text style={styles.cardDetails}>{item.price}</Text>
+        <View style={styles.cardLocation}>
+          <Icon name="location-outline" size={16} color="#aaa" />
+          <Text style={styles.cardLocationText}>{item.location}</Text>
+        </View>
+      </View>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -11,36 +74,52 @@ const VacationDetailsScreen = ({ navigation }) => {
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Vacation Details</Text>
       </View>
+      <Image source={image} style={styles.mainImage} />
 
-      <Image
-        source={{ uri: 'https://example.com/vacation-image.jpg' }}
-        style={styles.mainImage}
-      />
-
-      {/* Details Section */}
       <ScrollView contentContainerStyle={styles.detailsContainer}>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Taj Mahal</Text>
-          <Icon name="heart-outline" size={24} color="red" />
+          <Text style={styles.title}>{title}</Text>
+          <Icon
+            name={favorite ? "heart" : "heart-outline"}
+            size={24}
+            color={favorite ? "red" : "black"}
+          />
         </View>
+
         <View style={styles.locationContainer}>
           <Icon name="location-outline" size={16} color="black" />
-          <Text style={styles.locationText}>Uttar Pradesh, India</Text>
+          <Text style={styles.locationText}>{location}</Text>
           <Icon name="star" size={16} color="#FFD700" style={styles.starIcon} />
-          <Text style={styles.ratingText}>4.4 (41 Reviews)</Text>
+          <Text style={styles.ratingText}>{rating} ({reviews} Reviews)</Text>
         </View>
+        <Text style={styles.price}>Price: {price}</Text>
         <Text style={styles.sectionTitle}>Details</Text>
         <Text style={styles.detailsText}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tortor ac
-          lorem ipsum dolor sit amet.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tortor ac lorem ipsum dolor sit amet.
         </Text>
-        <View style={styles.footer}>
-          <Text style={styles.price}>$32 /Person</Text>
-          <TouchableOpacity style={styles.bookButton}>
-            <Text style={styles.bookButtonText}>Book Now</Text>
-          </TouchableOpacity>
+
+        <Text style={styles.sectionTitle}>Tour Guide</Text>
+        <View style={styles.tourGuideCard}>
+          <FlatList
+            data={guide}
+            renderItem={renderGuideItem}
+            keyExtractor={(item) => item.id}
+            horizontal
+            contentContainerStyle={styles.contentContainer}
+            showsHorizontalScrollIndicator={false}
+          />
         </View>
+        <Text style={styles.sectionTitle}>On Budget Tour</Text>
+        <Text style={styles.sectionTitle}>Location</Text>
       </ScrollView>
+
+      <View style={styles.footer}>
+        <Text style={styles.price}>$32</Text>
+        <Text style={styles.price1}>/Person</Text>
+        <TouchableOpacity style={styles.bookButton}>
+          <Text style={styles.bookButtonText}>Book Now</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -57,12 +136,14 @@ const styles = StyleSheet.create({
     right: 0,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center', 
     padding: 10,
     zIndex: 10,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Adding background color for better visibility
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   backButton: {
+    position: 'absolute', 
+    left: 10,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 20,
     padding: 5,
@@ -93,7 +174,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: 'black',
-    alignSelf:'center',
+    alignSelf: 'center',
   },
   locationContainer: {
     flexDirection: 'row',
@@ -102,24 +183,78 @@ const styles = StyleSheet.create({
   },
   locationText: {
     marginLeft: 5,
-    color: 'black', // Ensures location text is visible
+    color: 'black',
   },
   starIcon: {
     marginLeft: 10,
   },
   ratingText: {
     marginLeft: 5,
-    color: 'black', // Ensures rating text is visible
+    color: 'black',
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginTop: 10,
-    color: 'black', // Ensures section title is visible
+    color: 'black',
   },
   detailsText: {
     marginVertical: 10,
-    color: 'black', // Ensures details text is visible
+    color: 'black',
+  },
+  tourGuideCard: {
+    borderRadius: 10,
+    padding: 10,
+  },
+  cardContainer: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    marginRight: 15,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    overflow: 'hidden',
+    width: 300,
+    marginBottom: 20,
+    padding: 10,
+  },
+  cardImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+  },
+  cardContent: {
+    flex: 1,
+    paddingLeft: 10,
+    justifyContent: 'center',
+  },
+  cardName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  cardDetails: {
+    fontSize: 14,
+    color: '#555',
+  },
+  cardLocation: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 5,
+  },
+  cardLocationText: {
+    fontSize: 12,
+    color: '#aaa',
+    marginLeft: 5,
+  },
+  locationImage: {
+    width: '100%',
+    height: 200,
+    borderRadius: 10,
+    marginTop: 10,
   },
   footer: {
     flexDirection: 'row',
@@ -130,13 +265,18 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'black', // Ensures price text is visible
+    color: 'black',
+  },
+  price1: {
+    fontSize: 16,
+    color: 'gray',
+    marginright:90,
   },
   bookButton: {
-    backgroundColor: '#007BFF',
-    borderRadius: 20,
+    backgroundColor: '#E0A75E',
     paddingVertical: 10,
     paddingHorizontal: 20,
+    borderRadius: 10,
   },
   bookButtonText: {
     color: 'white',
