@@ -132,9 +132,13 @@ const OverviewScreen = ({ navigation }) => {
   );
 
   const renderGuideItem = ({ item }) => (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={styles.cardContainer}
-      onPress={() => navigation.navigate('GuideProfile', { guideId: item.id })} // Navigate to "GuideProfile" screen with guide ID
+
+      onPress={() => navigation.navigate('GuideProfile', {
+        guideImage: item.image,
+        guideName: item.name
+      })}
     >
       <Image source={item.image} style={styles.cardImage} />
       <View style={styles.ratingContainer}>
@@ -151,7 +155,7 @@ const OverviewScreen = ({ navigation }) => {
       </View>
     </TouchableOpacity>
   );
-  
+
 
   const renderHotelItem = ({ item }) => (
     <View style={styles.itemContainer1}>
@@ -217,7 +221,7 @@ const OverviewScreen = ({ navigation }) => {
 
           <Text style={styles.sectionHeading}>Frequently Visited</Text>
           <View style={styles.sectionContainer}>
-          <FrequentVisits  />
+            <FrequentVisits />
           </View>
 
           <View style={styles.headerSectionRow}>
@@ -228,7 +232,7 @@ const OverviewScreen = ({ navigation }) => {
           </View>
 
           <View style={styles.sectionContainer}>
-            
+
             <FlatList
               data={guide}
               renderItem={renderGuideItem}
@@ -257,7 +261,7 @@ const OverviewScreen = ({ navigation }) => {
           </View>
         </>
       )}
-      data={[]} 
+      data={[]}
     />
   );
 };

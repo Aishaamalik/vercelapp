@@ -2,7 +2,9 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const GuideProfileScreen = ({ navigation }) => {
+const GuideProfileScreen = ({ route, navigation }) => {
+    const { guideImage, guideName } = route.params;
+
   return (
     <View style={styles.container}>
       
@@ -20,13 +22,13 @@ const GuideProfileScreen = ({ navigation }) => {
         style={styles.backgroundImage}
       />
 
-      {/* Profile Picture and Name Section */}
-      <View style={styles.profileContainer}>
+       {/* Profile Picture and Name Section */}
+       <View style={styles.profileContainer}>
         <Image
-          source={require('../Assets/Tourguide/p1.jpg')}
+          source={guideImage}
           style={styles.profileImage}
         />
-        <Text style={styles.profileName}>Jonsky Alexia</Text>
+        <Text style={styles.profileName}>{guideName}</Text>
         <Text style={styles.profileSubtitle}>
           International tour guide in <Text style={styles.highlightedText}>Pakistan</Text>
         </Text>
