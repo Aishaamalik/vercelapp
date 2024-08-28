@@ -118,9 +118,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     right: 10,
-    backgroundColor: 'white',
-    borderRadius: 15,
-    padding: 5,
   },
   cardTitle: {
     fontSize: 16,

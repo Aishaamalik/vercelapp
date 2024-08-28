@@ -26,7 +26,6 @@ const ButtomNavigator = () => {
         name="Home"
         component={Home}
         options={{
-          tabBarStyle:{display:'none'},
           tabBarIcon: ({ color, size, focused }) => (
             <Icon name={focused ? "home" : "home-outline"} color={color} size={size} />
           ),

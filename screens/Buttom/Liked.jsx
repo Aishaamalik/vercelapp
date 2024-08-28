@@ -1,4 +1,3 @@
-// src/screens/WishlistScreen.js
 import React from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -11,7 +10,7 @@ const wishlistData = [
         price: '$235',
         rating: 4.4,
         reviews: 32,
-        image: require('../Assets/visits/tahitibeach.jpeg'), // Replace with your image path
+        image: require('../Assets/visits/tahitibeach.jpeg'), 
     },
     {
         id: '2',
@@ -20,7 +19,7 @@ const wishlistData = [
         price: '$235',
         rating: 4.4,
         reviews: 32,
-        image: require('../Assets/visits/lucismountain.jpeg'), // Replace with your image path
+        image: require('../Assets/visits/lucismountain.jpeg'),// Replace with your image path
     },
     {
         id: '3',
