@@ -19,6 +19,7 @@ const ButtomNavigator = () => {
         tabBarShowLabel: false, 
         tabBarActiveTintColor: '#0077b6',
         tabBarInactiveTintColor: 'gray', 
+        headerShown: false,
       }}
     >
       <Buttom.Screen

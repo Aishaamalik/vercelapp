@@ -199,7 +199,9 @@ const OverviewScreen = ({ navigation }) => {
               </TouchableOpacity>
               <View style={styles.headerIcons}>
                 <Icon1 name="moon" size={24} color="white" style={styles.headerIcon} />
+                <TouchableOpacity onPress={()=> navigation.navigate("Buttontabs")}>
                 <Icon name="person-outline" size={24} color="white" style={styles.headerIcon} />
+                </TouchableOpacity>
               </View>
             </View>
 
