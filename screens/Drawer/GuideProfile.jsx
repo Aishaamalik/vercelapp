@@ -8,8 +8,8 @@ const GuideProfileScreen = ({ navigation }) => {
       
       {/* Header with back arrow and title */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-back" size={24} color="#000" style={styles.backIcon} />
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+          <Icon name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.headerText}>Profile</Text>
       </View>
@@ -28,7 +28,7 @@ const GuideProfileScreen = ({ navigation }) => {
         />
         <Text style={styles.profileName}>Jonsky Alexia</Text>
         <Text style={styles.profileSubtitle}>
-          International tour guide in <Text style={{ color: '#FF5733' }}>Pakistan</Text>
+          International tour guide in <Text style={styles.highlightedText}>Pakistan</Text>
         </Text>
         <Text style={styles.profileSubtitle}>Travel and food vlogger</Text>
       </View>
@@ -82,14 +82,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingTop: 20,
+    paddingTop: 40, 
     paddingHorizontal: 20,
-    zIndex: 10, 
-    width: '100%',
+    width: '65%',
+    zIndex: 10,
+  },
+  backButton: {
+    padding: 10,
   },
   headerText: {
     color: 'black',
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
   },
   backgroundImage: {
@@ -103,40 +106,46 @@ const styles = StyleSheet.create({
   },
   profileContainer: {
     alignItems: 'center',
-    marginTop: 150, 
+    marginTop: 150,
+    paddingHorizontal: 20, 
   },
   profileImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    borderWidth: 3,
+    width: 120, 
+    height: 120,
+    borderRadius: 60, 
+    borderWidth: 4,
     borderColor: '#fff',
   },
   profileName: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
-    marginTop: 10,
+    marginTop: 15,
   },
   profileSubtitle: {
-    fontSize: 14,
+    fontSize: 16, 
     color: '#555',
     textAlign: 'center',
+    marginTop: 5, 
+  },
+  highlightedText: {
+    color: '#FF5733',
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginVertical: 20,
+    paddingHorizontal: 20,
   },
   messageButton: {
     backgroundColor: '#007BFF',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: 12,
+    paddingHorizontal: 30,
     borderRadius: 8,
   },
   callButton: {
     backgroundColor: '#F0F0F0',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: 12,
+    paddingHorizontal: 30,
     borderRadius: 8,
   },
   buttonText: {
@@ -167,13 +176,13 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   aboutTitle: {
-    fontSize: 18,
+    fontSize: 20, 
     fontWeight: 'bold',
+    marginBottom: 10,
   },
   aboutText: {
-    marginTop: 10,
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: 16, 
+    lineHeight: 22,
     color: '#777',
   },
 });
