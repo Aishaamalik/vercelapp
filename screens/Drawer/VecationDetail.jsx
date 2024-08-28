@@ -109,7 +109,7 @@ const VacationDetailsScreen = ({ route, navigation }) => {
             showsHorizontalScrollIndicator={false}
           />
         </View>
-        
+
         <View style={styles.budgetSection}>
           <Text style={styles.sectionTitle}>On Budget Tour</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Review')} style={styles.seeAllButton}>
@@ -117,17 +117,36 @@ const VacationDetailsScreen = ({ route, navigation }) => {
           </TouchableOpacity>
         </View>
 
-        
+
         <View style={styles.container1}>
-          <Text>Container 1</Text>
+          <View style={styles.reviewContainer}>
+            <View style={styles.reviewHeader}>
+              <Image
+                source={require('../Assets/Profile/pic1.jpeg')}
+                style={styles.profileImage}
+              />
+              <View style={styles.reviewHeaderText}>
+                <Text style={styles.reviewerName}>Jhone Kenoady</Text>
+                <Text style={styles.reviewDate}>23 Nov 2022</Text>
+              </View>
+            </View>
+            <View style={styles.ratingContainer}>
+              {[...Array(5)].map((_, index) => (
+                <Icon key={index} name="star" size={16} color="#FFD700" />
+              ))}
+            </View>
+            <Text style={styles.reviewComment}>
+              Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.
+            </Text>
+          </View>
         </View>
-        
+
         <View style={styles.location}>
           <Text style={styles.sectionTitle}>Location</Text>
         </View>
 
         <View style={styles.container2}>
-          <Text>Container 2</Text>
+          <Text style={{color:'black'}}>Maps</Text>
         </View>
 
       </ScrollView>
@@ -150,25 +169,64 @@ const styles = StyleSheet.create({
   },
 
   container1: {
-    width: '100%', 
-    height: 100, 
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 10,
+    width: '100%',
+    height: 140,
+    position:'relative',
+  },
+  reviewContainer: {
+    width: '100%',
+    height: 140,
+    position:'relative',
+  },
+  reviewHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  profileImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 20,
+  },
+  reviewHeaderText: {
+    marginLeft: 10,
+    color:'black',
+  },
+  reviewerName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color:'black',
+
+  },
+  reviewDate: {
+    color:'black',
+  },
+
+  ratingContainer: {
+    position: 'absolute',
+    top: 10, // Moves the ratingContainer to the top
+    right: 10, // Aligns the ratingContainer to the right
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 20,
+    padding: 5,
+  },
+  reviewComment: {
+    color:'black',
+
   },
   container2: {
-    width: '100%', 
-    height: 150, 
+    width: '100%',
+    height: 150,
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 10,
 
   },
-  budgetSection:{
-    flex:1,
+  budgetSection: {
+    flex: 1,
   },
-  location:{
-    flex:1,
+  location: {
+    flex: 1,
   },
   header: {
     position: 'absolute',
@@ -177,13 +235,13 @@ const styles = StyleSheet.create({
     right: 0,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center', 
+    justifyContent: 'center',
     padding: 10,
     zIndex: 10,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   backButton: {
-    position: 'absolute', 
+    position: 'absolute',
     left: 10,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 20,
@@ -328,8 +386,8 @@ const styles = StyleSheet.create({
     color: '#0077b6',
     fontWeight: 'bold',
   },
-  ratingText:{
-    color:'black',
+  ratingText: {
+    color: 'black',
   },
   ratingContainer: {
     position: 'absolute',
