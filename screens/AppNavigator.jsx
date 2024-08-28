@@ -22,6 +22,7 @@ import HotelListScreen from './Drawer/Hotellist';
 import VecationDetail from './Drawer/VecationDetail';
 import Review from './Drawer/Review';
 import GuideProfileScreen from './Drawer/GuideProfile';
+import HotelDetailsScreen from './Drawer/HotelDetailScreen';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
@@ -66,6 +67,7 @@ const AppNavigator = () => {
                 <Stack.Screen name='VecationDetails' component={VecationDetail}/>
                 <Stack.Screen name='Review' component={Review}/>
                 <Stack.Screen name='GuideProfile' component={GuideProfileScreen}/>
+                <Stack.Screen name='HotelDetail' component={HotelDetailsScreen}/>
 
 
             </Stack.Navigator>

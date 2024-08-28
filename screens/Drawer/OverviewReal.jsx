@@ -155,10 +155,16 @@ const OverviewScreen = ({ navigation }) => {
       </View>
     </TouchableOpacity>
   );
-
-
   const renderHotelItem = ({ item }) => (
-    <View style={styles.itemContainer1}>
+    <TouchableOpacity
+      style={styles.itemContainer1}
+      onPress={() => navigation.navigate('HotelDetail', { 
+        hotelImage: item.image,
+        hotelName: item.name,
+        hotelLocation: item.location,
+
+       })}
+    >
       <Image source={item.image} style={styles.image1} />
       <View style={styles.textContainer1}>
         <Text style={styles.name1}>{item.name}</Text>
@@ -169,7 +175,7 @@ const OverviewScreen = ({ navigation }) => {
         </View>
       </View>
       <Text style={styles.price1}>{item.price}</Text>
-    </View>
+    </TouchableOpacity>
   );
 
   const renderCategoryItem = ({ item }) => (
