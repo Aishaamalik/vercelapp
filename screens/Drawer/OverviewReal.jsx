@@ -302,167 +302,80 @@ const OverviewScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: 'white',
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 16,
-    backgroundColor: '#007BFF',
+    backgroundColor: '#2196F3',
+    paddingHorizontal: 10,
+    paddingVertical: 15,
   },
   headerIcons: {
     flexDirection: 'row',
   },
   headerIcon: {
-    marginLeft: 16,
+    marginLeft: 15,
   },
   profileSection: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
-    backgroundColor: '#FFF',
+    padding: 15,
   },
   profileImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 16,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    marginRight: 15,
   },
   greeting: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: 'black',
   },
   location: {
     fontSize: 14,
-    color: '#888',
+    color: 'black',
   },
   profileIcons: {
     flexDirection: 'row',
     marginLeft: 'auto',
   },
   profileIcon: {
-    marginLeft: 16,
+    marginLeft: 15,
   },
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 8,
-    backgroundColor: '#FFF',
-    marginHorizontal: 16,
-    borderRadius: 8,
-    marginVertical: 8,
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    marginHorizontal: 15,
   },
   searchInput: {
     flex: 1,
-    marginLeft: 8,
+    marginLeft: 10,
     fontSize: 16,
   },
   categories: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 16,
+    justifyContent: 'space-between',
+    marginHorizontal: 15,
+    marginVertical: 10,
   },
   category: {
     alignItems: 'center',
+    width: 70,
   },
   categoryIcon: {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
   },
   categoryText: {
-    marginTop: 8,
-    fontSize: 14,
-  },
-  sectionHeading: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginHorizontal: 16,
-    marginVertical: 8,
-  },
-  sectionContainer: {
-    marginBottom: 16,
-  },
-  cardContainer: {
-    margin: 8,
-    borderRadius: 8,
-    backgroundColor: '#FFF',
-    overflow: 'hidden',
-    elevation: 2,
-    width: 150,
-  },
-  cardImage: {
-    width: '100%',
-    height: 100,
-  },
-  ratingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 8,
-  },
-  ratingText: {
-    marginLeft: 4,
-    fontSize: 14,
-    color: '#FFD700',
-  },
-  cardContent: {
-    padding: 8,
-  },
-  cardName: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  cardDetails: {
-    fontSize: 14,
-    color: '#888',
-  },
-  cardLocation: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  cardLocationText: {
-    marginLeft: 4,
-    fontSize: 14,
-    color: '#555',
-  },
-  itemContainer1: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 8,
-    margin: 8,
-    backgroundColor: '#FFF',
-    borderRadius: 8,
-    elevation: 2,
-  },
-  image1: {
-    width: 80,
-    height: 80,
-    borderRadius: 8,
-  },
-  textContainer1: {
-    flex: 1,
-    marginLeft: 8,
-  },
-  name1: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  duration1: {
-    fontSize: 14,
-    color: '#888',
-  },
-  locationContainer1: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  location1: {
-    marginLeft: 4,
-    fontSize: 14,
-    color: '#555',
-  },
-  price1: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    marginTop: 5,
+    fontSize: 12,
+    color: 'black',
   },
   modalContainer: {
     flex: 1,
@@ -480,6 +393,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 16,
+    color:'black',
+
   },
   columnWrapper: {
     justifyContent: 'space-around',
@@ -500,6 +415,7 @@ const styles = StyleSheet.create({
   serviceName: {
     fontSize: 14,
     textAlign: 'center',
+    color:'black',
   },
   closeButton: {
     marginTop: 16,
@@ -513,6 +429,127 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  sectionHeading: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginLeft: 15,
+    marginVertical: 10,
+    color: 'black',
+  },
+  sectionContainer: {
+    paddingHorizontal: 15,
+  },
+  headerSectionRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 15,
+  },
+  sectionLabel: {
+    fontSize: 14,
+    color: '#2196F3',
+  },
+  cardContainer: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    marginRight: 15,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    overflow: 'hidden',
+    width: 300,
+    marginBottom: 20,
+    padding: 10,
+  },
+  cardImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+  },
+  cardContent: {
+    flex: 1,
+    paddingLeft: 10,
+    justifyContent: 'center',
+  },
+  cardName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  cardDetails: {
+    fontSize: 14,
+    color: '#555',
+  },
+  cardLocation: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 5,
+  },
+  cardLocationText: {
+    fontSize: 12,
+    color: '#aaa',
+    marginLeft: 5,
+  },
+  ratingContainer: {
+    position: 'absolute',
+    top: 90,
+    right: 210,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.9)',
+    borderRadius: 20,
+    padding: 5,
+  },
+  ratingText: {
+    fontSize: 14,
+    color: '#FFD700',
+    marginLeft: 5,
+  },
+  // The On Budget Tour
+
+  itemContainer1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+  image1: {
+    width: 90,
+    height: 90,
+    borderRadius: 10,
+  },
+  textContainer1: {
+    flex: 1,
+    marginLeft: 16,
+  },
+  name1: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  duration1: {
+    color: 'black',
+    marginVertical: 4,
+  },
+  locationContainer1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  location1: {
+    color: 'black',
+    marginLeft: 4,
+  },
+  price1: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'black',
+  },
 });
 
 export default OverviewScreen;
+
