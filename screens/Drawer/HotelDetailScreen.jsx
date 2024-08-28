@@ -81,11 +81,7 @@ const HotelDetailsScreen = ({route, navigation }) => {
         </View>
 
         <Text style={styles.locationTitle}>Location</Text>
-        <Image
-          source={{ uri: 'https://example.com/map.jpg' }}
-          style={styles.mapImage}
-        />
-
+        
         <View style={styles.priceContainer}>
           <Text style={styles.price}>$32</Text>
           <Text style={styles.originalPrice}>$312</Text>
@@ -139,20 +135,23 @@ const styles = StyleSheet.create({
   hotelInfo: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'center', 
+
   },
   hotelName: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: 'bold',   
+    color: 'black',
   },
-  hotelLocation: {
-    color: '#777',
+  hotelLocation: {   
+    color: 'black',
     marginVertical: 5,
   },
   commonFacilitiesTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginTop: 20,
+    marginTop: 20,   
+    color: 'black',
   },
   facilitiesContainer: {
     flexDirection: 'row',
@@ -165,18 +164,21 @@ const styles = StyleSheet.create({
   facilityIcon: {
     backgroundColor: '#f0f0f0',
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 10,   
+    color: 'black',
   },
   facilityText: {
-    marginTop: 5,
+    marginTop: 5,   
+    color: 'black',
   },
   detailsTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginTop: 20,
+    marginTop: 20,   
+    color: 'black',
   },
-  detailsText: {
-    color: '#777',
+  detailsText: {   
+    color: 'black',
     marginVertical: 5,
   },
   moreDetails: {
@@ -185,7 +187,8 @@ const styles = StyleSheet.create({
   reviewsTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginTop: 20,
+    marginTop: 20,   
+    color: 'black',
   },
   reviewItem: {
     flexDirection: 'row',
@@ -202,11 +205,13 @@ const styles = StyleSheet.create({
   },
   reviewHeader: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between',   
+    color: 'black',
   },
   reviewName: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: 'bold',   
+    color: 'black',
   },
   reviewDate: {
     color: '#777',
@@ -221,7 +226,8 @@ const styles = StyleSheet.create({
   locationTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginTop: 20,
+    marginTop: 20,   
+    color: 'black',
   },
   mapImage: {
     width: '100%',
