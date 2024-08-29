@@ -33,7 +33,7 @@ const initialData = [
     price: '$423',
     rating: '4.6',
     reviews: '213',
-    image: require('../Assets/visits/lucismountain.jpeg'),
+    image: require('../Assets/visits/p1.jpeg'),
     favorite: false,
 
 },
@@ -44,7 +44,7 @@ const initialData = [
     price: '$235',
     rating: '4.8',
     reviews: '67',
-    image: require('../Assets/visits/lucismountain.jpeg'),
+    image: require('../Assets/visits/p2.jpeg'),
     favorite: false,
 
 },
@@ -55,7 +55,7 @@ const initialData = [
     price: '$434',
     rating: '4.8',
     reviews: '324',
-    image: require('../Assets/visits/lucismountain.jpeg'),
+    image: require('../Assets/visits/tahitibeach.jpeg'),
     favorite: false,
 
 },
