@@ -366,7 +366,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#00BFFF',
   },
   filterItemText: {
-    color: '#00BFFF',
+    color: 'black',
   },
   starRatingContainer: {
     flexDirection: 'row',
