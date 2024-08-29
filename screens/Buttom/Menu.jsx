@@ -376,7 +376,7 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   selectedStarButton: {
-    backgroundColor: '#00BFFF',
+    backgroundColor: 'white',
     borderRadius: 5,
   },
   applyButton: {
