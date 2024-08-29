@@ -106,7 +106,11 @@ const Booked = () => {
                 </View>
             </View>
             <TouchableOpacity style={styles.detailButton}>
-                <Text style={styles.detailButtonText}>Detail</Text>
+                <Text style={styles.detailButtonText}>Rating</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.detailButton1}>
+                <Text style={styles.detailButtonText1}>Detail</Text>
             </TouchableOpacity>
         </View>
     );
@@ -280,10 +284,25 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         borderWidth: 1,
         borderColor: '#007BFF',
+        backgroundColor:'#007BFF',
+    },
+    detailButton1: {
+        marginTop: 10,
+        paddingVertical: 5,
+        paddingHorizontal: 20,
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: '#007BFF',
     },
     detailButtonText: {
+        color: 'white',
+        fontWeight: 'bold',
+        alignSelf:'center',
+    },
+    detailButtonText1: {
         color: '#007BFF',
         fontWeight: 'bold',
+        alignSelf:'center',
     },
     historyContainer: {
         flex: 1,
