@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList, TextInput, Modal, Button } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Slider from '@react-native-community/slider';
-
 const initialData = [
   {
     id: '1',
@@ -46,6 +45,7 @@ const initialData = [
     favorite: false,
   },
 ];
+
 const popularFilters = [
   { id: '1', label: 'Hotels (340)' },
   { id: '2', label: 'Swimming Pool (340)' },
@@ -54,6 +54,8 @@ const popularFilters = [
   { id: '5', label: 'Breakfast Included (115)' },
   { id: '6', label: 'Kitchen (10)' },
 ];
+
+
 
 const starRatings = [1, 2, 3, 4, 5];
 
@@ -66,20 +68,32 @@ const Menu = () => {
   
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [selectedRating, setSelectedRating] = useState(null); 
+
   const filteredData = data.filter(item =>
     item.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
   const renderFilterItem = ({ item }) => (
     <TouchableOpacity
-        style={[
-            styles.filterItem,
-            selectedFilters.includes(item.label) && styles.selectedFilterItem,
-        ]}
-        onPress={() => toggleFilter(item.label)}
+      style={[
+        styles.filterItem,
+        selectedFilters.includes(item.label) && styles.selectedFilterItem,
+      ]}
+      onPress={() => toggleFilter(item.label)}
     >
-        <Text style={styles.filterItemText}>{item.label}</Text>
+      <Text style={styles.filterItemText}>{item.label}</Text>
     </TouchableOpacity>
-);
+  );
+
+  const toggleFilter = (label) => {
+    setSelectedFilters((prevSelectedFilters) => {
+      if (prevSelectedFilters.includes(label)) {
+        return prevSelectedFilters.filter((filter) => filter !== label);
+      } else {
+        return [...prevSelectedFilters, label];
+      }
+    });
+  };
 
   const handlePress = (item) => {
     navigation.navigate('VecationDetails', {
@@ -120,17 +134,17 @@ const Menu = () => {
         <Icon
           name={item.favorite ? 'heart' : 'heart-outline'}
           size={24}
-          color={item.favorite ? 'red' : 'black'}
+          color={item.favorite ? 'red' : '#00BFFF'}
         />
       </TouchableOpacity>
       <Text style={styles.cardTitle}>{item.title}</Text>
       <View style={styles.cardLocation}>
-        <Icon name="location-outline" size={16} color="black" />
+        <Icon name="location-outline" size={16} color="gray" />
         <Text style={styles.cardLocationText}>{item.location}</Text>
       </View>
       <Text style={styles.cardPrice}>{item.price}</Text>
       <View style={styles.cardRating}>
-        <Icon name="star" size={16} color="#f9a825" />
+        <Icon name="star" size={16} color="#FFD700" />
         <Text style={styles.cardRatingText}>{item.rating}</Text>
         <Text style={styles.cardReviews}>({item.reviews})</Text>
       </View>
@@ -176,12 +190,12 @@ const Menu = () => {
                 minimumValue={0}
                 maximumValue={1000}
                 step={10}
-                minimumTrackTintColor="#E0A75E"
+                minimumTrackTintColor="#00BFFF"
                 maximumTrackTintColor="#C0C0C0"
                 onValueChange={(value) => setSliderValue(value)}
                 value={sliderValue}
               />
-              <Text style={styles.sliderValue}>${sliderValue.toFixed(2)} -1000$</Text>
+              <Text style={styles.sliderValue}>${sliderValue.toFixed(2)} - 1000$</Text>
             </View>
             <Text style={styles.sectionTitle}>Popular Filters</Text>
             <FlatList
@@ -203,16 +217,14 @@ const Menu = () => {
                   ]}
                   onPress={() => setSelectedRating(rating)}
                 >
-                  <Icon name="star" size={20} color={selectedRating === rating ? '#ffd700' : '#d3d3d3'} />
+                  <Icon name="star" size={20} color={selectedRating === rating ? '#FFD700' : '#d3d3d3'} />
                 </TouchableOpacity>
               ))}
             </View>
-
-
             <TouchableOpacity style={styles.applyButton}>
               <Text style={styles.applyButtonText}>Apply Filter</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.clearButton}>
+            <TouchableOpacity style={styles.clearButton} onPress={() => setSelectedFilters([])}>
               <Text style={styles.clearButtonText}>Clear All</Text>
             </TouchableOpacity>
           </View>
@@ -228,77 +240,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     backgroundColor: 'white',
   },
-  searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 5,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 10,
-    marginBottom: 10,
-  },
-  searchIcon: {
-    marginRight: 10,
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 16,
-  },
-  contentContainer: {
-    paddingVertical: 10,
-  },
-  card: {
-    width: '48%',
-    height: 300,
-    marginBottom: 15,
-    backgroundColor: 'white',
-    borderRadius: 10,
-    overflow: 'hidden',
-    elevation: 3,
-  },
-  cardImage: {
-    width: '100%',
-    height: 150,
-  },
-  favoriteIcon: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-  },
-  cardTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    margin: 5,
-    color: 'black',
-  },
-  cardLocation: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal: 10,
-  },
-  cardLocationText: {
-    marginLeft: 5,
-    color: 'black',
-  },
-  cardPrice: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    margin: 10,
-    color: 'black',
-  },
-  cardRating: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal: 10,
-  },
-  cardRatingText: {
-    marginLeft: 5,
-    color: 'black',
-  },
-  cardReviews: {
-    marginLeft: 5,
-    color: 'black',
-  },
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -311,117 +252,154 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 10,
     fontSize: 16,
+    color: 'black',
+  },
+  card: {
+    flex: 1,
+    margin: 10,
+    backgroundColor: '#f5f5f5',
+    borderRadius: 10,
+    overflow: 'hidden',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+  },
+  cardImage: {
+    width: '100%',
+    height: 150,
+  },
+  favoriteIcon: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding: 5,
+  },
+  cardTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    margin: 10,
+    color: 'black',
+  },
+  cardLocation: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: 10,
+    marginBottom: 5,
+  },
+  cardLocationText: {
+    marginLeft: 5,
+    color: 'gray',
+  },
+  cardPrice: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginHorizontal: 10,
+    marginBottom: 5,
+    color: 'black',
+  },
+  cardRating: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: 10,
+    marginBottom: 10,
+  },
+  cardRatingText: {
+    marginLeft: 5,
+    fontSize: 14,
+    color: 'gray',
+  },
+  cardReviews: {
+    marginLeft: 5,
+    fontSize: 14,
+    color: 'gray',
   },
   modalContainer: {
     flex: 1,
     justifyContent: 'flex-end',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
+    width: '100%',
     backgroundColor: 'white',
+    borderRadius: 10,
     padding: 20,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
   },
   modalTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: 'black',
   },
   sliderContainer: {
-    marginVertical: 20,
+    marginBottom: 20,
   },
   slider: {
     width: '100%',
     height: 40,
   },
   sliderValue: {
-    marginTop: 10,
     fontSize: 16,
-    fontWeight: 'bold',
     color: 'black',
-  },
-
-  modalContainer: {
-    flex: 1,
-    justifyContent:'flex-end',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContent: {
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 20,
-  },
-  closeButton: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-  },
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
+    marginTop: 5,
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
-    marginTop: 20,
-  },
-  slider: {
-    width: '100%',
-    height: 40,
-  },
-  priceRangeText: {
-    textAlign: 'center',
-    marginTop: 10,
+    marginBottom: 10,
+    color: 'black',
   },
   filterList: {
-    marginTop: 10,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   filterItem: {
     padding: 10,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: '#d3d3d3',
     margin: 5,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 5,
   },
   selectedFilterItem: {
-    borderColor: '#1fb28a',
-    backgroundColor: '#e0f7f3',
+    backgroundColor: '#00BFFF',
   },
   filterItemText: {
-    fontSize: 14,
+    color: '#00BFFF',
   },
   starRatingContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 10,
+    marginBottom: 20,
   },
   starButton: {
-    padding: 10,
+    margin: 5,
   },
   selectedStarButton: {
-    backgroundColor: '#e0f7f3',
-    borderRadius: 20,
+    backgroundColor: '#00BFFF',
+    borderRadius: 5,
   },
   applyButton: {
-    backgroundColor: '#1fb28a',
+    backgroundColor: '#00BFFF',
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 5,
     alignItems: 'center',
-    marginTop: 20,
+    marginBottom: 10,
   },
   applyButtonText: {
     color: 'white',
+    fontSize: 16,
     fontWeight: 'bold',
   },
   clearButton: {
+    backgroundColor: '#f5f5f5',
+    padding: 15,
+    borderRadius: 5,
     alignItems: 'center',
-    marginTop: 10,
   },
   clearButtonText: {
-    color: 'red',
+    color: '#00BFFF',
+    fontSize: 16,
     fontWeight: 'bold',
   },
 });
