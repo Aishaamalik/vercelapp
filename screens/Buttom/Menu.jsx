@@ -65,9 +65,9 @@ const Menu = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [sliderValue, setSliderValue] = useState(0);
-  
+
   const [selectedFilters, setSelectedFilters] = useState([]);
-  const [selectedRating, setSelectedRating] = useState(null); 
+  const [selectedRating, setSelectedRating] = useState(null);
 
   const filteredData = data.filter(item =>
     item.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -203,7 +203,7 @@ const Menu = () => {
               renderItem={renderFilterItem}
               keyExtractor={(item) => item.id}
               horizontal={false}
-              numColumns={3}
+              numColumns={2}
               contentContainerStyle={styles.filterList}
             />
             <Text style={styles.sectionTitle}>Star Rating</Text>
@@ -224,7 +224,14 @@ const Menu = () => {
             <TouchableOpacity style={styles.applyButton}>
               <Text style={styles.applyButtonText}>Apply Filter</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.clearButton} onPress={() => setSelectedFilters([])}>
+            <TouchableOpacity style={styles.clearButton}
+
+              onPress={() => {
+                setSelectedFilters([]);
+                setSelectedRating(null); 
+                setSliderValue(0);
+              }}
+            >
               <Text style={styles.clearButtonText}>Clear All</Text>
             </TouchableOpacity>
           </View>
@@ -376,7 +383,7 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   selectedStarButton: {
-    backgroundColor: 'white',
+    backgroundColor: 'whit',
     borderRadius: 5,
   },
   applyButton: {
