@@ -1,9 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const data = [
+const initialData = [
   {
     id: '1',
     image: require('../Assets/visits/tahitibeach.jpeg'),
@@ -12,7 +12,7 @@ const data = [
     price: '$235',
     rating: '4.4',
     reviews: '32',
-    favorite: true,
+    favorite: false,
   },
   {
     id: '2',
@@ -32,7 +32,7 @@ const data = [
     price: '$235',
     rating: '4.4',
     reviews: '32',
-    favorite: true,
+    favorite: false,
   },
   {
     id: '4',
@@ -48,6 +48,8 @@ const data = [
 
 const FrequentVisitScreen = () => {
   const navigation = useNavigation();
+  const [data, setData] = useState(initialData);
+
   const handlePress = (item) => {
     navigation.navigate('VecationDetails', {
       image: item.image,
@@ -59,11 +61,36 @@ const FrequentVisitScreen = () => {
     });
   };
 
+  const toggleFavorite = (itemId) => {
+    setData((prevData) =>
+      prevData.map((item) =>
+        item.id === itemId ? { ...item, favorite: !item.favorite } : item
+      )
+    );
+
+    const likedItems = data.filter((item) => item.id === itemId && !item.favorite);
+    if (likedItems.length > 0) {
+      handleFavoritePress();
+    }
+  };
+
+  const handleFavoritePress = () => {
+    const likedItems = data.filter(item => item.favorite);
+    navigation.navigate('Liked', { likedItems });
+  };
+
   const renderItem = ({ item }) => (
     <TouchableOpacity style={styles.card} onPress={() => handlePress(item)}>
       <Image source={item.image} style={styles.cardImage} />
-      <TouchableOpacity style={styles.favoriteIcon}>
-        <Icon name={item.favorite ? 'heart' : 'heart-outline'} size={24} color={item.favorite ? 'red' : 'black'} />
+      <TouchableOpacity
+        style={styles.favoriteIcon}
+        onPress={() => toggleFavorite(item.id)}
+      >
+        <Icon
+          name={item.favorite ? 'heart' : 'heart-outline'}
+          size={24}
+          color={item.favorite ? 'red' : 'black'}
+        />
       </TouchableOpacity>
       <Text style={styles.cardTitle}>{item.title}</Text>
       <View style={styles.cardLocation}>
