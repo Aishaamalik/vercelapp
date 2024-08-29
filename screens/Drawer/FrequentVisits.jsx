@@ -24,26 +24,51 @@ const initialData = [
     reviews: '41',
     favorite: false,
   },
+  
   {
     id: '3',
-    image: require('../Assets/visits/tahitibeach.jpeg'),
+    title: 'Cappadocia',
+    location: 'Turki',
+    price: '$423',
+    rating: '4.6',
+    reviews: '213',
+    image: require('../Assets/visits/lucismountain.jpeg'),
+    favorite: false,
+
+},
+{
+    id: '4',
+    title: 'Hanalei Bay',
+    location: 'Hawaii',
+    price: '$235',
+    rating: '4.8',
+    reviews: '67',
+    image: require('../Assets/visits/lucismountain.jpeg'),
+    favorite: false,
+
+},
+{
+    id: '5',
     title: 'Tahiti Beach',
     location: 'Polynesia, French',
-    price: '$235',
-    rating: '4.4',
-    reviews: '32',
-    favorite: false,
-  },
-  {
-    id: '4',
+    price: '$434',
+    rating: '4.8',
+    reviews: '324',
     image: require('../Assets/visits/lucismountain.jpeg'),
-    title: 'St. Lucia Mountain',
-    location: 'South America',
-    price: '$235',
-    rating: '4.4',
-    reviews: '41',
     favorite: false,
-  },
+
+},
+{
+    id: '6',
+    title: 'St. Lucia Mountain',
+    location: 'Polynesia, French',
+    price: '$543',
+    rating: '4.8',
+    reviews: '123',
+    image: require('../Assets/visits/lucismountain.jpeg'),
+    favorite: false,
+
+},
 ];
 
 const FrequentVisitScreen = () => {
