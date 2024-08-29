@@ -70,6 +70,7 @@ const AppNavigator = () => {
                 <Stack.Screen name='HotelDetail' component={HotelDetailsScreen}/>
 
 
+
             </Stack.Navigator>
         </NavigationContainer>
     );
