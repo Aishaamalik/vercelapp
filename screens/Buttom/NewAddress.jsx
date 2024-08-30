@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   saveButton: {
-    backgroundColor: '#F4F6FB',
+    backgroundColor: '#3498db',
     paddingVertical: 15,
     borderRadius: 8,
     alignItems: 'center',
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
   },
   saveButtonText: {
     fontSize: 16,
-    color: '#A9A9A9',
+    color: 'white',
     fontWeight: 'bold',
   },
 });
