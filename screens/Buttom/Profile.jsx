@@ -4,8 +4,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation, useRoute } from '@react-navigation/native'; 
 
-const profileImage = require('../Assets/Profile/pic1.jpeg');
-
 const settings = [
     {
         id: '1',
@@ -50,12 +48,16 @@ const ProfileScreen = () => {
 
     const [profileName, setProfileName] = useState('Andy');
     const [profileLocation, setProfileLocation] = useState('hhvhv');
+    const [profileImage, setProfileImage] = useState(require('../Assets/Profile/pic1.jpeg')); // Default image
 
     useEffect(() => {
         if (route.params) {
-            const { firstName, lastName, location } = route.params;
+            const { firstName, lastName, location, profileImage: newProfileImage } = route.params;
             setProfileName(`${firstName} ${lastName}`);
             setProfileLocation(location);
+            if (newProfileImage) {
+                setProfileImage({ uri: newProfileImage.uri }); // Update image
+            }
         }
     }, [route.params]);
 

@@ -33,6 +33,7 @@ const EditProfileScreen = () => {
             firstName,
             lastName,
             location,
+            profileImage,
         });
     };
     
