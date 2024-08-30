@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList, Switch } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/native'; 
 
 const profileImage = require('../Assets/Profile/pic1.jpeg');
 
@@ -10,25 +11,25 @@ const settings = [
         id: '1',
         category: 'Personal Info',
         options: [
-            { id: '1', icon: 'map-marker', name: 'My Address' },
-            { id: '2', icon: 'credit-card', name: 'Payment Method' },
+            { id: '1', icon: 'map-marker', name: 'My Address', screen: 'My Address' },
+            { id: '2', icon: 'credit-card', name: 'Payment Method', screen: 'PaymentScreen' },
         ],
     },
     {
         id: '2',
         category: 'Security',
         options: [
-            { id: '1', icon: 'lock', name: 'Change Password' },
-            { id: '2', icon: 'lock', name: 'Forgot Password' },
-            { id: '3', icon: 'shield', name: 'Security' },
-            { id: '4', icon: 'bell', name: 'Notifications' },
+            { id: '1', icon: 'lock', name: 'Change Password', screen: 'ChangePasswordScreen' },
+            { id: '2', icon: 'lock', name: 'Forgot Password', screen: 'ForgotPasswordScreen' },
+            { id: '3', icon: 'shield', name: 'Security', screen: 'SecurityScreen' },
+            { id: '4', icon: 'bell', name: 'Notifications', screen: 'NotificationsScreen' },
         ],
     },
     {
         id: '3',
         category: 'General',
         options: [
-            { id: '1', icon: 'globe', name: 'Language' },
+            { id: '1', icon: 'globe', name: 'Language', screen: 'LanguageScreen' },
             { id: '2', icon: 'trash', name: 'Clear Cache', extra: '00 MB' },
         ],
     },
@@ -36,31 +37,39 @@ const settings = [
         id: '4',
         category: 'About',
         options: [
-            { id: '1', icon: 'shield', name: 'Legal and Policies' },
-            { id: '2', icon: 'question-circle', name: 'Help & Support' },
+            { id: '1', icon: 'shield', name: 'Legal and Policies', screen: 'LegalPoliciesScreen' },
+            { id: '2', icon: 'question-circle', name: 'Help & Support', screen: 'HelpSupportScreen' },
         ],
     },
 ];
 
 const ProfileScreen = () => {
+    const navigation = useNavigation();
     const [isDarkMode, setIsDarkMode] = useState(false);
 
     const toggleSwitch = () => setIsDarkMode(previousState => !previousState);
+
     const renderOption = ({ item }) => (
-      <TouchableOpacity style={styles.option}>
-          <View style={styles.optionLeft}>
-              <Icon name={item.icon} size={24} color="black" />
-              <Text style={styles.optionText}>{item.name}</Text>
-          </View>
-          <View style={styles.optionRight}>
-              {item.extra && <Text style={styles.extraText}>{item.extra}</Text>}
-              {item.name !== 'Clear Cache' && (
-                  <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
-              )}
-          </View>
-      </TouchableOpacity>
-  );
-  
+        <TouchableOpacity
+            style={styles.option}
+            onPress={() => {
+                if (item.screen) {
+                    navigation.navigate(item.screen); 
+                }
+            }}
+        >
+            <View style={styles.optionLeft}>
+                <Icon name={item.icon} size={24} color="black" />
+                <Text style={styles.optionText}>{item.name}</Text>
+            </View>
+            <View style={styles.optionRight}>
+                {item.extra && <Text style={styles.extraText}>{item.extra}</Text>}
+                {item.name !== 'Clear Cache' && (
+                    <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
+                )}
+            </View>
+        </TouchableOpacity>
+    );
 
     const renderCategory = ({ item }) => (
         <View>
@@ -94,7 +103,7 @@ const ProfileScreen = () => {
             />
             <View style={styles.option}>
                 <View style={styles.optionLeft}>
-                    <Icon name="moon-o" size={24} color="black"/>
+                    <Icon name="moon-o" size={24} color="black" />
                     <Text style={styles.optionText}>Dark Mode</Text>
                 </View>
                 <Switch
@@ -111,7 +120,6 @@ const ProfileScreen = () => {
         </View>
     );
 };
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,

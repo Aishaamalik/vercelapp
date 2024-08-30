@@ -23,6 +23,8 @@ import VecationDetail from './Drawer/VecationDetail';
 import Review from './Drawer/Review';
 import GuideProfileScreen from './Drawer/GuideProfile';
 import HotelDetailsScreen from './Drawer/HotelDetailScreen';
+import MyAddress from './Buttom/MyAddress';
+import NewAddress from './Buttom/NewAddress';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
@@ -68,6 +70,10 @@ const AppNavigator = () => {
                 <Stack.Screen name='Review' component={Review}/>
                 <Stack.Screen name='GuideProfile' component={GuideProfileScreen}/>
                 <Stack.Screen name='HotelDetail' component={HotelDetailsScreen}/>
+                <Stack.Screen name='My Address' component={MyAddress}/>
+                <Stack.Screen name='New Address' component={NewAddress}/>
+
+
 
 
 
