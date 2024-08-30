@@ -2,25 +2,48 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AddressScreen = () => {
-  const [addresses, setAddresses] = useState([
-    { name: 'Andy Andrew', phone: '+1 234 567 890', address: '1234 Your Road No #6789, Your City, Country' },
-    { name: 'Elevenia Kalia', phone: '+1 234 567 890', address: '1234 Your Road No #6789, Your City, Country' },
-  ]);
+  const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const navigation = useNavigation();
   const route = useRoute();
   const newAddress = route.params?.newAddress;
 
   useEffect(() => {
+    const loadAddresses = async () => {
+      try {
+        const storedAddresses = await AsyncStorage.getItem('addresses');
+        if (storedAddresses) {
+          setAddresses(JSON.parse(storedAddresses));
+        }
+      } catch (error) {
+        console.error('Failed to load addresses from AsyncStorage:', error);
+      }
+    };
+
+    loadAddresses();
+  }, []);
+
+  useEffect(() => {
     if (newAddress) {
-      setAddresses((prevAddresses) => [
-        ...prevAddresses,
-        { ...newAddress,  address: `${newAddress.city}, ${newAddress.state}, ${newAddress.country}, ${newAddress.phone}` }
-      ]);
+      const updatedAddresses = [
+        ...addresses,
+        { ...newAddress, address: `${newAddress.city}, ${newAddress.state}, ${newAddress.country}` }
+      ];
+      setAddresses(updatedAddresses);
+      saveAddresses(updatedAddresses);
     }
   }, [newAddress]);
+
+  const saveAddresses = async (addresses) => {
+    try {
+      await AsyncStorage.setItem('addresses', JSON.stringify(addresses));
+    } catch (error) {
+      console.error('Failed to save addresses to AsyncStorage:', error);
+    }
+  };
 
   const handleSelectAddress = (addressName) => {
     setSelectedAddress(addressName);
@@ -29,7 +52,7 @@ const AddressScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-left" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>My Address</Text>
