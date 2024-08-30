@@ -3,23 +3,46 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-
 const AddCardScreen = () => {
     const [cardNumber, setCardNumber] = useState('');
     const [cardHolderName, setCardHolderName] = useState('');
     const [expiryDate, setExpiryDate] = useState('');
     const [cvcCode, setCvcCode] = useState('');
+    const [bank, setbank] = useState('');
+
     const navigation = useNavigation();
+
+    const handleAddCard = () => {
+        const newCard = {
+            id: Math.random().toString(),
+            type: 'Visa', 
+            bank: bank, 
+            lastDigits: cardNumber.slice(-4),
+            owner: cardHolderName,
+            logo: require('../Assets/bank/visa.png'), 
+        };
+
+        navigation.navigate('My Payment', { newCard });
+    };
 
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <TouchableOpacity onPress={()=> navigation.goBack()}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
                     <MaterialIcons name="arrow-back" size={24} />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>Add New Card</Text>
             </View>
             <View style={styles.form}>
+                
+            <Text style={styles.label}>Bank Name</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Enter Bank Name"
+                    value={bank}
+                    onChangeText={setbank}
+                    placeholderTextColor={"black"}
+                />
                 <Text style={styles.label}>Card Number</Text>
                 <TextInput
                     style={styles.input}
@@ -36,7 +59,6 @@ const AddCardScreen = () => {
                     value={cardHolderName}
                     onChangeText={setCardHolderName}
                     placeholderTextColor={"black"}
-
                 />
                 <View style={styles.row}>
                     <View style={styles.column}>
@@ -48,7 +70,6 @@ const AddCardScreen = () => {
                             onChangeText={setExpiryDate}
                             keyboardType="numeric"
                             placeholderTextColor={"black"}
-
                         />
                     </View>
                     <View style={styles.column}>
@@ -60,17 +81,17 @@ const AddCardScreen = () => {
                             onChangeText={setCvcCode}
                             keyboardType="numeric"
                             placeholderTextColor={"black"}
-
                         />
                     </View>
                 </View>
-                <TouchableOpacity style={styles.addButton}>
+                <TouchableOpacity style={styles.addButton} onPress={handleAddCard}>
                     <Text style={styles.addButtonText}>Add Card</Text>
                 </TouchableOpacity>
             </View>
         </View>
     );
 };
+
 
 const styles = StyleSheet.create({
     container: {

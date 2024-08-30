@@ -1,40 +1,44 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const paymentMethods = [
-    {
-        id: '1',
-        type: 'Visa',
-        bank: 'BCA (Bank Central Asia)',
-        lastDigits: '12345',
-        owner: 'Brooklyn Simmons',
-        logo: require('../Assets/bank/visa.png'),
-    },
-    {
-        id: '2',
-        type: 'MasterCard',
-        bank: 'BCA (Bank Central Asia)',
-        lastDigits: '12345',
-        owner: 'Brooklyn Simmons',
-        logo: require('../Assets/bank/visa.png'),
-
-    },
-    {
-        id: '3',
-        type: 'Visa',
-        bank: 'MCB',
-        lastDigits: '12345',
-        owner: 'Brooklyn Simmons',
-        logo: require('../Assets/bank/visa.png'),
-
-    },
-];
-
 const PaymentScreen = () => {
+    const [paymentMethods, setPaymentMethods] = useState([
+        {
+            id: '1',
+            type: 'Visa',
+            bank: 'BCA (Bank Central Asia)',
+            lastDigits: '12345',
+            owner: 'Brooklyn Simmons',
+            logo: require('../Assets/bank/visa.png'),
+        },
+        {
+            id: '2',
+            type: 'MasterCard',
+            bank: 'BCA (Bank Central Asia)',
+            lastDigits: '12345',
+            owner: 'Brooklyn Simmons',
+            logo: require('../Assets/bank/visa.png'),
+        },
+        {
+            id: '3',
+            type: 'Visa',
+            bank: 'MCB',
+            lastDigits: '12345',
+            owner: 'Brooklyn Simmons',
+            logo: require('../Assets/bank/visa.png'),
+        },
+    ]);
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
     const navigation = useNavigation();
+    const route = useRoute();
+
+    useEffect(() => {
+        if (route.params?.newCard) {
+            setPaymentMethods((prevMethods) => [...prevMethods, route.params.newCard]);
+        }
+    }, [route.params?.newCard]);
 
     const renderPaymentMethod = ({ item }) => (
         <TouchableOpacity
@@ -58,11 +62,11 @@ const PaymentScreen = () => {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <TouchableOpacity onPress={()=> navigation.goBack()}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
                     <MaterialIcons name="arrow-back" size={24} color="black"/>
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>My Payment</Text>
-                <TouchableOpacity onPress={()=> navigation.navigate("Add Card")}>
+                <TouchableOpacity onPress={() => navigation.navigate("Add Card")}>
                     <MaterialIcons name="add" size={24} color="black"/>
                 </TouchableOpacity>
             </View>
@@ -78,6 +82,7 @@ const PaymentScreen = () => {
         </View>
     );
 };
+
 
 const styles = StyleSheet.create({
     container: {
