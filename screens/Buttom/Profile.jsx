@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList, Switch } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { useNavigation } from '@react-navigation/native'; 
+import { useNavigation, useRoute } from '@react-navigation/native'; 
 
 const profileImage = require('../Assets/Profile/pic1.jpeg');
 
@@ -45,7 +45,19 @@ const settings = [
 
 const ProfileScreen = () => {
     const navigation = useNavigation();
+    const route = useRoute();
     const [isDarkMode, setIsDarkMode] = useState(false);
+
+    const [profileName, setProfileName] = useState('Andy');
+    const [profileLocation, setProfileLocation] = useState('hhvhv');
+
+    useEffect(() => {
+        if (route.params) {
+            const { firstName, lastName, location } = route.params;
+            setProfileName(`${firstName} ${lastName}`);
+            setProfileLocation(location);
+        }
+    }, [route.params]);
 
     const toggleSwitch = () => setIsDarkMode(previousState => !previousState);
 
@@ -87,9 +99,9 @@ const ProfileScreen = () => {
             <View style={styles.profileHeader}>
                 <Image source={profileImage} style={styles.profileImage} />
                 <View style={styles.profileInfo}>
-                    <Text style={styles.profileName}>Andy</Text>
+                    <Text style={styles.profileName}>{profileName}</Text>
                     <Text style={styles.profileLocation}>
-                        <Icon name="map-marker" size={14} /> hhvhv
+                        <Icon name="map-marker" size={14} /> {profileLocation}
                     </Text>
                 </View>
                 <TouchableOpacity style={styles.editButton} onPress={()=> navigation.navigate('Edit Profile')}>
@@ -120,6 +132,7 @@ const ProfileScreen = () => {
         </View>
     );
 };
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -150,14 +163,12 @@ const styles = StyleSheet.create({
     },
     editButton: {
         padding: 5,
-
     },
     category: {
         fontSize: 16,
         fontWeight: 'bold',
         marginVertical: 10,
         color:'black',
-
     },
     option: {
         flexDirection: 'row',
@@ -175,7 +186,6 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         fontSize: 16,
         color:'black',
-
     },
     optionRight: {
         flexDirection: 'row',
@@ -184,7 +194,6 @@ const styles = StyleSheet.create({
     extraText: {
         marginRight: 10,
         color:'black',
-
     },
     logoutButton: {
         marginTop: 20,

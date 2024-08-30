@@ -28,8 +28,14 @@ const EditProfileScreen = () => {
 
     const handleSave = () => {
         Alert.alert('Profile Updated', 'Your profile has been updated successfully.');
-        navigation.goBack();
+
+        navigation.navigate('Profile', {
+            firstName,
+            lastName,
+            location,
+        });
     };
+    
 
     return (
         <ScrollView>
@@ -171,6 +177,7 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         paddingHorizontal: 15,
         paddingVertical: 10,
+        color:'black',
     },
     largeInput: {
         borderWidth: 1,
@@ -179,6 +186,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         paddingVertical: 10,
         height: 100,
+        color:'black',
+
     },
     calendarIcon: {
         position: 'absolute',
