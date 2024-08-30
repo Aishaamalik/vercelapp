@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Platform, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 
@@ -36,6 +36,7 @@ const NewAddressScreen = () => {
   };
 
   return (
+    <ScrollView>
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={()=> navigation.goBack()}>
@@ -116,6 +117,7 @@ const NewAddressScreen = () => {
         </TouchableOpacity>
       </View>
     </View>
+    </ScrollView>
   );
 };
 
@@ -162,6 +164,7 @@ const styles = StyleSheet.create({
     paddingVertical: Platform.OS === 'ios' ? 15 : 10,
     borderRadius: 8,
     marginBottom: 20,
+    color:'black',
   },
   textArea: {
     backgroundColor: '#F4F6FB',
@@ -171,6 +174,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlignVertical: 'top', 
     height: 100, 
+    color:'black',
+
   },
   placeholderText: {
     color: '#A9A9A9',

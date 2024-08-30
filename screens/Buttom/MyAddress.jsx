@@ -50,6 +50,7 @@ const AddressScreen = () => {
   };
 
   return (
+    
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>

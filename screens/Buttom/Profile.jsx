@@ -46,8 +46,8 @@ const ProfileScreen = () => {
     const route = useRoute();
     const [isDarkMode, setIsDarkMode] = useState(false);
 
-    const [profileName, setProfileName] = useState('Andy');
-    const [profileLocation, setProfileLocation] = useState('hhvhv');
+    const [profileName, setProfileName] = useState('Name Not Set');
+    const [profileLocation, setProfileLocation] = useState('Location Not Set');
     const [profileImage, setProfileImage] = useState(require('../Assets/Profile/pic1.jpeg')); // Default image
 
     useEffect(() => {
@@ -56,7 +56,7 @@ const ProfileScreen = () => {
             setProfileName(`${firstName} ${lastName}`);
             setProfileLocation(location);
             if (newProfileImage) {
-                setProfileImage({ uri: newProfileImage.uri }); // Update image
+                setProfileImage({ uri: newProfileImage.uri }); 
             }
         }
     }, [route.params]);
