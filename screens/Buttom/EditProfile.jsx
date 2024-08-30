@@ -2,8 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, Alert, ScrollView } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
-const profileImage = require('../Assets/Profile/pic1.jpeg');
+import { launchImageLibrary } from 'react-native-image-picker'; 
 
 const EditProfileScreen = () => {
     const [firstName, setFirstName] = useState('');
@@ -12,103 +11,114 @@ const EditProfileScreen = () => {
     const [dateOfBirth, setDateOfBirth] = useState('');
     const [gender, setGender] = useState('Male');
     const [location, setLocation] = useState('');
+    const [profileImage, setProfileImage] = useState(require('../Assets/Profile/pic1.jpeg')); 
     const navigation = useNavigation();
 
+    const handleImagePick = () => {
+        launchImageLibrary({}, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.errorMessage) {
+                console.log('ImagePicker Error: ', response.errorMessage);
+            } else {
+                setProfileImage({ uri: response.assets[0].uri });
+            }
+        });
+    };
+
     const handleSave = () => {
-        // Add logic to save changes, e.g., send data to a server or save locally
         Alert.alert('Profile Updated', 'Your profile has been updated successfully.');
-        // After saving, navigate back or do other actions
         navigation.goBack();
     };
 
     return (
         <ScrollView>
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <MaterialIcons name="arrow-back" size={24} color="black" />
-                </TouchableOpacity>
-                <Text style={styles.headerTitle}>Edit Profile</Text>
-            </View>
-            <View style={styles.profileSection}>
-                <Image source={profileImage} style={styles.profileImage} />
-                <TouchableOpacity style={styles.editIcon}>
-                    <MaterialIcons name="edit" size={24} color="#fff" />
-                </TouchableOpacity>
-            </View>
-            <View style={styles.inputContainer}>
-                <Text style={styles.label}>First Name</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="First Name"
-                    value={firstName}
-                    onChangeText={setFirstName}
-                    placeholderTextColor={'gray'}
-                />
-            </View>
-            <View style={styles.inputContainer}>
-                <Text style={styles.label}>Last Name</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Last Name"
-                    value={lastName}
-                    onChangeText={setLastName}
-                    placeholderTextColor={'gray'}
-                />
-            </View>
-            <View style={styles.inputContainer}>
-                <Text style={styles.label}>E-mail</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="E-mail"
-                    value={email}
-                    onChangeText={setEmail}
-                    keyboardType="email-address"
-                    placeholderTextColor={'gray'}
-                />
-            </View>
-            <View style={styles.inputContainer}>
-                <Text style={styles.label}>Date of Birth</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Date of Birth"
-                    value={dateOfBirth}
-                    onChangeText={setDateOfBirth}
-                    placeholderTextColor={'gray'}
-                />
-                <MaterialIcons name="calendar-today" size={24} style={styles.calendarIcon} />
-            </View>
-            <View style={styles.genderContainer}>
-                <Text style={styles.label}>Gender</Text>
-                <View style={styles.genderOptions}>
-                    <TouchableOpacity
-                        style={[styles.genderOption, gender === 'Male' && styles.selectedGender]}
-                        onPress={() => setGender('Male')}
-                    >
-                        <Text style={[styles.genderText, gender === 'Male' && styles.genderText1]}>Male</Text>
+            <View style={styles.container}>
+                <View style={styles.header}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <MaterialIcons name="arrow-back" size={24} color="black" />
                     </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[styles.genderOption, gender === 'Female' && styles.selectedGender]}
-                        onPress={() => setGender('Female')}
-                    >
-                        <Text style={[styles.genderText, gender === 'Female' && styles.genderText1]}>Female</Text>
+                    <Text style={styles.headerTitle}>Edit Profile</Text>
+                </View>
+                <View style={styles.profileSection}>
+                    <Image source={profileImage} style={styles.profileImage} />
+                    <TouchableOpacity style={styles.editIcon} onPress={handleImagePick}>
+                        <MaterialIcons name="edit" size={24} color="#fff" />
                     </TouchableOpacity>
                 </View>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label}>First Name</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="First Name"
+                        value={firstName}
+                        onChangeText={setFirstName}
+                        placeholderTextColor={'gray'}
+                    />
+                </View>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label}>Last Name</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Last Name"
+                        value={lastName}
+                        onChangeText={setLastName}
+                        placeholderTextColor={'gray'}
+                    />
+                </View>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label}>E-mail</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="E-mail"
+                        value={email}
+                        onChangeText={setEmail}
+                        keyboardType="email-address"
+                        placeholderTextColor={'gray'}
+                    />
+                </View>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label}>Date of Birth</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Date of Birth"
+                        value={dateOfBirth}
+                        onChangeText={setDateOfBirth}
+                        placeholderTextColor={'gray'}
+                    />
+                    <MaterialIcons name="calendar-today" size={24} style={styles.calendarIcon} />
+                </View>
+                <View style={styles.genderContainer}>
+                    <Text style={styles.label}>Gender</Text>
+                    <View style={styles.genderOptions}>
+                        <TouchableOpacity
+                            style={[styles.genderOption, gender === 'Male' && styles.selectedGender]}
+                            onPress={() => setGender('Male')}
+                        >
+                            <Text style={[styles.genderText, gender === 'Male' && styles.genderText1]}>Male</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[styles.genderOption, gender === 'Female' && styles.selectedGender]}
+                            onPress={() => setGender('Female')}
+                        >
+                            <Text style={[styles.genderText, gender === 'Female' && styles.genderText1]}>Female</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label}>Location</Text>
+                    <TextInput
+                        style={styles.largeInput}
+                        placeholder="Location"
+                        value={location}
+                        onChangeText={setLocation}
+                        placeholderTextColor={'gray'}
+                    />
+                </View>
+                <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+                    <Text style={styles.saveButtonText}>Save Changes</Text>
+                </TouchableOpacity>
             </View>
-            <View style={styles.inputContainer}>
-                <Text style={styles.label}>Location</Text>
-                <TextInput
-                    style={styles.largeInput}
-                    placeholder="Location"
-                    value={location}
-                    onChangeText={setLocation}
-                    placeholderTextColor={'gray'}
-                />
-            </View>
-            <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-                <Text style={styles.saveButtonText}>Save Changes</Text>
-            </TouchableOpacity>
-        </View>
         </ScrollView>
     );
 };
