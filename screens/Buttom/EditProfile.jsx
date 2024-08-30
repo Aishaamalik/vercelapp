@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, Button } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, Alert, ScrollView } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const profileImage = require('../Assets/Profile/pic1.jpeg');
@@ -15,13 +14,21 @@ const EditProfileScreen = () => {
     const [location, setLocation] = useState('');
     const navigation = useNavigation();
 
+    const handleSave = () => {
+        // Add logic to save changes, e.g., send data to a server or save locally
+        Alert.alert('Profile Updated', 'Your profile has been updated successfully.');
+        // After saving, navigate back or do other actions
+        navigation.goBack();
+    };
+
     return (
+        <ScrollView>
         <View style={styles.container}>
             <View style={styles.header}>
-                <TouchableOpacity onPress={()=> navigation.goBack()}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
                     <MaterialIcons name="arrow-back" size={24} color="black" />
                 </TouchableOpacity>
-                <Text style={styles.headerTitle}>Profile</Text>
+                <Text style={styles.headerTitle}>Edit Profile</Text>
             </View>
             <View style={styles.profileSection}>
                 <Image source={profileImage} style={styles.profileImage} />
@@ -47,7 +54,6 @@ const EditProfileScreen = () => {
                     value={lastName}
                     onChangeText={setLastName}
                     placeholderTextColor={'gray'}
-
                 />
             </View>
             <View style={styles.inputContainer}>
@@ -59,7 +65,6 @@ const EditProfileScreen = () => {
                     onChangeText={setEmail}
                     keyboardType="email-address"
                     placeholderTextColor={'gray'}
-
                 />
             </View>
             <View style={styles.inputContainer}>
@@ -70,7 +75,6 @@ const EditProfileScreen = () => {
                     value={dateOfBirth}
                     onChangeText={setDateOfBirth}
                     placeholderTextColor={'gray'}
-
                 />
                 <MaterialIcons name="calendar-today" size={24} style={styles.calendarIcon} />
             </View>
@@ -99,13 +103,13 @@ const EditProfileScreen = () => {
                     value={location}
                     onChangeText={setLocation}
                     placeholderTextColor={'gray'}
-
                 />
             </View>
-            <TouchableOpacity style={styles.saveButton}>
+            <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
                 <Text style={styles.saveButtonText}>Save Changes</Text>
             </TouchableOpacity>
         </View>
+        </ScrollView>
     );
 };
 
@@ -124,7 +128,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         marginLeft: 20,
-        color:'black',
+        color: 'black',
     },
     profileSection: {
         alignItems: 'center',
@@ -148,7 +152,7 @@ const styles = StyleSheet.create({
     },
     label: {
         fontSize: 16,
-        color:'black',
+        color: 'black',
         marginBottom: 5,
     },
     input: {
@@ -170,7 +174,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: 15,
         top: 35,
-        color:'black',
+        color: 'black',
     },
     genderContainer: {
         marginBottom: 20,
@@ -202,7 +206,6 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         borderRadius: 25,
         alignItems: 'center',
-        marginTop: 20,
     },
     saveButtonText: {
         color: '#fff',
