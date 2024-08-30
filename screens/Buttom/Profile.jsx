@@ -10,7 +10,7 @@ const settings = [
         category: 'Personal Info',
         options: [
             { id: '1', icon: 'map-marker', name: 'My Address', screen: 'My Address' },
-            { id: '2', icon: 'credit-card', name: 'Payment Method', screen: 'PaymentScreen' },
+            { id: '2', icon: 'credit-card', name: 'Payment Method', screen: 'My Payment' },
         ],
     },
     {

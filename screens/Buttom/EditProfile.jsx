@@ -39,6 +39,13 @@ const EditProfileScreen = ({ navigation }) => {
 
   const handleSave = () => {
     Alert.alert('Profile Updated', 'Your profile has been updated successfully.');
+
+    navigation.navigate('Profile', {
+      firstName,
+      lastName,
+      location,
+      profileImage, 
+  });
   };
 
   const handleDateSelect = (day) => {
