@@ -92,7 +92,7 @@ const ProfileScreen = () => {
                         <Icon name="map-marker" size={14} /> hhvhv
                     </Text>
                 </View>
-                <TouchableOpacity style={styles.editButton}>
+                <TouchableOpacity style={styles.editButton} onPress={()=> navigation.navigate('Edit Profile')}>
                     <MaterialIcons name="edit" size={24} color='black' />
                 </TouchableOpacity>
             </View>

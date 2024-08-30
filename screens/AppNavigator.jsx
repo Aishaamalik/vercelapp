@@ -25,6 +25,7 @@ import GuideProfileScreen from './Drawer/GuideProfile';
 import HotelDetailsScreen from './Drawer/HotelDetailScreen';
 import MyAddress from './Buttom/MyAddress';
 import NewAddress from './Buttom/NewAddress';
+import EditProfile from './Buttom/EditProfile';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
@@ -72,6 +73,8 @@ const AppNavigator = () => {
                 <Stack.Screen name='HotelDetail' component={HotelDetailsScreen}/>
                 <Stack.Screen name='My Address' component={MyAddress}/>
                 <Stack.Screen name='New Address' component={NewAddress}/>
+                <Stack.Screen name='Edit Profile' component={EditProfile}/>
+
 
 
 
