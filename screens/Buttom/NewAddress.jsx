@@ -1,14 +1,39 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useNavigation } from '@react-navigation/native';
 
 const NewAddressScreen = () => {
   const [name, setName] = useState('');
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
-  const [zipCode, setZipCode] = useState('');
+  const [zipCode, setZipCode] = useState('');  
+  const [phone, setphone] = useState('');
+
   const [detailAddress, setDetailAddress] = useState('');
+  const navigation = useNavigation();
+
+  const handleSaveAddress = () => {
+    const newAddress = {
+      name,
+      country,
+      city,
+      state,
+      zipCode,
+      detailAddress,
+      phone,
+      
+    };
+    navigation.navigate('My Address', { newAddress });
+    setName('');
+    setCountry('');
+    setCity('');
+    setState('');
+    setZipCode('');
+    setDetailAddress('');
+    setphone('');
+  };
 
   return (
     <View style={styles.container}>
@@ -30,22 +55,31 @@ const NewAddressScreen = () => {
         />
 
         <Text style={styles.label}>Country</Text>
-        <TouchableOpacity style={styles.input}>
-          <Text style={styles.placeholderText}>{country || 'Select Country'}</Text>
-          <Icon name="chevron-down" size={16} color="#A9A9A9" />
-        </TouchableOpacity>
+        <TextInput 
+          style={styles.input} 
+          placeholder="Enter Country" 
+          placeholderTextColor="#A9A9A9"
+          value={country}
+          onChangeText={setCountry}
+        />
 
         <Text style={styles.label}>City</Text>
-        <TouchableOpacity style={styles.input}>
-          <Text style={styles.placeholderText}>{city || 'Select City'}</Text>
-          <Icon name="chevron-down" size={16} color="#A9A9A9" />
-        </TouchableOpacity>
+        <TextInput 
+          style={styles.input} 
+          placeholder="Enter City" 
+          placeholderTextColor="#A9A9A9"
+          value={city}
+          onChangeText={setCity}
+        />
 
         <Text style={styles.label}>State</Text>
-        <TouchableOpacity style={styles.input}>
-          <Text style={styles.placeholderText}>{state || 'Select State'}</Text>
-          <Icon name="chevron-down" size={16} color="#A9A9A9" />
-        </TouchableOpacity>
+        <TextInput 
+          style={styles.input} 
+          placeholder="Enter State" 
+          placeholderTextColor="#A9A9A9"
+          value={state}
+          onChangeText={setState}
+        />
 
         <Text style={styles.label}>Zip Code</Text>
         <TextInput 
@@ -54,6 +88,16 @@ const NewAddressScreen = () => {
           placeholderTextColor="#A9A9A9"
           value={zipCode}
           onChangeText={setZipCode}
+          keyboardType="numeric"
+        />
+
+        <Text style={styles.label}>Phone Number</Text>
+        <TextInput 
+          style={styles.input} 
+          placeholder="Enter Phone Number" 
+          placeholderTextColor="#A9A9A9"
+          value={phone}
+          onChangeText={setphone}
           keyboardType="numeric"
         />
 
@@ -67,13 +111,14 @@ const NewAddressScreen = () => {
           multiline
         />
 
-        <TouchableOpacity style={styles.saveButton}>
+        <TouchableOpacity style={styles.saveButton} onPress={handleSaveAddress}>
           <Text style={styles.saveButtonText}>Save Address</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -86,14 +131,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
+    justifyContent: 'center', 
+
   },
   backButton: {
-    marginRight: 10,
+    position: 'absolute', 
+    left: 0,
+
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#000',
+
   },
   form: {
     marginTop: 20,

@@ -1,14 +1,29 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const AddressScreen = () => {
-  const [selectedAddress, setSelectedAddress] = useState(null); 
+  const [addresses, setAddresses] = useState([
+    { name: 'Andy Andrew', phone: '+1 234 567 890', address: '1234 Your Road No #6789, Your City, Country' },
+    { name: 'Elevenia Kalia', phone: '+1 234 567 890', address: '1234 Your Road No #6789, Your City, Country' },
+  ]);
+  const [selectedAddress, setSelectedAddress] = useState(null);
   const navigation = useNavigation();
+  const route = useRoute();
+  const newAddress = route.params?.newAddress;
+
+  useEffect(() => {
+    if (newAddress) {
+      setAddresses((prevAddresses) => [
+        ...prevAddresses,
+        { ...newAddress,  address: `${newAddress.city}, ${newAddress.state}, ${newAddress.country}, ${newAddress.phone}` }
+      ]);
+    }
+  }, [newAddress]);
 
   const handleSelectAddress = (addressName) => {
-    setSelectedAddress(addressName); 
+    setSelectedAddress(addressName);
   };
 
   return (
@@ -24,20 +39,16 @@ const AddressScreen = () => {
       </View>
 
       <ScrollView contentContainerStyle={styles.addressList}>
-        <AddressItem 
-          name="Andy Andrew" 
-          phone="+1 234 567 890" 
-          address="1234 Your Road No #6789, Your City, Country" 
-          isSelected={selectedAddress === "Andy Andrew"} 
-          onSelect={handleSelectAddress}
-        />
-        <AddressItem 
-          name="Elevenia Kalia" 
-          phone="+1 234 567 890" 
-          address="1234 Your Road No #6789, Your City, Country" 
-          isSelected={selectedAddress === "Elevenia Kalia"} 
-          onSelect={handleSelectAddress} 
-        />
+        {addresses.map((address, index) => (
+          <AddressItem 
+            key={index}
+            name={address.name}
+            phone={address.phone}
+            address={address.address}
+            isSelected={selectedAddress === address.name}
+            onSelect={handleSelectAddress}
+          />
+        ))}
       </ScrollView>
 
       <TouchableOpacity style={styles.selectButton}>
