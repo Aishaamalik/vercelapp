@@ -37,6 +37,9 @@ import help from './Buttom/help';
 import legal from './Buttom/legal';
 import DrawerNavigator from './Drawer/DrawerNavigator';
 import CreateAccountScreen from './src/SignUp';
+import SignUpScreen from './src/SignUpWithEmail';
+import SignIn from './src/SignIn';
+import SignInWithEmail from './src/SignInWithEmail';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
@@ -98,6 +101,10 @@ const AppNavigator = () => {
                 <Stack.Screen name='legal' component={legal}/>
                 <Stack.Screen name='Drawer' component={DrawerNavigator}/>
                 <Stack.Screen name='SignUp' component={CreateAccountScreen}/>
+                <Stack.Screen name='SignUpWithEmail' component={SignUpScreen}/>
+                <Stack.Screen name='SignIn' component={SignIn}/>
+                <Stack.Screen name='SignInWithEmail' component={SignInWithEmail}/>
+                
 
 
 
