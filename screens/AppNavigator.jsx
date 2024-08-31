@@ -42,6 +42,8 @@ import SignIn from './src/SignIn';
 import SignInWithEmail from './src/SignInWithEmail';
 import CreatePassword from './src/CreatePassword';
 import EnterOTPScreen from './src/otp';
+import Chatpage from './src/Chatpage';
+import MessagePage from './src/MessagePage';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
@@ -108,10 +110,8 @@ const AppNavigator = () => {
                 <Stack.Screen name='SignInWithEmail' component={SignInWithEmail}/>
                 <Stack.Screen name='Create Password' component={CreatePassword}/>
                 <Stack.Screen name='Otp' component={EnterOTPScreen}/>
-
-                
-
-
+                <Stack.Screen name='Chat' component={Chatpage}/>
+                <Stack.Screen name='Message' component={MessagePage}/>
 
 
 
