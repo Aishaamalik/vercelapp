@@ -40,6 +40,8 @@ import CreateAccountScreen from './src/SignUp';
 import SignUpScreen from './src/SignUpWithEmail';
 import SignIn from './src/SignIn';
 import SignInWithEmail from './src/SignInWithEmail';
+import CreatePassword from './src/CreatePassword';
+import EnterOTPScreen from './src/otp';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
@@ -104,6 +106,8 @@ const AppNavigator = () => {
                 <Stack.Screen name='SignUpWithEmail' component={SignUpScreen}/>
                 <Stack.Screen name='SignIn' component={SignIn}/>
                 <Stack.Screen name='SignInWithEmail' component={SignInWithEmail}/>
+                <Stack.Screen name='Create Password' component={CreatePassword}/>
+                <Stack.Screen name='Otp' component={EnterOTPScreen}/>
                 
 
 

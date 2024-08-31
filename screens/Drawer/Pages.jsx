@@ -31,10 +31,10 @@ const PagesScreen = ({ navigation }) => {
                         <PageItem title="Sign Up With Email Page" onPress={() => handleNavigation('SignUpWithEmail')} />
                         <PageItem title="Sign In Page" onPress={() => handleNavigation('SignIn')} />
                         <PageItem title="Sign In With Email Page" onPress={() => handleNavigation('SignInWithEmail')} />
-                        <PageItem title="Create New Password Page" onPress={() => handleNavigation('CreateNewPassword')} />
-                        <PageItem title="Forgot Password Page" onPress={() => handleNavigation('ForgotPassword')} />
-                        <PageItem title="Enter OTP Page" onPress={() => handleNavigation('EnterOTP')} />
-                        <PageItem title="Select Language Page" onPress={() => handleNavigation('SelectLanguage')} />
+                        <PageItem title="Create New Password Page" onPress={() => handleNavigation('Create Password')} />
+                        <PageItem title="Forgot Password Page" onPress={() => handleNavigation('Forget Password')} />
+                        <PageItem title="Enter OTP Page" onPress={() => handleNavigation('Otp')} />
+                        <PageItem title="Select Language Page" onPress={() => handleNavigation('Language')} />
                     </View>
                 </View>
                 <View style={styles.section}>
@@ -119,49 +119,59 @@ const PagesScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#f2f2f2',
     },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#007bff',
-        padding: 15,
+        paddingVertical: 15,
+        paddingHorizontal: 20,
     },
     headerTitle: {
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: 'bold',
         color: '#fff',
-        marginLeft: 10,
+        marginLeft: 15,
     },
     content: {
-        padding: 15,
+        paddingHorizontal: 15,
+        paddingVertical: 10,
     },
     section: {
         marginBottom: 20,
     },
     sectionTitle: {
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 10,
+        color: '#333', 
     },
     sectionContent: {
-        backgroundColor: '#f8f9fa',
-        borderRadius: 5,
+        backgroundColor: '#ffffff',
+        borderRadius: 10,
         padding: 10,
+        shadowColor: '#000', 
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 3,
     },
     pageItem: {
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 10,
-        borderRadius: 5,
-        marginBottom: 10,
+        paddingVertical: 12,
+        paddingHorizontal: 15,
+        borderRadius: 8,
+        marginBottom: 8,
         backgroundColor: '#fff',
         elevation: 2,
     },
     pageTitle: {
         flex: 1,
-        marginLeft: 10,
+        marginLeft: 15,
         fontSize: 16,
+        color: '#333', 
     },
 });
 
