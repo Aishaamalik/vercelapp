@@ -33,6 +33,8 @@ import ForgetPassword from './Buttom/ForgetPassword';
 import SecurityScreen from './Buttom/Security';
 import Notifications from './Buttom/Notifications';
 import Language from './Buttom/Language';
+import help from './Buttom/help';
+import legal from './Buttom/legal';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
@@ -83,11 +85,16 @@ const AppNavigator = () => {
                 <Stack.Screen name='Edit Profile' component={EditProfile}/>
                 <Stack.Screen name='My Payment' component={MyPayment}/>
                 <Stack.Screen name='Add Card' component={AddCard}/>
+
+                
                 <Stack.Screen name='Change Password' component={ChangePassword}/>
                 <Stack.Screen name='Forget Password' component={ForgetPassword}/>
                 <Stack.Screen name='Security' component={SecurityScreen}/>
                 <Stack.Screen name='Notifications' component={Notifications}/>
                 <Stack.Screen name='Language' component={Language}/>
+                <Stack.Screen name='help' component={help}/>
+                <Stack.Screen name='legal' component={legal}/>
+
 
             </Stack.Navigator>
         </NavigationContainer>

@@ -10,7 +10,7 @@ const languages = {
 };
 
 const LanguageScreen = () => {
-  const navigation = useNavigation(); // useNavigation hook for navigation
+  const navigation = useNavigation(); 
   const [selectedLanguage, setSelectedLanguage] = useState('English (UK)');
 
   const renderLanguageItem = (language) => (

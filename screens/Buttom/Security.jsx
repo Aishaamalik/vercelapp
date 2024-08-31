@@ -1,16 +1,18 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, Text, Switch, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+
 
 const SecurityScreen = () => {
   const [isFaceIDEnabled, setFaceIDEnabled] = useState(true);
   const [isRememberPasswordEnabled, setRememberPasswordEnabled] = useState(true);
   const [isTouchIDEnabled, setTouchIDEnabled] = useState(true);
-
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton}>
+        <TouchableOpacity style={styles.backButton} onPress={()=> navigation.goBack()}>
           <Icon name="arrow-left" size={24} color="black" />
         </TouchableOpacity>
         <Text style={styles.title}>Security</Text>

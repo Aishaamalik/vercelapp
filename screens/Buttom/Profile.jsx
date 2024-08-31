@@ -35,8 +35,8 @@ const settings = [
         id: '4',
         category: 'About',
         options: [
-            { id: '1', icon: 'shield', name: 'Legal and Policies', screen: 'LegalPoliciesScreen' },
-            { id: '2', icon: 'question-circle', name: 'Help & Support', screen: 'HelpSupportScreen' },
+            { id: '1', icon: 'shield', name: 'Legal and Policies', screen: 'legal' },
+            { id: '2', icon: 'question-circle', name: 'Help & Support', screen: 'help' },
         ],
     },
 ];

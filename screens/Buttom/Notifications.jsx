@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Switch, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -7,11 +8,12 @@ const NotificationsScreen = () => {
     const [isScheduleReminderEnabled, setIsScheduleReminderEnabled] = useState(true);
     const [isMessageEnabled, setIsMessageEnabled] = useState(true);
     const [isCallEnabled, setIsCallEnabled] = useState(true);
+    const navigation =useNavigation();
 
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.goBack()}>
                     <MaterialIcons name="arrow-back" size={24} color="#333" />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>Notifications</Text>
