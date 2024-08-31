@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, FlatList, M
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon1 from 'react-native-vector-icons/Feather';
 import FrequentVisits from '../Drawer/FrequentVisits';
+import { useNavigation } from '@react-navigation/native';
 
 const categories = [
   { title: 'Airport', icon: require('../Assets/Icons/airport.png') },
@@ -116,8 +117,9 @@ const hotels = [
   },
 ];
 
-const Home = ({ navigation }) => {
+const Home = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const navigation =useNavigation();
 
   const handleServicePress = (screen) => {
     navigation.navigate(screen);
@@ -193,7 +195,18 @@ const Home = ({ navigation }) => {
       <FlatList
         ListHeaderComponent={() => (
           <>
-
+          
+          <View style={styles.header}>
+              <TouchableOpacity onPress={()=> navigation.navigate("Drawer")}>
+                <Icon name="menu" size={24} color="white" />
+              </TouchableOpacity>
+              <View style={styles.headerIcons}>
+                <Icon1 name="moon" size={24} color="white" style={styles.headerIcon} />
+                <TouchableOpacity onPress={()=> navigation.navigate("Buttontabs")}>
+                <Icon name="person-outline" size={24} color="white" style={styles.headerIcon} />
+                </TouchableOpacity>
+              </View>
+            </View>
             <View style={styles.profileSection}>
               <Image source={require('../Assets/Profile/pic1.jpeg')} style={styles.profileImage} />
               <View>

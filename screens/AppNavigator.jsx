@@ -35,6 +35,8 @@ import Notifications from './Buttom/Notifications';
 import Language from './Buttom/Language';
 import help from './Buttom/help';
 import legal from './Buttom/legal';
+import DrawerNavigator from './Drawer/DrawerNavigator';
+import CreateAccountScreen from './src/SignUp';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
@@ -94,6 +96,11 @@ const AppNavigator = () => {
                 <Stack.Screen name='Language' component={Language}/>
                 <Stack.Screen name='help' component={help}/>
                 <Stack.Screen name='legal' component={legal}/>
+                <Stack.Screen name='Drawer' component={DrawerNavigator}/>
+                <Stack.Screen name='SignUp' component={CreateAccountScreen}/>
+
+
+
 
 
             </Stack.Navigator>
