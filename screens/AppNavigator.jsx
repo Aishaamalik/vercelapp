@@ -29,6 +29,8 @@ import EditProfile from './Buttom/EditProfile';
 import MyPayment from './Buttom/MyPayment';
 import AddCard from './Buttom/AddCard';
 import ChangePassword from './Buttom/ChangePassword';
+import ForgetPassword from './Buttom/ForgetPassword';
+import SecurityScreen from './Buttom/Security';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
@@ -80,8 +82,8 @@ const AppNavigator = () => {
                 <Stack.Screen name='My Payment' component={MyPayment}/>
                 <Stack.Screen name='Add Card' component={AddCard}/>
                 <Stack.Screen name='Change Password' component={ChangePassword}/>
-
-
+                <Stack.Screen name='Forget Password' component={ForgetPassword}/>
+                <Stack.Screen name='Security' component={SecurityScreen}/>
 
             </Stack.Navigator>
         </NavigationContainer>
