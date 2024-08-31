@@ -8,6 +8,9 @@ import Menu from './Menu';
 import Booked from './Booked';
 import Liked from './Liked';
 import Profile from './Profile';
+import { Drawer } from 'react-native-paper';
+import DrawerNavigator from '../Drawer/DrawerNavigator';
+import HomeTabNavigator from './Home';
 
 const Buttom = createBottomTabNavigator();
 
@@ -24,7 +27,7 @@ const ButtomNavigator = () => {
     >
       <Buttom.Screen
         name="Home"
-        component={Home}
+        component={HomeTabNavigator}
         options={{
           tabBarIcon: ({ color, size, focused }) => (
             <Icon name={focused ? "home" : "home-outline"} color={color} size={size} />
