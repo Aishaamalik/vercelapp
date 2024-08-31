@@ -27,7 +27,7 @@ const settings = [
         id: '3',
         category: 'General',
         options: [
-            { id: '1', icon: 'globe', name: 'Language', screen: 'LanguageScreen' },
+            { id: '1', icon: 'globe', name: 'Language', screen: 'Language' },
             { id: '2', icon: 'trash', name: 'Clear Cache', extra: '00 MB' },
         ],
     },
