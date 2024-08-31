@@ -17,8 +17,8 @@ const settings = [
         id: '2',
         category: 'Security',
         options: [
-            { id: '1', icon: 'lock', name: 'Change Password', screen: 'ChangePasswordScreen' },
-            { id: '2', icon: 'lock', name: 'Forgot Password', screen: 'ForgotPasswordScreen' },
+            { id: '1', icon: 'lock', name: 'Change Password', screen: 'Change Password' },
+            { id: '2', icon: 'lock', name: 'Forgot Password', screen: 'Forgot Password' },
             { id: '3', icon: 'shield', name: 'Security', screen: 'SecurityScreen' },
             { id: '4', icon: 'bell', name: 'Notifications', screen: 'NotificationsScreen' },
         ],
