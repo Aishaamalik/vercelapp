@@ -1,44 +1,74 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const PaymentScreen = () => {
-    const [paymentMethods, setPaymentMethods] = useState([
-        {
-            id: '1',
-            type: 'Visa',
-            bank: 'BCA (Bank Central Asia)',
-            lastDigits: '12345',
-            owner: 'Brooklyn Simmons',
-            logo: require('../Assets/bank/visa.png'),
-        },
-        {
-            id: '2',
-            type: 'MasterCard',
-            bank: 'BCA (Bank Central Asia)',
-            lastDigits: '12345',
-            owner: 'Brooklyn Simmons',
-            logo: require('../Assets/bank/visa.png'),
-        },
-        {
-            id: '3',
-            type: 'Visa',
-            bank: 'MCB',
-            lastDigits: '12345',
-            owner: 'Brooklyn Simmons',
-            logo: require('../Assets/bank/visa.png'),
-        },
-    ]);
+    const [paymentMethods, setPaymentMethods] = useState([]);
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
     const navigation = useNavigation();
     const route = useRoute();
 
     useEffect(() => {
+        const loadPaymentData = async () => {
+            try {
+                const storedPaymentMethods = await AsyncStorage.getItem('paymentMethods');
+                const storedSelectedPaymentMethod = await AsyncStorage.getItem('selectedPaymentMethod');
+                
+                if (storedPaymentMethods) {
+                    setPaymentMethods(JSON.parse(storedPaymentMethods));
+                } else {
+                    setPaymentMethods([
+                        {
+                            id: '1',
+                            type: 'Visa',
+                            bank: 'BCA (Bank Central Asia)',
+                            lastDigits: '12345',
+                            owner: 'Brooklyn Simmons',
+                            logo: require('../Assets/bank/visa.png'),
+                        },
+                        {
+                            id: '2',
+                            type: 'MasterCard',
+                            bank: 'BCA (Bank Central Asia)',
+                            lastDigits: '12345',
+                            owner: 'Brooklyn Simmons',
+                            logo: require('../Assets/bank/visa.png'),
+                        },
+                        {
+                            id: '3',
+                            type: 'Visa',
+                            bank: 'MCB',
+                            lastDigits: '12345',
+                            owner: 'Brooklyn Simmons',
+                            logo: require('../Assets/bank/visa.png'),
+                        },
+                    ]);
+                }
+
+                if (storedSelectedPaymentMethod) {
+                    setSelectedPaymentMethod(storedSelectedPaymentMethod);
+                }
+            } catch (error) {
+                console.error('Failed to load payment data:', error);
+            }
+        };
+
+        loadPaymentData();
+    }, []);
+
+    useEffect(() => {
         if (route.params?.newCard) {
-            setPaymentMethods((prevMethods) => [...prevMethods, route.params.newCard]);
+            const newPaymentMethods = [...paymentMethods, route.params.newCard];
+            setPaymentMethods(newPaymentMethods);
+            AsyncStorage.setItem('paymentMethods', JSON.stringify(newPaymentMethods));
         }
     }, [route.params?.newCard]);
+
+    useEffect(() => {
+        AsyncStorage.setItem('selectedPaymentMethod', selectedPaymentMethod);
+    }, [selectedPaymentMethod]);
 
     const renderPaymentMethod = ({ item }) => (
         <TouchableOpacity
