@@ -94,7 +94,7 @@ const PagesScreen = ({ navigation }) => {
                         <PageItem title="Wishlist Page" onPress={() => handleNavigation('Liked')} />
                         <PageItem title="Explore Page" onPress={() => handleNavigation('Explore')} />
                         <PageItem title="Checkout Vacation Page" onPress={() => handleNavigation('CheckoutVacation')} />
-                        <PageItem title="Search Result Page" onPress={() => handleNavigation('SearchResult')} />
+                        <PageItem title="Search Result Page" onPress={() => handleNavigation('Search')} />
                         <PageItem title="Location Page" onPress={() => handleNavigation('Location')} />
                         <PageItem title="Booked Ticket Page" onPress={() => handleNavigation('BookedTicket')} />
                         <PageItem title="Ticket Details Page" onPress={() => handleNavigation('TicketDetails')} />

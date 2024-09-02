@@ -53,6 +53,7 @@ import Liked from './Buttom/Liked';
 import Booked from './Buttom/Booked';
 import Menu from './Buttom/Menu';
 import CheckoutVacation from './src/CheckoutVacation';
+import SearchDestination from './src/SearchDestination';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
@@ -130,6 +131,7 @@ const AppNavigator = () => {
                 <Stack.Screen name='Liked' component={Liked}/>
                 <Stack.Screen name='Explore' component={Menu}/>
                 <Stack.Screen name='CheckoutVacation' component={CheckoutVacation}/>
+                <Stack.Screen name='Search' component={SearchDestination}/>
 
 
 
