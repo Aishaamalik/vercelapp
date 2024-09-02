@@ -54,6 +54,9 @@ import Booked from './Buttom/Booked';
 import Menu from './Buttom/Menu';
 import CheckoutVacation from './src/CheckoutVacation';
 import SearchDestination from './src/SearchDestination';
+import BookHotelScreen from './src/BookHotel';
+import DetailTicket from './src/DetailTicket';
+import MainNotifications from './src/MainNotifications';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
@@ -132,6 +135,9 @@ const AppNavigator = () => {
                 <Stack.Screen name='Explore' component={Menu}/>
                 <Stack.Screen name='CheckoutVacation' component={CheckoutVacation}/>
                 <Stack.Screen name='Search' component={SearchDestination}/>
+                <Stack.Screen name='Booked' component={Booked}/>
+                <Stack.Screen name='Detail Ticket' component={DetailTicket}/>
+                <Stack.Screen name='Main Notifications' component={MainNotifications}/>
 
 
 

@@ -286,7 +286,7 @@ const SearchDestinationScreen = ({ navigation }) => {
                 setSelectedFilters([]);
                 setSelectedRatings([]);
                 setSliderValue(0);
-                setData(initialData);
+                setFilteredDestinations(destinations);
                 setModalVisible(false);
               }}
             >

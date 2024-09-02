@@ -96,19 +96,19 @@ const PagesScreen = ({ navigation }) => {
                         <PageItem title="Checkout Vacation Page" onPress={() => handleNavigation('CheckoutVacation')} />
                         <PageItem title="Search Result Page" onPress={() => handleNavigation('Search')} />
                         <PageItem title="Location Page" onPress={() => handleNavigation('Location')} />
-                        <PageItem title="Booked Ticket Page" onPress={() => handleNavigation('BookedTicket')} />
-                        <PageItem title="Ticket Details Page" onPress={() => handleNavigation('TicketDetails')} />
+                        <PageItem title="Booked Ticket Page" onPress={() => handleNavigation('Booked')} />
+                        <PageItem title="Ticket Details Page" onPress={() => handleNavigation('Detail Ticket')} />
                         <PageItem title="Tour Guide Page" onPress={() => handleNavigation('TourGuide')} />
                     </View>
                 </View>
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Others</Text>
                     <View style={styles.sectionContent}>
-                        <PageItem title="Welcome" onPress={() => handleNavigation('Welcome')} />
-                        <PageItem title="Notification" onPress={() => handleNavigation('Notification')} />
+                        <PageItem title="Welcome" onPress={() => handleNavigation('Slider')} />
+                        <PageItem title="Notification" onPress={() => handleNavigation('Main Notifications')} />
                         <PageItem title="Review" onPress={() => handleNavigation('Review')} />
-                        <PageItem title="Legal Policies Page" onPress={() => handleNavigation('LegalPolicies')} />
-                        <PageItem title="Help And Support Page" onPress={() => handleNavigation('HelpAndSupport')} />
+                        <PageItem title="Legal Policies Page" onPress={() => handleNavigation('legal')} />
+                        <PageItem title="Help And Support Page" onPress={() => handleNavigation('help')} />
                     </View>
                 </View>
             </ScrollView>
