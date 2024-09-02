@@ -50,6 +50,9 @@ import ProfileScreen from './Buttom/Profile';
 import BookHotel from './src/BookHotel';
 import Checkout from './src/Checkout';
 import Liked from './Buttom/Liked';
+import Booked from './Buttom/Booked';
+import Menu from './Buttom/Menu';
+import CheckoutVacation from './src/CheckoutVacation';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
@@ -125,6 +128,8 @@ const AppNavigator = () => {
                 <Stack.Screen name='Book Hotel' component={BookHotel}/>
                 <Stack.Screen name='Checkout' component={Checkout}/>
                 <Stack.Screen name='Liked' component={Liked}/>
+                <Stack.Screen name='Explore' component={Menu}/>
+                <Stack.Screen name='CheckoutVacation' component={CheckoutVacation}/>
 
 
 
