@@ -3,12 +3,10 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const GuideProfileScreen = ({ route, navigation }) => {
-    const { guideImage, guideName } = route.params;
+    const { guideImage, guideName = 'Default Guide Name' } = route.params || {};
 
     return (
         <View style={styles.container}>
-
-            {/* Header with back arrow and title */}
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                     <Icon name="arrow-back" size={24} color="#000" />
@@ -16,16 +14,18 @@ const GuideProfileScreen = ({ route, navigation }) => {
                 <Text style={styles.headerText}>Profile</Text>
             </View>
 
-            {/* Background Image */}
             <Image
                 source={require('../Assets/Tourguide/background.jpg')}
                 style={styles.backgroundImage}
             />
 
-            {/* Profile Picture and Name Section */}
             <View style={styles.profileContainer}>
                 <Image
-                    source={guideImage}
+                    source={
+                        guideImage 
+                        ? { uri: guideImage } 
+                        : require('../Assets/Tourguide/p1.jpg') 
+                    }
                     style={styles.profileImage}
                 />
                 <Text style={styles.profileName}>{guideName}</Text>
@@ -35,7 +35,6 @@ const GuideProfileScreen = ({ route, navigation }) => {
                 <Text style={styles.profileSubtitle}>Travel and food vlogger</Text>
             </View>
 
-            {/* Action Buttons */}
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.messageButton}>
                     <Text style={styles.buttonText}>Send Message</Text>
@@ -45,7 +44,6 @@ const GuideProfileScreen = ({ route, navigation }) => {
                 </TouchableOpacity>
             </View>
 
-            {/* Info Section */}
             <View style={styles.infoContainer}>
                 <View style={styles.infoBox}>
                     <Text style={styles.infoLabel}>Guide</Text>
@@ -61,7 +59,6 @@ const GuideProfileScreen = ({ route, navigation }) => {
                 </View>
             </View>
 
-            {/* About Us Section */}
             <View style={styles.aboutContainer}>
                 <Text style={styles.aboutTitle}>About Us</Text>
                 <Text style={styles.aboutText}>

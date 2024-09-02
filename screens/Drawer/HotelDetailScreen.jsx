@@ -38,7 +38,7 @@ const HotelDetailsScreen = ({ route, navigation }) => {
 
   const renderCategoryItem = ({ item }) => (
     <TouchableOpacity
-      key={item.title} // Add key here
+      key={item.title}
       style={styles.category}
       onPress={() => item.title === 'More' && setModalVisible(true)}
     >

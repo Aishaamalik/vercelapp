@@ -60,28 +60,28 @@ const PagesScreen = ({ navigation }) => {
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Profile</Text>
                     <View style={styles.sectionContent}>
-                        <PageItem title="User Profile Page" onPress={() => handleNavigation('UserProfile')} />
-                        <PageItem title="User Info Page" onPress={() => handleNavigation('UserInfo')} />
+                        <PageItem title="User Profile Page" onPress={() => handleNavigation('Profile')} />
+                        <PageItem title="User Info Page" onPress={() => handleNavigation('Edit Profile')} />
                         <PageItem title="Guide Profile Page" onPress={() => handleNavigation('GuideProfile')} />
                     </View>
                 </View>
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Profile Settings</Text>
                     <View style={styles.sectionContent}>
-                        <PageItem title="Address Page" onPress={() => handleNavigation('Address')} />
-                        <PageItem title="Add Address Page" onPress={() => handleNavigation('AddAddress')} />
-                        <PageItem title="Add Card Page" onPress={() => handleNavigation('AddCard')} />
-                        <PageItem title="Change Password Page" onPress={() => handleNavigation('ChangePassword')} />
+                        <PageItem title="Address Page" onPress={() => handleNavigation('My Address')} />
+                        <PageItem title="Add Address Page" onPress={() => handleNavigation('New Address')} />
+                        <PageItem title="Add Card Page" onPress={() => handleNavigation('Add Card')} />
+                        <PageItem title="Change Password Page" onPress={() => handleNavigation('Change Password')} />
                         <PageItem title="Notifications Page" onPress={() => handleNavigation('Notifications')} />
                         <PageItem title="Security Page" onPress={() => handleNavigation('Security')} />
                         <PageItem title="Language Page" onPress={() => handleNavigation('Language')} />
-                        <PageItem title="Payment Page" onPress={() => handleNavigation('Payment')} />
+                        <PageItem title="Payment Page" onPress={() => handleNavigation('My Payment')} />
                     </View>
                 </View>
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Hotel</Text>
                     <View style={styles.sectionContent}>
-                        <PageItem title="Book Hotel Page" onPress={() => handleNavigation('BookHotel')} />
+                        <PageItem title="Book Hotel Page" onPress={() => handleNavigation('Book Hotel')} />
                         <PageItem title="Checkout Hotel Page" onPress={() => handleNavigation('CheckoutHotel')} />
                         <PageItem title="Hotels Page" onPress={() => handleNavigation('Hotels')} />
                         <PageItem title="Hotel Details Page" onPress={() => handleNavigation('HotelDetails')} />

@@ -46,6 +46,8 @@ import Chatpage from './src/Chatpage';
 import MessagePage from './src/MessagePage';
 import AudioCall from './src/AudioCall';
 import VideoCall from './src/VideoCall';
+import ProfileScreen from './Buttom/Profile';
+import BookHotel from './src/BookHotel';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
@@ -114,8 +116,11 @@ const AppNavigator = () => {
                 <Stack.Screen name='Otp' component={EnterOTPScreen}/>
                 <Stack.Screen name='Chat' component={Chatpage}/>
                 <Stack.Screen name='Message' component={MessagePage}/>
+
                 <Stack.Screen name='Audio Call' component={AudioCall}/>
                 <Stack.Screen name='Video Call' component={VideoCall}/>
+                <Stack.Screen name='Profile' component={ProfileScreen}/>
+                <Stack.Screen name='Book Hotel' component={BookHotel}/>
 
 
 
