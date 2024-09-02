@@ -82,7 +82,7 @@ const PagesScreen = ({ navigation }) => {
                     <Text style={styles.sectionTitle}>Hotel</Text>
                     <View style={styles.sectionContent}>
                         <PageItem title="Book Hotel Page" onPress={() => handleNavigation('Book Hotel')} />
-                        <PageItem title="Checkout Hotel Page" onPress={() => handleNavigation('CheckoutHotel')} />
+                        <PageItem title="Checkout Hotel Page" onPress={() => handleNavigation('Checkout')} />
                         <PageItem title="Hotels Page" onPress={() => handleNavigation('Hotels')} />
                         <PageItem title="Hotel Details Page" onPress={() => handleNavigation('HotelDetails')} />
                     </View>

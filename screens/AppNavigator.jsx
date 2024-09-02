@@ -48,6 +48,7 @@ import AudioCall from './src/AudioCall';
 import VideoCall from './src/VideoCall';
 import ProfileScreen from './Buttom/Profile';
 import BookHotel from './src/BookHotel';
+import Checkout from './src/Checkout';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
@@ -121,6 +122,7 @@ const AppNavigator = () => {
                 <Stack.Screen name='Video Call' component={VideoCall}/>
                 <Stack.Screen name='Profile' component={ProfileScreen}/>
                 <Stack.Screen name='Book Hotel' component={BookHotel}/>
+                <Stack.Screen name='Checkout' component={Checkout}/>
 
 
 
