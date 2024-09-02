@@ -49,6 +49,7 @@ import VideoCall from './src/VideoCall';
 import ProfileScreen from './Buttom/Profile';
 import BookHotel from './src/BookHotel';
 import Checkout from './src/Checkout';
+import Liked from './Buttom/Liked';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
@@ -123,6 +124,7 @@ const AppNavigator = () => {
                 <Stack.Screen name='Profile' component={ProfileScreen}/>
                 <Stack.Screen name='Book Hotel' component={BookHotel}/>
                 <Stack.Screen name='Checkout' component={Checkout}/>
+                <Stack.Screen name='Liked' component={Liked}/>
 
 
 

@@ -1,17 +1,61 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useRoute } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Liked = () => {
   const route = useRoute();
-  const likedItems = route.params?.likedItems || [];
+  const [likedItems, setLikedItems] = useState([]);
+
+  useEffect(() => {
+    const loadLikedItems = async () => {
+      try {
+        const storedItems = await AsyncStorage.getItem('likedItems');
+        if (storedItems) {
+          setLikedItems(JSON.parse(storedItems));
+        }
+      } catch (error) {
+        console.error('Failed to load liked items from storage', error);
+      }
+    };
+
+    loadLikedItems();
+  }, []);
+
+  useEffect(() => {
+    const saveLikedItems = async () => {
+      try {
+        await AsyncStorage.setItem('likedItems', JSON.stringify(likedItems));
+      } catch (error) {
+        console.error('Failed to save liked items to storage', error);
+      }
+    };
+
+    if (likedItems.length > 0) {
+      saveLikedItems();
+    }
+  }, [likedItems]);
+
+  const toggleFavorite = (item) => {
+    setLikedItems((prevLikedItems) => {
+      const isLiked = prevLikedItems.find((likedItem) => likedItem.id === item.id);
+      if (isLiked) {
+        return prevLikedItems.filter((likedItem) => likedItem.id !== item.id);
+      } else {
+        return [...prevLikedItems, item];
+      }
+    });
+  };
 
   const renderItem = ({ item }) => (
     <View style={styles.card}>
       <Image source={item.image} style={styles.image} />
-      <TouchableOpacity style={styles.favoriteButton}>
-        <Icon name="heart" size={20} color="red" />
+      <TouchableOpacity
+        style={styles.favoriteButton}
+        onPress={() => toggleFavorite(item)}
+      >
+        <Icon name="heart" size={20} color={likedItems.some(likedItem => likedItem.id === item.id) ? "red" : "gray"} />
       </TouchableOpacity>
       <Text style={styles.title}>{item.title}</Text>
       <View style={styles.locationContainer}>
@@ -40,6 +84,7 @@ const Liked = () => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

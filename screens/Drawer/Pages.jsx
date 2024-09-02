@@ -83,15 +83,15 @@ const PagesScreen = ({ navigation }) => {
                     <View style={styles.sectionContent}>
                         <PageItem title="Book Hotel Page" onPress={() => handleNavigation('Book Hotel')} />
                         <PageItem title="Checkout Hotel Page" onPress={() => handleNavigation('Checkout')} />
-                        <PageItem title="Hotels Page" onPress={() => handleNavigation('Hotels')} />
-                        <PageItem title="Hotel Details Page" onPress={() => handleNavigation('HotelDetails')} />
+                        <PageItem title="Hotels Page" onPress={() => handleNavigation('HotelList')} />
+                        <PageItem title="Hotel Details Page" onPress={() => handleNavigation('HotelDetail')} />
                     </View>
                 </View>
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Vacation</Text>
                     <View style={styles.sectionContent}>
-                        <PageItem title="Vacation Details Page" onPress={() => handleNavigation('VacationDetails')} />
-                        <PageItem title="Wishlist Page" onPress={() => handleNavigation('Wishlist')} />
+                        <PageItem title="Vacation Details Page" onPress={() => handleNavigation('VecationDetails')} />
+                        <PageItem title="Wishlist Page" onPress={() => handleNavigation('Liked')} />
                         <PageItem title="Explore Page" onPress={() => handleNavigation('Explore')} />
                         <PageItem title="Checkout Vacation Page" onPress={() => handleNavigation('CheckoutVacation')} />
                         <PageItem title="Search Result Page" onPress={() => handleNavigation('SearchResult')} />

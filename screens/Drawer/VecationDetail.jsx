@@ -1,6 +1,14 @@
+
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+
+const defaultImage = require('../Assets/Tourguide/background.jpg');
+const defaultTitle = 'Amazing Vacation Spot';
+const defaultLocation = 'Unknown Location';
+const defaultPrice = '$0';
+const defaultRating = 'N/A';
+const defaultReviews = 'No Reviews';
 
 const guide = [
   {
@@ -46,8 +54,18 @@ const guide = [
 ];
 
 const VacationDetailsScreen = ({ route, navigation }) => {
-  const { image, title, location, price, rating, reviews, favorite } = route.params;
+  // Destructuring route params with default values
+  const {
+    image = defaultImage,
+    title = defaultTitle,
+    location = defaultLocation,
+    price = defaultPrice,
+    rating = defaultRating,
+    reviews = defaultReviews,
+    favorite = false,
+  } = route.params || {}; // Added fallback in case route.params is undefined
 
+  // Render method for FlatList tour guide items
   const renderGuideItem = ({ item }) => (
     <View style={styles.cardContainer}>
       <Image source={item.image} style={styles.cardImage} />
@@ -68,15 +86,20 @@ const VacationDetailsScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
+      {/* Header Section */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <Icon name="arrow-back" size={24} color="white" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Vacation Details</Text>
       </View>
+
+      {/* Main Image */}
       <Image source={image} style={styles.mainImage} />
 
+      {/* Content Section */}
       <ScrollView contentContainerStyle={styles.detailsContainer}>
+        {/* Title and Favorite Icon */}
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{title}</Text>
           <Icon
@@ -86,18 +109,24 @@ const VacationDetailsScreen = ({ route, navigation }) => {
           />
         </View>
 
+        {/* Location and Rating */}
         <View style={styles.locationContainer}>
           <Icon name="location-outline" size={16} color="black" />
           <Text style={styles.locationText}>{location}</Text>
           <Icon name="star" size={16} color="#FFD700" style={styles.starIcon} />
-          <Text style={styles.ratingText}>{rating} ({reviews} Reviews)</Text>
+          <Text style={styles.ratingText}>{rating} ({reviews})</Text>
         </View>
+        
+        {/* Price Information */}
         <Text style={styles.price}>Price: {price}</Text>
+
+        {/* Details Section */}
         <Text style={styles.sectionTitle}>Details</Text>
         <Text style={styles.detailsText}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tortor ac lorem ipsum dolor sit amet.
         </Text>
 
+        {/* Tour Guide Section */}
         <Text style={styles.sectionTitle}>Tour Guide</Text>
         <View style={styles.tourGuideCard}>
           <FlatList
@@ -110,6 +139,7 @@ const VacationDetailsScreen = ({ route, navigation }) => {
           />
         </View>
 
+        {/* On Budget Tour Section */}
         <View style={styles.budgetSection}>
           <Text style={styles.sectionTitle}>On Budget Tour</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Review')} style={styles.seeAllButton}>
@@ -117,7 +147,7 @@ const VacationDetailsScreen = ({ route, navigation }) => {
           </TouchableOpacity>
         </View>
 
-
+        {/* Review Section */}
         <View style={styles.container1}>
           <View style={styles.reviewContainer}>
             <View style={styles.reviewHeader}>
@@ -141,16 +171,18 @@ const VacationDetailsScreen = ({ route, navigation }) => {
           </View>
         </View>
 
+        {/* Location Section */}
         <View style={styles.location}>
           <Text style={styles.sectionTitle}>Location</Text>
         </View>
 
+        {/* Maps Placeholder */}
         <View style={styles.container2}>
-          <Text style={{color:'black'}}>Maps</Text>
+          <Text style={{ color: 'black' }}>Maps</Text>
         </View>
-
       </ScrollView>
 
+      {/* Footer Section */}
       <View style={styles.footer}>
         <Text style={styles.price}>$32</Text>
         <Text style={styles.price1}>/Person</Text>

@@ -21,7 +21,10 @@ const services = [
 ];
 
 const HotelDetailsScreen = ({ route, navigation }) => {
-  const { hotelName, hotelLocation, hotelImage } = route.params;
+  const defaultImage = require('../Assets/visits/hotel.jpeg'); // Add a path to a default image
+  const defaultHotelName = 'Hotel Name Unavailable';
+
+  const { hotelName = defaultHotelName, hotelLocation, hotelImage = defaultImage } = route.params || {};
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -92,7 +95,7 @@ const HotelDetailsScreen = ({ route, navigation }) => {
           <Text style={styles.reviewsTitle}>Reviews</Text>
           <View style={styles.reviewItem}>
             <Image
-              source={{ uri: 'https://example.com/user-profile.jpg' }}
+              source={require('../Assets/Tourguide/p1.jpg')}
               style={styles.reviewImage}
             />
             <View style={styles.reviewContent}>
@@ -152,6 +155,7 @@ const HotelDetailsScreen = ({ route, navigation }) => {
     </View>
   );
 };
+
 
 
 const styles = StyleSheet.create({
