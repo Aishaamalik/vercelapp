@@ -53,7 +53,7 @@ const PagesScreen = ({ navigation }) => {
                 <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Call</Text>
                     <View style={styles.sectionContent}>
-                        <PageItem title="Audio Call Page" onPress={() => handleNavigation('AudioCall')} />
+                        <PageItem title="Audio Call Page" onPress={() => handleNavigation('Audio Call')} />
                         <PageItem title="Video Call Page" onPress={() => handleNavigation('VideoCall')} />
                     </View>
                 </View>

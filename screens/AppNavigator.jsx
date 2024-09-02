@@ -44,6 +44,7 @@ import CreatePassword from './src/CreatePassword';
 import EnterOTPScreen from './src/otp';
 import Chatpage from './src/Chatpage';
 import MessagePage from './src/MessagePage';
+import AudioCall from './src/AudioCall';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
@@ -112,6 +113,7 @@ const AppNavigator = () => {
                 <Stack.Screen name='Otp' component={EnterOTPScreen}/>
                 <Stack.Screen name='Chat' component={Chatpage}/>
                 <Stack.Screen name='Message' component={MessagePage}/>
+                <Stack.Screen name='Audio Call' component={AudioCall}/>
 
 
 
