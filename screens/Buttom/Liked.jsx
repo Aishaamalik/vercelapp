@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 const Liked = () => {
   const route = useRoute();
-  const [likedItems, setLikedItems] = useState([]);
+  const [likedItems, setLikedItems] = useState(route.params?.likedItems || []);
 
   useEffect(() => {
     const loadLikedItems = async () => {
@@ -37,7 +36,7 @@ const Liked = () => {
     }
   }, [likedItems]);
 
-  const toggleFavorite = (item) => {
+  const toggleFavorite = useCallback((item) => {
     setLikedItems((prevLikedItems) => {
       const isLiked = prevLikedItems.find((likedItem) => likedItem.id === item.id);
       if (isLiked) {
@@ -46,9 +45,9 @@ const Liked = () => {
         return [...prevLikedItems, item];
       }
     });
-  };
+  }, []);
 
-  const renderItem = ({ item }) => (
+  const renderItem = useCallback(({ item }) => (
     <View style={styles.card}>
       <Image source={item.image} style={styles.image} />
       <TouchableOpacity
@@ -69,7 +68,7 @@ const Liked = () => {
         <Text style={styles.reviews}>({item.reviews})</Text>
       </View>
     </View>
-  );
+  ), [likedItems]);
 
   return (
     <View style={styles.container}>
@@ -77,13 +76,14 @@ const Liked = () => {
       <FlatList
         data={likedItems}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         numColumns={2}
         contentContainerStyle={styles.list}
       />
     </View>
   );
 };
+
 
 
 const styles = StyleSheet.create({

@@ -69,9 +69,7 @@ const initialData = [
     favorite: false,
 
 },
-];
-
-const FrequentVisitScreen = () => {
+];const FrequentVisitScreen = () => {
   const navigation = useNavigation();
   const [data, setData] = useState(initialData);
 
@@ -93,15 +91,11 @@ const FrequentVisitScreen = () => {
       )
     );
 
-    const likedItems = data.filter((item) => item.id === itemId && !item.favorite);
+    // Filter liked items and navigate to Liked screen
+    const likedItems = data.filter((item) => item.id === itemId ? !item.favorite : item.favorite);
     if (likedItems.length > 0) {
-      handleFavoritePress();
+      navigation.navigate('Liked', { likedItems });
     }
-  };
-
-  const handleFavoritePress = () => {
-    const likedItems = data.filter(item => item.favorite);
-    navigation.navigate('Liked', { likedItems });
   };
 
   const renderItem = ({ item }) => (
@@ -144,6 +138,7 @@ const FrequentVisitScreen = () => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
