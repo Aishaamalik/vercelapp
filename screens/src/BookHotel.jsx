@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, Modal, FlatList } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { Calendar } from 'react-native-calendars'; // Import the Calendar component
+import { Calendar } from 'react-native-calendars';
 
 const categories = [
   { title: 'AC', icon: require('../Assets/Iconsfacilities/ac.png') },
@@ -24,8 +24,8 @@ const services = [
 
 const BookHotelScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [calendarVisible, setCalendarVisible] = useState(false); // State for calendar modal
-  const [selectedDate, setSelectedDate] = useState(''); // State to keep track of the selected date
+  const [calendarVisible, setCalendarVisible] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(''); 
 
   const handleServicePress = (screen) => {
     navigation.goBack();
@@ -62,7 +62,7 @@ const BookHotelScreen = ({ navigation }) => {
         <Text style={styles.sectionTitle}>Customer Info</Text>
         <View style={styles.infoRow}>
           <Text style={styles.infoLabel}>Name</Text>
-          <Text style={styles.infoValue}>Andy Lexian</Text>
+          <Text style={styles.infoValue}>Name Not Set</Text>
         </View>
         <View style={styles.infoRow}>
           <Text style={styles.infoLabel}>Email</Text>
