@@ -19,7 +19,6 @@ const ButtomNavigator = () => {
     <Buttom.Navigator
       initialRouteName='Profile'
       screenOptions={{
-        tabBarShowLabel: false, 
         tabBarActiveTintColor: '#0077b6',
         tabBarInactiveTintColor: 'gray', 
         headerShown: false,

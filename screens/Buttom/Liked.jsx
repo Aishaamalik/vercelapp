@@ -3,47 +3,39 @@ import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const Liked = () => {
   const route = useRoute();
   const [likedItems, setLikedItems] = useState(route.params?.likedItems || []);
 
   useEffect(() => {
-    const loadLikedItems = async () => {
-      try {
-        const storedItems = await AsyncStorage.getItem('likedItems');
-        if (storedItems) {
-          setLikedItems(JSON.parse(storedItems));
+    if (!route.params?.likedItems) {
+      const loadLikedItems = async () => {
+        try {
+          const storedItems = await AsyncStorage.getItem('likedItems');
+          if (storedItems) {
+            setLikedItems(JSON.parse(storedItems));
+          }
+        } catch (error) {
+          console.error('Failed to load liked items from storage', error);
         }
-      } catch (error) {
-        console.error('Failed to load liked items from storage', error);
-      }
-    };
+      };
 
-    loadLikedItems();
-  }, []);
-
-  useEffect(() => {
-    const saveLikedItems = async () => {
-      try {
-        await AsyncStorage.setItem('likedItems', JSON.stringify(likedItems));
-      } catch (error) {
-        console.error('Failed to save liked items to storage', error);
-      }
-    };
-
-    if (likedItems.length > 0) {
-      saveLikedItems();
+      loadLikedItems();
     }
-  }, [likedItems]);
+  }, [route.params?.likedItems]);
 
   const toggleFavorite = useCallback((item) => {
     setLikedItems((prevLikedItems) => {
       const isLiked = prevLikedItems.find((likedItem) => likedItem.id === item.id);
-      if (isLiked) {
-        return prevLikedItems.filter((likedItem) => likedItem.id !== item.id);
-      } else {
-        return [...prevLikedItems, item];
-      }
+      const updatedLikedItems = isLiked
+        ? prevLikedItems.filter((likedItem) => likedItem.id !== item.id)
+        : [...prevLikedItems, item];
+
+      // Save updated liked items to AsyncStorage
+      AsyncStorage.setItem('likedItems', JSON.stringify(updatedLikedItems));
+
+      return updatedLikedItems;
     });
   }, []);
 
@@ -83,6 +75,7 @@ const Liked = () => {
     </View>
   );
 };
+
 
 
 

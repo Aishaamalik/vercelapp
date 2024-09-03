@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialData = [
   {
@@ -24,52 +25,49 @@ const initialData = [
     reviews: '41',
     favorite: false,
   },
-  
   {
     id: '3',
+    image: require('../Assets/visits/p1.jpeg'),
     title: 'Cappadocia',
     location: 'Turki',
     price: '$423',
     rating: '4.6',
     reviews: '213',
-    image: require('../Assets/visits/p1.jpeg'),
     favorite: false,
-
-},
-{
+  },
+  {
     id: '4',
+    image: require('../Assets/visits/p2.jpeg'),
     title: 'Hanalei Bay',
     location: 'Hawaii',
     price: '$235',
     rating: '4.8',
     reviews: '67',
-    image: require('../Assets/visits/p2.jpeg'),
     favorite: false,
-
-},
-{
+  },
+  {
     id: '5',
+    image: require('../Assets/visits/tahitibeach.jpeg'),
     title: 'Tahiti Beach',
     location: 'Polynesia, French',
     price: '$434',
     rating: '4.8',
     reviews: '324',
-    image: require('../Assets/visits/tahitibeach.jpeg'),
     favorite: false,
-
-},
-{
+  },
+  {
     id: '6',
+    image: require('../Assets/visits/lucismountain.jpeg'),
     title: 'St. Lucia Mountain',
     location: 'Polynesia, French',
     price: '$543',
     rating: '4.8',
     reviews: '123',
-    image: require('../Assets/visits/lucismountain.jpeg'),
     favorite: false,
+  },
+];
 
-},
-];const FrequentVisitScreen = () => {
+const FrequentVisitScreen = () => {
   const navigation = useNavigation();
   const [data, setData] = useState(initialData);
 
@@ -82,34 +80,25 @@ const initialData = [
       rating: item.rating,
       reviews: item.reviews,
     });
-  };
-
-  const toggleFavorite = (itemId) => {
-    setData((prevData) =>
-      prevData.map((item) =>
+  };const toggleFavorite = (itemId) => {
+    setData((prevData) => {
+      const updatedData = prevData.map((item) =>
         item.id === itemId ? { ...item, favorite: !item.favorite } : item
-      )
-    );
-
-    // Filter liked items and navigate to Liked screen
-    const likedItems = data.filter((item) => item.id === itemId ? !item.favorite : item.favorite);
-    if (likedItems.length > 0) {
+      );
+      const likedItems = updatedData.filter((item) => item.favorite);
+      AsyncStorage.setItem('likedItems', JSON.stringify(likedItems));
       navigation.navigate('Liked', { likedItems });
-    }
+  
+      return updatedData;
+    });
   };
+  
 
   const renderItem = ({ item }) => (
     <TouchableOpacity style={styles.card} onPress={() => handlePress(item)}>
       <Image source={item.image} style={styles.cardImage} />
-      <TouchableOpacity
-        style={styles.favoriteIcon}
-        onPress={() => toggleFavorite(item.id)}
-      >
-        <Icon
-          name={item.favorite ? 'heart' : 'heart-outline'}
-          size={24}
-          color={item.favorite ? 'red' : 'black'}
-        />
+      <TouchableOpacity style={styles.favoriteIcon} onPress={() => toggleFavorite(item.id)}>
+        <Icon name={item.favorite ? 'heart' : 'heart-outline'} size={24} color={item.favorite ? 'red' : 'black'} />
       </TouchableOpacity>
       <Text style={styles.cardTitle}>{item.title}</Text>
       <View style={styles.cardLocation}>
@@ -138,7 +127,6 @@ const initialData = [
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
