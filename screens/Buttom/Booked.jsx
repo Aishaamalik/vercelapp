@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const initialBookings = [
     {
@@ -58,6 +58,7 @@ const Booked = () => {
     const [activeTab, setActiveTab] = useState('Booked');
     const [bookings, setBookings] = useState(initialBookings);
     const [finished, setFinished] = useState(initialFinished); 
+    const navigation = useNavigation();
 
     useEffect(() => {
         if (route.params) {
@@ -99,7 +100,7 @@ const Booked = () => {
                     <Text style={styles.price}>{item.price}</Text>
                 </View>
             </View>
-            <TouchableOpacity style={styles.detailButton}>
+            <TouchableOpacity style={styles.detailButton} onPress={()=> navigation.navigate('Detail Ticket')}>
                 <Text style={styles.detailButtonText}>Detail</Text>
             </TouchableOpacity>
         </View>

@@ -118,11 +118,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         flex: 1,
         textAlign: 'center',
+        color:'black',
     },
     ticketId: {
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 15,
+        color:'black',
     },
     statusContainer: {
         alignSelf: 'flex-start',
@@ -154,6 +156,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 10,
+        color:'black',
     },
     locationContainer: {
         flexDirection: 'row',
@@ -181,6 +184,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 15,
+        color:'black',
     },
     infoRow: {
         flexDirection: 'row',
@@ -193,6 +197,7 @@ const styles = StyleSheet.create({
     },
     infoValue: {
         fontSize: 16,
+        color:'black',
     },
     infoValueSuccess: {
         fontSize: 16,
@@ -210,10 +215,12 @@ const styles = StyleSheet.create({
     totalLabel: {
         fontSize: 18,
         fontWeight: 'bold',
+        color:'black',
     },
     totalValue: {
         fontSize: 18,
         fontWeight: 'bold',
+        color:'black',
     },
     downloadButton: {
         backgroundColor: '#1E90FF',
