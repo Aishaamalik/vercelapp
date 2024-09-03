@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useRoute } from '@react-navigation/native';
 
-const bookings = [
+const initialBookings = [
     {
         id: '1',
         date: '22 March 2022, Thu',
-        title: 'The Lalit New Delhi',
-        location: 'Uttar Pradesh, India',
+        title: 'Faisal Mosque ',
+        location: 'Islamabad, Pakistan',
         rating: 4.4,
         reviews: 41,
         price: '$320',
         status: 'Will Come',
-        image: require('../Assets/visits/p1.jpeg'),
+        image: require('../Assets/visits/mosque.jpeg'),
     },
     {
         id: '2',
@@ -23,38 +24,58 @@ const bookings = [
         reviews: 41,
         price: '$320',
         status: 'Will Come',
-        image: require('../Assets/visits/p1.jpeg'),
+        image: require('../Assets/visits/tajmahal.jpeg'),
     },
 ];
 
-const finished = [
-  {
-      id: '1',
-      date: '22 March 2022, Thu',
-      title: 'The Lalit New Delhi',
-      location: 'Uttar Pradesh, India',
-      rating: 4.4,
-      reviews: 41,
-      price: '$320',
-      status: 'Finished',
-      image: require('../Assets/visits/p1.jpeg'),
+const initialFinished = [
+    {
+        id: '1',
+        date: '22 March 2022, Thu',
+        title: 'Faisal Mosque ',
+        location: 'Islamabad, Pakistan',
+        rating: 4.4,
+        reviews: 41,
+        price: '$320',
+        status: 'Will Come',
+        image: require('../Assets/visits/mosque.jpeg'),
     },
-  {
-      id: '2',
-      date: '22 March 2022, Thu',
-      title: 'The Lalit New Delhi',
-      location: 'Uttar Pradesh, India',
-      rating: 4.4,
-      reviews: 41,
-      price: '$320',
-      status: 'Finished',
-      image: require('../Assets/visits/p1.jpeg'),
+    {
+        id: '2',
+        date: '22 March 2022, Thu',
+        title: 'Taj Mahal',
+        location: 'Uttar Pradesh, India',
+        rating: 4.4,
+        reviews: 41,
+        price: '$320',
+        status: 'Will Come',
+        image: require('../Assets/visits/tajmahal.jpeg'),
     },
 ];
-
 
 const Booked = () => {
+    const route = useRoute(); 
     const [activeTab, setActiveTab] = useState('Booked');
+    const [bookings, setBookings] = useState(initialBookings);
+    const [finished, setFinished] = useState(initialFinished); 
+
+    useEffect(() => {
+        if (route.params) {
+            const { hotelName, hotelLocation, hotelImage, price, startDate, endDate } = route.params;
+            const newBooking = {
+                id: (bookings.length + 1).toString(), 
+                date: `${startDate} to ${endDate}`,
+                title: hotelName,
+                location: hotelLocation,
+                rating: 4.4,
+                reviews: 41,
+                price: price,
+                status: 'Will Come', 
+                image: hotelImage, 
+            };
+            setBookings((prevBookings) => [...prevBookings, newBooking]);
+        }
+    }, [route.params]);
 
     const renderItem = ({ item }) => (
         <View style={styles.card}>
@@ -83,6 +104,7 @@ const Booked = () => {
             </TouchableOpacity>
         </View>
     );
+
     const renderItem1 = ({ item }) => (
         <View style={styles.card}>
             <View style={styles.cardHeader}>
@@ -108,7 +130,6 @@ const Booked = () => {
             <TouchableOpacity style={styles.detailButton}>
                 <Text style={styles.detailButtonText}>Rating</Text>
             </TouchableOpacity>
-
             <TouchableOpacity style={styles.detailButton1}>
                 <Text style={styles.detailButtonText1}>Detail</Text>
             </TouchableOpacity>
@@ -140,18 +161,16 @@ const Booked = () => {
                 />
             ) : (
                 <View style={styles.historyContainer}>
-                  
-                <FlatList
-                    data={finished}
-                    renderItem={renderItem1}
-                    keyExtractor={(item) => item.id}
-                />
+                    <FlatList
+                        data={finished}
+                        renderItem={renderItem1}
+                        keyExtractor={(item) => item.id}
+                    />
                 </View>
             )}
         </View>
     );
 };
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,

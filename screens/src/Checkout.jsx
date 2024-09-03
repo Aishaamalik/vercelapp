@@ -21,10 +21,20 @@ const CheckoutScreen = ({ route, navigation }) => {
     const handlePayNow = () => {
         setModalVisible(true);
     };
-
     const handleCloseModal = () => {
-        navigation.navigate('Booked')
+        navigation.navigate('Booked', {
+            hotelName,
+            hotelLocation,
+            hotelImage,
+            price,
+            originalPrice,
+            startDate,
+            endDate,
+            customerName,
+            customerEmail
+        });
     };
+    
 
     return (
         <ScrollView style={styles.container}>
@@ -136,7 +146,6 @@ const CheckoutScreen = ({ route, navigation }) => {
                 <Text style={styles.payNowButtonText}>Pay Now</Text>
             </TouchableOpacity>
 
-            {/* Modal View */}
             <Modal
                 animationType="slide"
                 transparent={true}
