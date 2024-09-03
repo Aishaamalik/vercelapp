@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Liked = () => {
   const route = useRoute();
+  const navigation = useNavigation();
   const [likedItems, setLikedItems] = useState(route.params?.likedItems || []);
 
   useEffect(() => {
@@ -31,8 +32,6 @@ const Liked = () => {
       const updatedLikedItems = isLiked
         ? prevLikedItems.filter((likedItem) => likedItem.id !== item.id)
         : [...prevLikedItems, item];
-
-      // Save updated liked items to AsyncStorage
       AsyncStorage.setItem('likedItems', JSON.stringify(updatedLikedItems));
 
       return updatedLikedItems;
@@ -40,7 +39,14 @@ const Liked = () => {
   }, []);
 
   const renderItem = useCallback(({ item }) => (
-    <View style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('VecationDetails', {
+      image: item.image,
+      title: item.title,
+      location: item.location,
+      price: item.price,
+      rating: item.rating,
+      reviews: item.reviews,
+    })}>
       <Image source={item.image} style={styles.image} />
       <TouchableOpacity
         style={styles.favoriteButton}
@@ -59,12 +65,17 @@ const Liked = () => {
         <Text style={styles.rating}>{item.rating}</Text>
         <Text style={styles.reviews}>({item.reviews})</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   ), [likedItems]);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>My Wishlist</Text>
+      <View style={styles.headerContainer}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+          <Icon name="arrow-left" size={20} color="#333" />
+        </TouchableOpacity>
+        <Text style={styles.header}>My Wishlist</Text>
+      </View>
       <FlatList
         data={likedItems}
         renderItem={renderItem}
@@ -76,21 +87,28 @@ const Liked = () => {
   );
 };
 
-
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f0f0f0',
     paddingTop: 20,
   },
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    marginBottom: 20,
+  },
+  backButton: {
+    padding: 10,
+  },
   header: {
     fontSize: 26,
     fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
     color: '#333',
+    flex: 1,
+    textAlign: 'center',
+    paddingRight: 20, // to offset the back button space
   },
   list: {
     paddingHorizontal: 15,
