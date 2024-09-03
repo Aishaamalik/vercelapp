@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput, ScrollView, Modal, Button } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const CheckoutScreen = ({ route, navigation }) => {
     const [selectedCard, setSelectedCard] = useState(null);
+    const [modalVisible, setModalVisible] = useState(false);
 
     const {
         hotelName = 'Hotel Name Unavailable',
@@ -16,6 +17,14 @@ const CheckoutScreen = ({ route, navigation }) => {
         customerName = 'Name Not Set',
         customerEmail = 'example@mail.com'
     } = route.params || {};
+
+    const handlePayNow = () => {
+        setModalVisible(true);
+    };
+
+    const handleCloseModal = () => {
+        navigation.navigate('Booked')
+    };
 
     return (
         <ScrollView style={styles.container}>
@@ -123,9 +132,27 @@ const CheckoutScreen = ({ route, navigation }) => {
                 </TouchableOpacity>
             </View>
             
-            <TouchableOpacity style={styles.payNowButton} onPress={()=> navigation.navigate('Splash Order')}>
+            <TouchableOpacity style={styles.payNowButton} onPress={handlePayNow}>
                 <Text style={styles.payNowButtonText}>Pay Now</Text>
             </TouchableOpacity>
+
+            {/* Modal View */}
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={handleCloseModal}
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.modalTitle}>Order Successful</Text>
+                        <Text style={styles.modalMessage}>Your Order has been processed successfully.</Text>
+                        <TouchableOpacity style={styles.modalButton} onPress={handleCloseModal}>
+                            <Text style={styles.modalButtonText}>Continue</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
         </ScrollView>
     );
 };
@@ -217,7 +244,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         padding: 10,
-        color:'black',
+        color: 'black',
     },
     applyButton: {
         backgroundColor: '#007BFF',
@@ -249,7 +276,7 @@ const styles = StyleSheet.create({
     },
     cardNumber: {
         flex: 1,
-        color:'balck',
+        color: 'black',
     },
     payNowButton: {
         backgroundColor: '#007BFF',
@@ -260,6 +287,39 @@ const styles = StyleSheet.create({
     payNowButtonText: {
         color: 'white',
         fontWeight: 'bold',
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+    },
+    modalContent: {
+        width: '80%',
+        padding: 20,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        alignItems: 'center',
+    },
+    modalTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        color:'black',
+    },
+    modalMessage: {
+        fontSize: 16,
+        marginBottom: 20,
+        textAlign: 'center',
+        color:'black',
+    },
+    modalButton: {
+        backgroundColor: '#007BFF',
+        padding: 10,
+        borderRadius: 5,
+    },
+    modalButtonText: {
+        color: 'white',
     },
 });
 
