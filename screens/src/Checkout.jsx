@@ -1,4 +1,3 @@
-// In CheckoutScreen.jsx
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -6,7 +5,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const CheckoutScreen = ({ route, navigation }) => {
     const [selectedCard, setSelectedCard] = useState(null);
 
-    // Extract params from route
     const {
         hotelName = 'Hotel Name Unavailable',
         hotelLocation = 'Location Not Available',

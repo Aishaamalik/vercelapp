@@ -196,8 +196,8 @@ const BookHotelScreen = ({ route, navigation }) => {
             originalPrice,
             startDate,
             endDate,
-            customerName: 'Name Not Set', // Replace with actual customer name
-            customerEmail: 'example@mail.com' // Replace with actual customer email
+            customerName: 'Name Not Set', 
+            customerEmail: 'example@mail.com' 
           })}>
           <Text style={styles.bookButtonText}>Confirm Booking</Text>
         </TouchableOpacity>
@@ -207,7 +207,6 @@ const BookHotelScreen = ({ route, navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  // Your styles here
   container: {
     flex: 1,
     backgroundColor: 'white',
