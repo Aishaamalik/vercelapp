@@ -93,7 +93,7 @@ const BookHotelScreen = ({ route, navigation }) => {
         <Text style={styles.sectionTitle}>Order Info</Text>
         <View style={styles.orderInfo}>
           <Image
-            source={hotelImage} 
+            source={hotelImage}
             style={styles.hotelImage}
           />
           <View style={styles.hotelDetails}>
@@ -187,7 +187,18 @@ const BookHotelScreen = ({ route, navigation }) => {
       <View style={styles.bookingDetails}>
         <Text style={styles.bookingDetailText}>Price: ${price}</Text>
         <Text style={styles.bookingDetailText}>Original Price: ${originalPrice}</Text>
-        <TouchableOpacity style={styles.bookButton}>
+        <TouchableOpacity style={styles.bookButton}
+          onPress={() => navigation.navigate('Checkout', {
+            hotelName,
+            hotelLocation,
+            hotelImage,
+            price,
+            originalPrice,
+            startDate,
+            endDate,
+            customerName: 'Name Not Set', // Replace with actual customer name
+            customerEmail: 'example@mail.com' // Replace with actual customer email
+          })}>
           <Text style={styles.bookButtonText}>Confirm Booking</Text>
         </TouchableOpacity>
       </View>
@@ -211,7 +222,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginLeft: 10,
-    color:'black',
+    color: 'black',
   },
   section: {
     padding: 15,
@@ -219,7 +230,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    color:'black',
+    color: 'black',
   },
   infoRow: {
     flexDirection: 'row',
@@ -228,7 +239,7 @@ const styles = StyleSheet.create({
   },
   infoLabel: {
     fontWeight: 'bold',
-    color:'black',
+    color: 'black',
   },
   infoValue: {
     color: '#555',
@@ -250,7 +261,7 @@ const styles = StyleSheet.create({
   hotelName: {
     fontSize: 18,
     fontWeight: 'bold',
-    color:'black',
+    color: 'black',
   },
   hotelLocation: {
     color: '#555',
@@ -297,7 +308,7 @@ const styles = StyleSheet.create({
   categoryText: {
     marginTop: 5,
     fontSize: 12,
-    color:'black',
+    color: 'black',
   },
   modalContainer: {
     flex: 1,
@@ -314,7 +325,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
-    color:'black',
+    color: 'black',
   },
   columnWrapper: {
     justifyContent: 'space-evenly',
@@ -332,7 +343,7 @@ const styles = StyleSheet.create({
   serviceName: {
     marginTop: 5,
     fontSize: 14,
-    color:'black',
+    color: 'black',
   },
   closeButton: {
     marginTop: 20,
@@ -350,7 +361,7 @@ const styles = StyleSheet.create({
   bookingDetailText: {
     fontSize: 16,
     marginBottom: 5,
-    color:'black',
+    color: 'black',
   },
   bookButton: {
     backgroundColor: '#007BFF',

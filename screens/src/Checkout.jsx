@@ -1,9 +1,23 @@
+// In CheckoutScreen.jsx
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const CheckoutScreen = ({ navigation }) => {
+const CheckoutScreen = ({ route, navigation }) => {
     const [selectedCard, setSelectedCard] = useState(null);
+
+    // Extract params from route
+    const {
+        hotelName = 'Hotel Name Unavailable',
+        hotelLocation = 'Location Not Available',
+        hotelImage = require('../Assets/visits/hotel.jpeg'),
+        price = 0,
+        originalPrice = 0,
+        startDate = '',
+        endDate = '',
+        customerName = 'Name Not Set',
+        customerEmail = 'example@mail.com'
+    } = route.params || {};
 
     return (
         <ScrollView style={styles.container}>
@@ -16,12 +30,12 @@ const CheckoutScreen = ({ navigation }) => {
             
             <View style={styles.hotelInfo}>
                 <Image
-                    source={require('../Assets/visits/hotel.jpeg')}
+                    source={hotelImage}
                     style={styles.hotelImage}
                 />
                 <View style={styles.hotelDetails}>
-                    <Text style={styles.hotelName}>The Lalit New Delhi</Text>
-                    <Text style={styles.hotelLocation}>Uttar Pradesh, India</Text>
+                    <Text style={styles.hotelName}>{hotelName}</Text>
+                    <Text style={styles.hotelLocation}>{hotelLocation}</Text>
                     <View style={styles.rating}>
                         <Ionicons name="star" size={16} color="#FFD700" />
                         <Text style={styles.ratingText}>4.4 (41)</Text>
@@ -33,11 +47,11 @@ const CheckoutScreen = ({ navigation }) => {
                 <Text style={styles.sectionTitle}>Customer Info</Text>
                 <View style={styles.infoRow}>
                     <Text style={styles.infoLabel}>Name</Text>
-                    <Text style={styles.infoValue}>Andy Lexian</Text>
+                    <Text style={styles.infoValue}>{customerName}</Text>
                 </View>
                 <View style={styles.infoRow}>
                     <Text style={styles.infoLabel}>Email</Text>
-                    <Text style={styles.infoValue}>example@mail.com</Text>
+                    <Text style={styles.infoValue}>{customerEmail}</Text>
                 </View>
             </View>
             
@@ -45,15 +59,15 @@ const CheckoutScreen = ({ navigation }) => {
                 <Text style={styles.sectionTitle}>Order Info</Text>
                 <View style={styles.infoRow}>
                     <Text style={styles.infoLabel}>Length of Stay</Text>
-                    <Text style={styles.infoValue}>3 days 2 nights</Text>
+                    <Text style={styles.infoValue}>{startDate} to {endDate}</Text>
                 </View>
                 <View style={styles.infoRow}>
                     <Text style={styles.infoLabel}>Check In</Text>
-                    <Text style={styles.infoValue}>June 12, 2022</Text>
+                    <Text style={styles.infoValue}>{startDate}</Text>
                 </View>
                 <View style={styles.infoRow}>
                     <Text style={styles.infoLabel}>Check Out</Text>
-                    <Text style={styles.infoValue}>June 14, 2022</Text>
+                    <Text style={styles.infoValue}>{endDate}</Text>
                 </View>
                 <View style={styles.infoRow}>
                     <Text style={styles.infoLabel}>Type Room</Text>
@@ -67,6 +81,7 @@ const CheckoutScreen = ({ navigation }) => {
                     <TextInput
                         style={styles.promoCodeInput}
                         placeholder="Input code"
+                        placeholderTextColor={"black"}
                     />
                     <TouchableOpacity style={styles.applyButton}>
                         <Text style={styles.applyButtonText}>Apply</Text>
@@ -78,7 +93,7 @@ const CheckoutScreen = ({ navigation }) => {
                 </View>
                 <View style={styles.infoRow}>
                     <Text style={styles.infoLabel}>Total Pay</Text>
-                    <Text style={styles.totalValue}>$300</Text>
+                    <Text style={styles.totalValue}>${price - 20}</Text>
                 </View>
             </View>
             
@@ -110,7 +125,7 @@ const CheckoutScreen = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
             
-            <TouchableOpacity style={styles.payNowButton}>
+            <TouchableOpacity style={styles.payNowButton} onPress={()=> navigation.navigate('Splash Order')}>
                 <Text style={styles.payNowButtonText}>Pay Now</Text>
             </TouchableOpacity>
         </ScrollView>
@@ -132,6 +147,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         marginLeft: 10,
+        color: 'black',
     },
     hotelInfo: {
         flexDirection: 'row',
@@ -156,13 +172,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     hotelName: {
+        fontSize: 18,
         fontWeight: 'bold',
-        fontSize: 16,
-        color: '#333',
+        color: 'black',
     },
     hotelLocation: {
-        color: '#888',
-        marginBottom: 5,
+        color: '#555',
     },
     rating: {
         flexDirection: 'row',
@@ -170,113 +185,83 @@ const styles = StyleSheet.create({
     },
     ratingText: {
         marginLeft: 5,
-        color: '#888',
+        color: '#555',
     },
     section: {
         marginBottom: 20,
-        padding: 10,
-        backgroundColor: '#f8f8f8',
-        borderRadius: 10,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.1,
-        shadowRadius: 1,
-        elevation: 2,
     },
     sectionTitle: {
         fontSize: 16,
         fontWeight: 'bold',
+        color: 'black',
         marginBottom: 10,
-        color: '#333',
     },
     infoRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ddd',
-        paddingBottom: 5,
+        marginVertical: 5,
     },
     infoLabel: {
-        color: '#888',
-        fontSize: 14,
+        fontWeight: 'bold',
+        color: 'black',
     },
     infoValue: {
-        fontWeight: 'bold',
-        color: '#333',
-        fontSize: 14,
-    },
-    promoValue: {
-        fontWeight: 'bold',
-        color: 'red',
-        fontSize: 14,
-    },
-    totalValue: {
-        fontWeight: 'bold',
-        fontSize: 18,
-        color: '#333',
+        color: '#555',
     },
     promoCodeContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        borderWidth: 1,
-        borderColor: '#ddd',
-        borderRadius: 5,
-        overflow: 'hidden',
-        marginBottom: 10,
+        marginVertical: 10,
     },
     promoCodeInput: {
         flex: 1,
+        borderColor: '#ccc',
+        borderWidth: 1,
+        borderRadius: 5,
         padding: 10,
-        backgroundColor: '#fff',
+        color:'black',
     },
     applyButton: {
         backgroundColor: '#007BFF',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
+        padding: 10,
+        borderRadius: 5,
+        marginLeft: 10,
     },
     applyButtonText: {
-        color: '#fff',
+        color: 'white',
+    },
+    promoValue: {
+        color: '#FF0000',
+    },
+    totalValue: {
         fontWeight: 'bold',
-        fontSize: 14,
+        color: 'black',
     },
     paymentMethod: {
         flexDirection: 'row',
         alignItems: 'center',
-        borderWidth: 1,
-        borderColor: '#ddd',
-        borderRadius: 5,
-        padding: 10,
-        marginBottom: 10,
-        backgroundColor: '#fff',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.1,
-        shadowRadius: 1,
-        elevation: 2,
+        paddingVertical: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
     },
     cardImage: {
         width: 40,
         height: 25,
-        resizeMode: 'contain',
         marginRight: 10,
     },
     cardNumber: {
         flex: 1,
-        fontSize: 14,
-        color: '#333',
+        color:'balck',
     },
     payNowButton: {
         backgroundColor: '#007BFF',
-        paddingVertical: 15,
+        padding: 15,
+        borderRadius: 10,
         alignItems: 'center',
-        borderRadius: 5,
-        marginTop: 20,
     },
     payNowButtonText: {
-        color: '#fff',
+        color: 'white',
         fontWeight: 'bold',
-        fontSize: 16,
     },
 });
 
