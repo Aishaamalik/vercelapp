@@ -131,10 +131,9 @@ const Booked = () => {
                     <Text style={styles.price}>{item.price}</Text>
                 </View>
             </View>
-            <TouchableOpacity style={styles.detailButton}>
-                <Text style={styles.detailButtonText}>Rating</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.detailButton1}>
+            <TouchableOpacity style={styles.detailButton1}
+            
+            onPress={() => navigation.navigate('Detail Ticket', { bookingDetails: item })}>
                 <Text style={styles.detailButtonText1}>Detail</Text>
             </TouchableOpacity>
         </View>
