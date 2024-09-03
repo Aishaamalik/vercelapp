@@ -77,7 +77,6 @@ const Booked = () => {
             setBookings((prevBookings) => [...prevBookings, newBooking]);
         }
     }, [route.params]);
-
     const renderItem = ({ item }) => (
         <View style={styles.card}>
             <View style={styles.cardHeader}>
@@ -100,11 +99,15 @@ const Booked = () => {
                     <Text style={styles.price}>{item.price}</Text>
                 </View>
             </View>
-            <TouchableOpacity style={styles.detailButton} onPress={()=> navigation.navigate('Detail Ticket')}>
+            <TouchableOpacity 
+                style={styles.detailButton} 
+                onPress={() => navigation.navigate('Detail Ticket', { bookingDetails: item })}
+            >
                 <Text style={styles.detailButtonText}>Detail</Text>
             </TouchableOpacity>
         </View>
     );
+    
 
     const renderItem1 = ({ item }) => (
         <View style={styles.card}>

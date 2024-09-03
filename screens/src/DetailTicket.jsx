@@ -2,7 +2,9 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const DetailTicketScreen = ({ navigation }) => {
+const DetailTicketScreen = ({ route, navigation }) => {
+    const { bookingDetails } = route.params; 
+
     return (
         <ScrollView style={styles.container}>
             <View style={styles.header}>
@@ -14,20 +16,20 @@ const DetailTicketScreen = ({ navigation }) => {
 
             <Text style={styles.ticketId}>INV1273436347</Text>
             <View style={styles.statusContainer}>
-                <Text style={styles.statusText}>Will Come</Text>
+                <Text style={styles.statusText}>{bookingDetails.status}</Text>
             </View>
 
             <View style={styles.hotelInfoContainer}>
-                <Image source={require('../Assets/visits/hotel.jpeg')} style={styles.hotelImage} />
+                <Image source={bookingDetails.image} style={styles.hotelImage} />
                 <View style={styles.hotelDetails}>
-                    <Text style={styles.hotelName}>The Lalit New Delhi</Text>
+                    <Text style={styles.hotelName}>{bookingDetails.title}</Text>
                     <View style={styles.locationContainer}>
                         <Ionicons name="location-outline" size={16} color="#888" />
-                        <Text style={styles.locationText}>Uttar Pradesh, India</Text>
+                        <Text style={styles.locationText}>{bookingDetails.location}</Text>
                     </View>
                     <View style={styles.ratingContainer}>
                         <Ionicons name="star" size={16} color="#FFD700" />
-                        <Text style={styles.ratingText}>4.4 (41)</Text>
+                        <Text style={styles.ratingText}>{bookingDetails.rating} ({bookingDetails.reviews})</Text>
                     </View>
                 </View>
             </View>
@@ -95,6 +97,7 @@ const DetailTicketScreen = ({ navigation }) => {
     );
 };
 
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -118,13 +121,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         flex: 1,
         textAlign: 'center',
-        color:'black',
+        color: 'black',
     },
     ticketId: {
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 15,
-        color:'black',
+        color: 'black',
     },
     statusContainer: {
         alignSelf: 'flex-start',
@@ -156,7 +159,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 10,
-        color:'black',
+        color: 'black',
     },
     locationContainer: {
         flexDirection: 'row',
@@ -184,7 +187,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 15,
-        color:'black',
+        color: 'black',
     },
     infoRow: {
         flexDirection: 'row',
@@ -197,7 +200,7 @@ const styles = StyleSheet.create({
     },
     infoValue: {
         fontSize: 16,
-        color:'black',
+        color: 'black',
     },
     infoValueSuccess: {
         fontSize: 16,
@@ -215,12 +218,12 @@ const styles = StyleSheet.create({
     totalLabel: {
         fontSize: 18,
         fontWeight: 'bold',
-        color:'black',
+        color: 'black',
     },
     totalValue: {
         fontSize: 18,
         fontWeight: 'bold',
-        color:'black',
+        color: 'black',
     },
     downloadButton: {
         backgroundColor: '#1E90FF',
