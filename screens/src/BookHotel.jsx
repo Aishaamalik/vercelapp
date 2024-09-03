@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, Modal, FlatList } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Calendar } from 'react-native-calendars';
 
 const categories = [
@@ -25,8 +24,11 @@ const services = [
 const BookHotelScreen = ({ route, navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [calendarVisible, setCalendarVisible] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(''); 
+  const [selectedDate, setSelectedDate] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
+  // Get params from route
   const {
     hotelName = 'Hotel Name Unavailable',
     hotelLocation = 'Location Not Available',
@@ -37,6 +39,15 @@ const BookHotelScreen = ({ route, navigation }) => {
 
   const handleServicePress = (screen) => {
     navigation.goBack();
+  };
+
+  const handleDateChange = (date) => {
+    if (!startDate) {
+      setStartDate(date.dateString);
+    } else if (startDate && !endDate) {
+      setEndDate(date.dateString);
+      setCalendarVisible(false);
+    }
   };
 
   const renderServiceItem = ({ item }) => (
@@ -101,6 +112,15 @@ const BookHotelScreen = ({ route, navigation }) => {
       </View>
 
       <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Stay Duration</Text>
+        <TouchableOpacity style={styles.dateButton} onPress={() => setCalendarVisible(true)}>
+          <Text style={styles.dateButtonText}>
+            {startDate && endDate ? `${startDate} to ${endDate}` : 'Select Dates'}
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.section}>
         <View style={styles.facilitiesHeader}>
           <Text style={styles.sectionTitle}>Common Facilities</Text>
           <TouchableOpacity>
@@ -143,6 +163,27 @@ const BookHotelScreen = ({ route, navigation }) => {
         </View>
       </Modal>
 
+      <Modal
+        transparent={true}
+        visible={calendarVisible}
+        onRequestClose={() => setCalendarVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Calendar
+              onDayPress={handleDateChange}
+              markedDates={{ [startDate]: { selected: true }, [endDate]: { selected: true } }}
+            />
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setCalendarVisible(false)}
+            >
+              <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
       <View style={styles.bookingDetails}>
         <Text style={styles.bookingDetailText}>Price: ${price}</Text>
         <Text style={styles.bookingDetailText}>Original Price: ${originalPrice}</Text>
@@ -155,6 +196,7 @@ const BookHotelScreen = ({ route, navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  // Your styles here
   container: {
     flex: 1,
     backgroundColor: 'white',
@@ -194,6 +236,7 @@ const styles = StyleSheet.create({
   orderInfo: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginVertical: 10,
   },
   hotelImage: {
     width: 100,
@@ -201,7 +244,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   hotelDetails: {
-    marginLeft: 10,
+    marginLeft: 15,
+    flex: 1,
   },
   hotelName: {
     fontSize: 18,
@@ -217,7 +261,16 @@ const styles = StyleSheet.create({
   },
   ratingText: {
     marginLeft: 5,
-    color: '#FFD700',
+    color: '#555',
+  },
+  dateButton: {
+    padding: 10,
+    backgroundColor: '#e0e0e0',
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  dateButtonText: {
+    color: '#555',
   },
   facilitiesHeader: {
     flexDirection: 'row',
@@ -244,7 +297,7 @@ const styles = StyleSheet.create({
   categoryText: {
     marginTop: 5,
     fontSize: 12,
-    color: '#555',
+    color:'black',
   },
   modalContainer: {
     flex: 1,
@@ -261,16 +314,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+    color:'black',
   },
   columnWrapper: {
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
   },
   contentContainer: {
     paddingBottom: 20,
   },
   serviceItem: {
     alignItems: 'center',
-    marginBottom: 15,
   },
   serviceImage: {
     width: 50,
@@ -279,6 +332,7 @@ const styles = StyleSheet.create({
   serviceName: {
     marginTop: 5,
     fontSize: 14,
+    color:'black',
   },
   closeButton: {
     marginTop: 20,
