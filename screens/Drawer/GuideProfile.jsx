@@ -1,14 +1,22 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const GuideProfileScreen = ({ route, navigation }) => {
-    const { guideImage, guideName = 'Default Guide Name' } = route.params || {};
+    const defaultImage = require('../Assets/Tourguide/p1.jpg'); 
+    const defaultName = 'Default Guide Name';
+
+    const { guideImage = defaultImage, guideName = defaultName } = route.params || {};
 
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                <TouchableOpacity
+                    onPress={() => navigation.goBack()}
+                    style={styles.backButton}
+                    accessibilityLabel="Back"
+                    accessibilityHint="Go back to the previous screen"
+                >
                     <Icon name="arrow-back" size={24} color="#000" />
                 </TouchableOpacity>
                 <Text style={styles.headerText}>Profile</Text>
@@ -21,11 +29,7 @@ const GuideProfileScreen = ({ route, navigation }) => {
 
             <View style={styles.profileContainer}>
                 <Image
-                    source={
-                        guideImage 
-                        ? { uri: guideImage } 
-                        : require('../Assets/Tourguide/p1.jpg') 
-                    }
+                    source={guideImage}
                     style={styles.profileImage}
                 />
                 <Text style={styles.profileName}>{guideName}</Text>
@@ -36,10 +40,10 @@ const GuideProfileScreen = ({ route, navigation }) => {
             </View>
 
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.messageButton}>
+                <TouchableOpacity style={styles.messageButton} accessibilityLabel="Send Message">
                     <Text style={styles.buttonText}>Send Message</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.callButton}>
+                <TouchableOpacity style={styles.callButton} accessibilityLabel="Call Now">
                     <Text style={styles.buttonText1}>Call Now</Text>
                 </TouchableOpacity>
             </View>
@@ -71,6 +75,8 @@ const GuideProfileScreen = ({ route, navigation }) => {
     );
 };
 
+const { width, height } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -83,7 +89,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingTop: 40,
         paddingHorizontal: 20,
-        width: '65%',
+        width: '100%',
         zIndex: 10,
     },
     backButton: {
@@ -99,13 +105,13 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         right: 0,
-        height: 220,
+        height: height * 0.3, // Adjust height based on screen size
         width: '100%',
         resizeMode: 'cover',
     },
     profileContainer: {
         alignItems: 'center',
-        marginTop: 150,
+        marginTop: height * 0.3, // Adjust marginTop based on background image height
         paddingHorizontal: 20,
     },
     profileImage: {
@@ -120,7 +126,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: 15,
         color: 'black',
-
     },
     profileSubtitle: {
         fontSize: 16, 
@@ -177,7 +182,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         color: '#0CAFFF',
-        
     },
     aboutContainer: {
         paddingHorizontal: 20,
@@ -188,7 +192,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 10,
         color: 'black',
-
     },
     aboutText: {
         fontSize: 16,

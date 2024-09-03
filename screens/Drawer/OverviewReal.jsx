@@ -116,6 +116,22 @@ const hotels = [
   },
 ];
 
+const handleServicePress = (categoryTitle) => {
+  switch (categoryTitle) {
+    case 'Airport':
+      navigation.navigate('Airport'); 
+      break;
+    case 'Rental':
+      navigation.navigate('Rental'); 
+      break;
+    case 'Hotel':
+      navigation.navigate('Hotel'); 
+      break;
+    default:
+      setModalVisible(false);
+      break;
+  }
+};
 const OverviewScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -181,7 +197,13 @@ const OverviewScreen = ({ navigation }) => {
     <TouchableOpacity
       key={item.title}
       style={styles.category}
-      onPress={() => item.title === 'More' && setModalVisible(true)}
+      onPress={() => {
+        if (item.title === 'More') {
+          setModalVisible(true);
+        } else {
+          handleServicePress(item.title);
+        }
+      }}
     >
       <Image source={item.icon} style={styles.categoryIcon} />
       <Text style={styles.categoryText}>{item.title}</Text>
@@ -212,8 +234,12 @@ const OverviewScreen = ({ navigation }) => {
                 <Text style={styles.location}>Netherlands</Text>
               </View>
               <View style={styles.profileIcons}>
-                <Icon1 name="bell" size={24} color="black" style={styles.profileIcon} />
+                <TouchableOpacity onPress={()=> navigation.navigate('Main Notifications')}>                
+                  <Icon1 name="bell" size={24} color="black" style={styles.profileIcon} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('Message')}>
                 <Icon1 name="message-square" size={24} color="black" style={styles.profileIcon} />
+                </TouchableOpacity>
               </View>
             </View>
 
