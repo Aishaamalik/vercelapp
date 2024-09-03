@@ -21,7 +21,7 @@ const services = [
 ];
 
 const HotelDetailsScreen = ({ route, navigation }) => {
-  const defaultImage = require('../Assets/visits/hotel.jpeg'); 
+  const defaultImage = require('../Assets/visits/hotel.jpeg');
   const defaultHotelName = 'Hotel Name Unavailable';
 
   const { hotelName = defaultHotelName, hotelLocation, hotelImage = defaultImage } = route.params || {};
@@ -122,7 +122,13 @@ const HotelDetailsScreen = ({ route, navigation }) => {
             <Text style={styles.originalPrice}>$312</Text>
           </View>
 
-          <TouchableOpacity style={styles.bookButton} onPress={()=> navigation.navigate('Book Hotel')}>
+          <TouchableOpacity style={styles.bookButton} onPress={() => navigation.navigate('Book Hotel', {
+            hotelName: hotelName,
+            hotelLocation: hotelLocation,
+            hotelImage: hotelImage,
+            price: 32,
+            originalPrice: 312,
+          })}>
             <Text style={styles.bookButtonText}>Book Now</Text>
           </TouchableOpacity>
         </View>

@@ -22,10 +22,18 @@ const services = [
   { name: 'Open Space', image: require('../Assets/Iconsfacilities/park.png'), screen: 'Open Space' },
 ];
 
-const BookHotelScreen = ({ navigation }) => {
+const BookHotelScreen = ({ route, navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [calendarVisible, setCalendarVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState(''); 
+
+  const {
+    hotelName = 'Hotel Name Unavailable',
+    hotelLocation = 'Location Not Available',
+    hotelImage = require('../Assets/visits/hotel.jpeg'),
+    price = 0,
+    originalPrice = 0
+  } = route.params || {};
 
   const handleServicePress = (screen) => {
     navigation.goBack();
@@ -74,12 +82,12 @@ const BookHotelScreen = ({ navigation }) => {
         <Text style={styles.sectionTitle}>Order Info</Text>
         <View style={styles.orderInfo}>
           <Image
-            source={require('../Assets/visits/hotel.jpeg')} 
+            source={hotelImage} 
             style={styles.hotelImage}
           />
           <View style={styles.hotelDetails}>
-            <Text style={styles.hotelName}>The Lalit New Delhi</Text>
-            <Text style={styles.hotelLocation}>Uttar Pradesh, India</Text>
+            <Text style={styles.hotelName}>{hotelName}</Text>
+            <Text style={styles.hotelLocation}>{hotelLocation}</Text>
             <View style={styles.rating}>
               <Ionicons name="star" size={16} color="#FFD700" />
               <Text style={styles.ratingText}>4.4 (41)</Text>
@@ -104,27 +112,9 @@ const BookHotelScreen = ({ navigation }) => {
           {categories.map((category) => renderCategoryItem({ item: category }))}
         </View>
 
-        <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.seeAllButton}></TouchableOpacity>
-      </View>
-
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Stay time</Text>
-        <View style={styles.dateRow}>
-          <View style={styles.dateContainer}>
-            <Text style={styles.dateLabel}>Check in</Text>
-            <TouchableOpacity style={styles.dateInput} onPress={() => setCalendarVisible(true)}>
-              <Text style={styles.dateText}>{selectedDate || 'Date'}</Text>
-              <Ionicons name="calendar" size={20} color="#000" />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.dateContainer}>
-            <Text style={styles.dateLabel}>Check Out</Text>
-            <TouchableOpacity style={styles.dateInput} onPress={() => setCalendarVisible(true)}>
-              <Text style={styles.dateText}>{selectedDate || 'Date'}</Text>
-              <Ionicons name="calendar" size={20} color="#000" />
-            </TouchableOpacity>
-          </View>
-        </View>
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <Text style={styles.seeAllText}>See All</Text>
+        </TouchableOpacity>
       </View>
 
       <Modal
@@ -153,229 +143,171 @@ const BookHotelScreen = ({ navigation }) => {
         </View>
       </Modal>
 
-      {/* Calendar Modal */}
-      <Modal
-        transparent={true}
-        visible={calendarVisible}
-        onRequestClose={() => setCalendarVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Calendar
-              onDayPress={(day) => {
-                setSelectedDate(day.dateString);
-                setCalendarVisible(false);
-              }}
-              markedDates={{
-                [selectedDate]: { selected: true, selectedColor: '#007BFF' }
-              }}
-            />
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={() => setCalendarVisible(false)}
-            >
-              <Text style={styles.closeButtonText}>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+      <View style={styles.bookingDetails}>
+        <Text style={styles.bookingDetailText}>Price: ${price}</Text>
+        <Text style={styles.bookingDetailText}>Original Price: ${originalPrice}</Text>
+        <TouchableOpacity style={styles.bookButton}>
+          <Text style={styles.bookButtonText}>Confirm Booking</Text>
+        </TouchableOpacity>
+      </View>
     </ScrollView>
   );
 };
 
- const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        paddingHorizontal: 20,
-    },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginVertical: 20,
-    },
-    headerTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginLeft: 10,
-        color: '#000',
-    },
-    section: {
-        marginBottom: 20,
-    },
-    sectionTitle: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginBottom: 10,
-        color: '#000',
-    },
-    infoRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 10,
-    },
-    infoLabel: {
-        color: '#888',
-        fontSize: 14,
-    },
-    infoValue: {
-        fontWeight: 'bold',
-        color: '#000',
-        fontSize: 14,
-    },
-    orderInfo: {
-        flexDirection: 'row',
-        marginBottom: 10,
-        alignItems: 'center',
-    },
-    hotelImage: {
-        width: 100,
-        height: 100,
-        borderRadius: 10,
-        marginRight: 10,
-    },
-    hotelDetails: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    hotelName: {
-        fontWeight: 'bold',
-        fontSize: 16,
-        color: '#000',
-        marginBottom: 5,
-    },
-    hotelLocation: {
-        color: '#888',
-        fontSize: 14,
-        marginBottom: 5,
-    },
-    rating: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    ratingText: {
-        marginLeft: 5,
-        color: '#888',
-        fontSize: 14,
-    },
-    facilitiesHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 10,
-    },
-    seeAllText: {
-        color: '#007BFF',
-        fontSize: 14,
-    },
-    categories: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-        marginHorizontal: 15,
-        marginVertical: 10,
-    },
-    category: {
-        alignItems: 'center',
-        width: 70,
-        marginBottom: 15,
-    },
-    categoryIcon: {
-        width: 30,
-        height: 30,
-        resizeMode: 'contain',
-    },
-    categoryText: {
-        marginTop: 5,
-        fontSize: 12,
-        color: 'black',
-    },
-    dateRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    dateContainer: {
-        flex: 1,
-        marginRight: 10,
-    },
-    dateLabel: {
-        color: '#888',
-        fontSize: 14,
-        marginBottom: 5,
-    },
-    dateInput: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: 10,
-        borderWidth: 1,
-        borderColor: '#ddd',
-        borderRadius: 5,
-    },
-    dateText: {
-        color: '#888',
-        fontSize: 14,
-    },
-    serviceItem: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '45%',
-        margin: '2.5%',
-        padding: 10,
-        borderRadius: 10,
-        backgroundColor: '#F5F5F5',
-    },
-    serviceImage: {
-        width: 40,
-        height: 40,
-        marginBottom: 8,
-        resizeMode: 'contain',
-    },
-    serviceName: {
-        fontSize: 14,
-        textAlign: 'center',
-        color: '#000',
-    },
-    modalContainer: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
-    modalContent: {
-        backgroundColor: '#FFF',
-        borderTopLeftRadius: 16,
-        borderTopRightRadius: 16,
-        padding: 16,
-        height: '50%',
-    },
-    bottomSheetHeading: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 10,
-        color: '#000',
-    },
-    closeButton: {
-        backgroundColor: '#007BFF',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 5,
-        alignItems: 'center',
-        marginTop: 20,
-    },
-    closeButtonText: {
-        color: '#FFF',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    columnWrapper: {
-        justifyContent: 'space-between',
-    },
-    contentContainer: {
-        paddingBottom: 20,
-    },
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 15,
+    backgroundColor: '#f8f8f8',
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginLeft: 10,
+    color:'black',
+  },
+  section: {
+    padding: 15,
+  },
+  sectionTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color:'black',
+  },
+  infoRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+  },
+  infoLabel: {
+    fontWeight: 'bold',
+    color:'black',
+  },
+  infoValue: {
+    color: '#555',
+  },
+  orderInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  hotelImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+  },
+  hotelDetails: {
+    marginLeft: 10,
+  },
+  hotelName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color:'black',
+  },
+  hotelLocation: {
+    color: '#555',
+  },
+  rating: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  ratingText: {
+    marginLeft: 5,
+    color: '#FFD700',
+  },
+  facilitiesHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  seeAllText: {
+    color: '#007BFF',
+  },
+  categories: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  category: {
+    width: '25%',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  categoryIcon: {
+    width: 30,
+    height: 30,
+  },
+  categoryText: {
+    marginTop: 5,
+    fontSize: 12,
+    color: '#555',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 15,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
+  bottomSheetHeading: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  columnWrapper: {
+    justifyContent: 'space-between',
+  },
+  contentContainer: {
+    paddingBottom: 20,
+  },
+  serviceItem: {
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  serviceImage: {
+    width: 50,
+    height: 50,
+  },
+  serviceName: {
+    marginTop: 5,
+    fontSize: 14,
+  },
+  closeButton: {
+    marginTop: 20,
+    paddingVertical: 10,
+    backgroundColor: '#007BFF',
+    borderRadius: 5,
+  },
+  closeButtonText: {
+    color: 'white',
+    textAlign: 'center',
+  },
+  bookingDetails: {
+    padding: 15,
+  },
+  bookingDetailText: {
+    fontSize: 16,
+    marginBottom: 5,
+    color:'black',
+  },
+  bookButton: {
+    backgroundColor: '#007BFF',
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  bookButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
 });
-
 
 export default BookHotelScreen;
