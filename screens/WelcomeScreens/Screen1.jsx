@@ -1,11 +1,11 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import DrawerNavigator from '../Drawer/DrawerNavigator'
+import Signup from '../src/SignIn'
 
 const Screen1 = () => {
   return (
     <View style={{flex: 1}}>
-      <DrawerNavigator/>
+      <Signup/>
     </View>
   )
 }

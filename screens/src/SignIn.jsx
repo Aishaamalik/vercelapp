@@ -1,24 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 
 const Signup = () => {
-    const navigation =useNavigation();
+    const [email, setEmail] = useState('');
+    const navigation = useNavigation();
+
+    const handleContinue = () => {
+        if (email === 'abc@gmail.com') {
+            navigation.navigate('one'); 
+        } else {
+            console.log('Invalid email');
+        }
+    };
+
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <MaterialIcons name="menu" size={24} color="#fff" />
-                </TouchableOpacity>
-                
-            </View>
-            
+
             <View style={styles.content1}>
                 <Text style={styles.title}>Hi, Welcome Back!</Text>
                 <Text style={styles.subtitle}>Lorem ipsum dolor sit amet</Text>
-                </View>
+            </View>
+            
             <View style={styles.content}>
                 <View style={styles.inputContainer}>
                     <Text style={styles.label}>Email</Text>
@@ -26,9 +31,11 @@ const Signup = () => {
                         style={styles.input}
                         placeholder="Enter your email address"
                         placeholderTextColor="#cfd8dc"
+                        value={email}
+                        onChangeText={setEmail}
                     />
                 </View>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={handleContinue}>
                     <Text style={styles.buttonText}>Continue with Email</Text>
                 </TouchableOpacity>
                 <View style={styles.dividerContainer}>
@@ -36,7 +43,7 @@ const Signup = () => {
                     <Text style={styles.orText}>Or continue with</Text>
                     <View style={styles.divider} />
                 </View>
-                <TouchableOpacity style={[styles.button, styles.googleButton]}>
+                <TouchableOpacity style={[styles.button, styles.googleButton]} onPress={()=> navigation.navigate('SignInWithEmail')}>
                     <FontAwesome name="google" size={20} color="#DB4437" style={styles.socialIcon} />
                     <Text style={[styles.buttonText, styles.googleButtonText]}>Continue with Google</Text>
                 </TouchableOpacity>
@@ -45,7 +52,10 @@ const Signup = () => {
                     <Text style={[styles.buttonText, styles.appleButtonText]}>Continue with Apple</Text>
                 </TouchableOpacity>
                 <Text style={styles.footerText}>
-                    Already have an account? <Text style={styles.loginText}>SignUp</Text>
+                    Already have an account? 
+                    <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+                        <Text style={styles.loginText}>SignUp</Text>
+                    </TouchableOpacity>
                 </Text>
             </View>
         </View>
@@ -62,12 +72,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: 15,
-    },
-    headerIcons: {
-        flexDirection: 'row',
-    },
-    icon: {
-        marginRight: 15,
     },
     content: {
         flex: 1,

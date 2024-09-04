@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList, Switch } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList, Switch, Modal, Button } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation, useRoute } from '@react-navigation/native'; 
@@ -45,10 +45,10 @@ const ProfileScreen = () => {
     const navigation = useNavigation();
     const route = useRoute();
     const [isDarkMode, setIsDarkMode] = useState(false);
-
     const [profileName, setProfileName] = useState('Name Not Set');
     const [profileLocation, setProfileLocation] = useState('Location Not Set');
     const [profileImage, setProfileImage] = useState(require('../Assets/Profile/pic1.jpeg')); // Default image
+    const [modalVisible, setModalVisible] = useState(false); // Modal visibility state
 
     useEffect(() => {
         if (route.params) {
@@ -128,9 +128,32 @@ const ProfileScreen = () => {
                     value={isDarkMode}
                 />
             </View>
-            <TouchableOpacity style={styles.logoutButton}>
+            <TouchableOpacity
+                style={styles.logoutButton}
+                onPress={() => setModalVisible(true)} 
+            >
                 <Text style={styles.logoutButtonText}>Log Out</Text>
             </TouchableOpacity>
+            
+            <Modal
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(false)}
+                animationType="slide"
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.modalText}>Are you sure you want to log out?</Text>
+                        <View style={styles.modalButtons}>
+                            <Button title="Cancel" onPress={() => setModalVisible(false)} />
+                            <Button title="Log Out" onPress={() => {
+                                setModalVisible(false)
+                                navigation.navigate('Slider');
+                            }} />
+                        </View>
+                    </View>
+                </View>
+            </Modal>
         </View>
     );
 };
@@ -209,6 +232,30 @@ const styles = StyleSheet.create({
         color: '#007BFF',
         fontSize: 16,
         fontWeight: 'bold',
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContent: {
+        width: '80%',
+        padding: 20,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        alignItems: 'center',
+    },
+    modalText: {
+        fontSize: 18,
+        color:'black',
+        marginBottom: 20,
+    },
+    modalButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '70%',
+        padding:20,
     },
 });
 

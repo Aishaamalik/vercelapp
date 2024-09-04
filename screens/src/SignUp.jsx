@@ -36,7 +36,7 @@ const CreateAccountScreen = () => {
                     <Text style={styles.orText}>Or continue with</Text>
                     <View style={styles.divider} />
                 </View>
-                <TouchableOpacity style={[styles.button, styles.googleButton]}>
+                <TouchableOpacity style={[styles.button, styles.googleButton]} onPress={()=> navigation.navigate('SignUpWithEmail')}>
                     <FontAwesome name="google" size={20} color="#DB4437" style={styles.socialIcon} />
                     <Text style={[styles.buttonText, styles.googleButtonText]}>Continue with Google</Text>
                 </TouchableOpacity>

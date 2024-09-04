@@ -54,10 +54,10 @@ import Booked from './Buttom/Booked';
 import Menu from './Buttom/Menu';
 import CheckoutVacation from './src/CheckoutVacation';
 import SearchDestination from './src/SearchDestination';
-import BookHotelScreen from './src/BookHotel';
 import DetailTicket from './src/DetailTicket';
 import MainNotifications from './src/MainNotifications';
 import Splash3 from './src/Splash3';
+import OverviewScreen from './Drawer/OverviewReal';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
@@ -141,6 +141,8 @@ const AppNavigator = () => {
                 <Stack.Screen name='Main Notifications' component={MainNotifications}/>
 
                 <Stack.Screen name='Splash Order' component={Splash3}/>
+                <Stack.Screen name='one' component={DrawerNavigator}/>
+
 
 
 
