@@ -3,6 +3,9 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, FlatList, M
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon1 from 'react-native-vector-icons/Feather';
 import FrequentVisits from './FrequentVisits';
+import { toggleTheme } from '../Themes/ThemeAction';
+import { useSelector, useDispatch } from 'react-redux';
+
 
 const categories = [
   { title: 'Airport', icon: require('../Assets/Icons/airport.png') },
@@ -134,22 +137,25 @@ const handleServicePress = (categoryTitle) => {
 };
 const OverviewScreen = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const isDay = useSelector(state => state.theme.isDay);
+  const dispatch = useDispatch();
+  const textColor = isDay ? 'black' : 'white';
+
+
 
   const handleServicePress = (screen) => {
     navigation.navigate(screen);
     setModalVisible(false);
   };
-
   const renderServiceItem = ({ item }) => (
-    <TouchableOpacity onPress={() => handleServicePress(item.screen)} style={styles.serviceItem}>
+    <TouchableOpacity onPress={() => handleServicePress(item.screen)} style={[styles.serviceItem, { backgroundColor: isDay ? 'white' : '#282C35' }]}>
       <Image source={item.image} style={styles.serviceImage} />
-      <Text style={styles.serviceName}>{item.name}</Text>
+      <Text style={[styles.serviceName, { color: textColor }]}>{item.name}</Text>
     </TouchableOpacity>
   );
-
   const renderGuideItem = ({ item }) => (
     <TouchableOpacity
-      style={styles.cardContainer}
+      style={[styles.cardContainer, { backgroundColor: isDay ? 'white' : '#282C35' }]}
       onPress={() => navigation.navigate('GuideProfile', {
         guideImage: item.image,
         guideName: item.name
@@ -158,14 +164,14 @@ const OverviewScreen = ({ navigation }) => {
       <Image source={item.image} style={styles.cardImage} />
       <View style={styles.ratingContainer}>
         <Icon name="star" size={16} color="#FFD700" />
-        <Text style={styles.ratingText}>{item.rating}</Text>
+        <Text style={[styles.ratingText, { color: textColor }]}>{item.rating}</Text>
       </View>
       <View style={styles.cardContent}>
-        <Text style={styles.cardName}>{item.name}</Text>
-        <Text style={styles.cardDetails}>{item.price}</Text>
+        <Text style={[styles.cardName, { color: textColor }]}>{item.name}</Text>
+        <Text style={[styles.cardDetails, { color: textColor }]}>{item.price}</Text>
         <View style={styles.cardLocation}>
           <Icon name="location-outline" size={16} color="#aaa" />
-          <Text style={styles.cardLocationText}>{item.location}</Text>
+          <Text style={[styles.cardLocationText, { color: textColor }]}>{item.location}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -182,17 +188,16 @@ const OverviewScreen = ({ navigation }) => {
     >
       <Image source={item.image} style={styles.image1} />
       <View style={styles.textContainer1}>
-        <Text style={styles.name1}>{item.name}</Text>
-        <Text style={styles.duration1}>{item.duration}</Text>
+        <Text style={[styles.name1, { color: textColor }]}>{item.name}</Text>
+        <Text style={[styles.duration1, { color: textColor }]}>{item.duration}</Text>
         <View style={styles.locationContainer1}>
           <Icon name="location-outline" size={14} color="#555" />
-          <Text style={styles.location1}>{item.location}</Text>
+          <Text style={[styles.location1, { color: textColor }]}>{item.location}</Text>
         </View>
       </View>
-      <Text style={styles.price1}>{item.price}</Text>
+      <Text style={[styles.price1, { color: textColor }]}>{item.price}</Text>
     </TouchableOpacity>
   );
-
   const renderCategoryItem = ({ item }) => (
     <TouchableOpacity
       key={item.title}
@@ -206,60 +211,60 @@ const OverviewScreen = ({ navigation }) => {
       }}
     >
       <Image source={item.icon} style={styles.categoryIcon} />
-      <Text style={styles.categoryText}>{item.title}</Text>
+      <Text style={[styles.categoryText, { color: textColor }]}>{item.title}</Text>
     </TouchableOpacity>
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: isDay ? 'white' : '#282C35' }]}>
       <FlatList
         ListHeaderComponent={() => (
           <>
-            <View style={styles.header}>
-              <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-                <Icon name="menu" size={24} color="white" />
-              </TouchableOpacity>
-              <View style={styles.headerIcons}>
-                <Icon1 name="moon" size={24} color="white" style={styles.headerIcon} />
-                <TouchableOpacity onPress={()=> navigation.navigate("Buttontabs")}>
+          <View style={[styles.header, { backgroundColor: isDay ? '#2196F3' : '#2196F3' }]}>
+            <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+              <Icon name="menu" size={24} color="white" />
+            </TouchableOpacity>
+            <View style={styles.headerIcons}>
+              <Icon1 name={isDay ? 'sun' : 'moon'} size={24} color="white" style={styles.headerIcon} />
+              <TouchableOpacity onPress={()=> navigation.navigate("Buttontabs")}>
                 <Icon name="person-outline" size={24} color="white" style={styles.headerIcon} />
-                </TouchableOpacity>
-              </View>
+              </TouchableOpacity>
             </View>
+          </View>
 
-            <View style={styles.profileSection}>
+          <View style={styles.profileSection}>
               <Image source={require('../Assets/Profile/pic1.jpeg')} style={styles.profileImage} />
               <View>
-                <Text style={styles.greeting}>Hi, Andy</Text>
-                <Text style={styles.location}>Netherlands</Text>
+                <Text style={[styles.profileName, { color: textColor }]}>Alonzo Endera</Text>
+                <Text style={[styles.profileLocation, { color: textColor }]}>Polynesia, French</Text>
               </View>
+            
               <View style={styles.profileIcons}>
                 <TouchableOpacity onPress={()=> navigation.navigate('Main Notifications')}>                
-                  <Icon1 name="bell" size={24} color="black" style={styles.profileIcon} />
+                  <Icon1 name="bell" size={24} color="gray" style={styles.profileIcon} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=> navigation.navigate('Message')}>
-                <Icon1 name="message-square" size={24} color="black" style={styles.profileIcon} />
+                <Icon1 name="message-square" size={24} color="gray" style={styles.profileIcon} />
                 </TouchableOpacity>
               </View>
             </View>
-
-            <View style={styles.searchBar}>
-              <Icon name="search" size={20} color="black" />
-              <TextInput placeholder="Search..." style={styles.searchInput} placeholderTextColor={'black'} />
-              <Icon name="options" size={20} color="black" />
-            </View>
+            <TextInput
+              style={[styles.searchBar, { backgroundColor: isDay ? 'white' : '#555', color: textColor }]}
+              placeholder="Search"
+              placeholderTextColor={isDay ? '#999' : '#aaa'}
+            />
 
             <View style={styles.categories}>
               {categories.map((category) => renderCategoryItem({ item: category }))}
             </View>
 
-            <Text style={styles.sectionHeading}>Frequently Visited</Text>
+            <Text style={[styles.sectionHeading, { color: textColor }]}>Frequently Visited</Text>
             <View style={styles.sectionContainer}>
               <FrequentVisits />
             </View>
 
             <View style={styles.headerSectionRow}>
-              <Text style={styles.sectionHeading}>Tour Guide</Text>
+              <Text style={[styles.sectionHeading, { color: textColor }]}>Tour Guide</Text>
               <TouchableOpacity onPress={() => navigation.navigate('TourGuide')}>
                 <Text style={styles.sectionLabel}>See All</Text>
               </TouchableOpacity>
@@ -277,7 +282,7 @@ const OverviewScreen = ({ navigation }) => {
             </View>
 
             <View style={styles.headerSectionRow}>
-              <Text style={styles.sectionHeading}>On Budget Tour</Text>
+              <Text style={[styles.sectionHeading, { color: textColor }]}>On Budget Tour</Text>
               <TouchableOpacity onPress={() => navigation.navigate('HotelList')}>
                 <Text style={styles.sectionLabel}>See All</Text>
               </TouchableOpacity>
@@ -304,7 +309,7 @@ const OverviewScreen = ({ navigation }) => {
         onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
+          <View style={[styles.modalContent, { backgroundColor: isDay ? 'white' : '#282C35' }]}>
             <Text style={styles.bottomSheetHeading}>Additional Services</Text>
             <FlatList
               data={services}
