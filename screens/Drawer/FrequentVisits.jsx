@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector } from 'react-redux';  // Import useSelector for theme management
+
 
 const initialData = [
   {
@@ -70,9 +72,10 @@ const initialData = [
 const FrequentVisitScreen = () => {
   const navigation = useNavigation();
   const [data, setData] = useState(initialData);
+  const isDay = useSelector(state => state.theme.isDay);  
 
   const handlePress = (item) => {
-    navigation.navigate('VecationDetails', {
+    navigation.navigate('VacationDetails', {
       image: item.image,
       title: item.title,
       location: item.location,
@@ -80,7 +83,9 @@ const FrequentVisitScreen = () => {
       rating: item.rating,
       reviews: item.reviews,
     });
-  };const toggleFavorite = (itemId) => {
+  };
+
+  const toggleFavorite = (itemId) => {
     setData((prevData) => {
       const updatedData = prevData.map((item) =>
         item.id === itemId ? { ...item, favorite: !item.favorite } : item
@@ -88,34 +93,33 @@ const FrequentVisitScreen = () => {
       const likedItems = updatedData.filter((item) => item.favorite);
       AsyncStorage.setItem('likedItems', JSON.stringify(likedItems));
       navigation.navigate('Liked', { likedItems });
-  
+
       return updatedData;
     });
   };
-  
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.card} onPress={() => handlePress(item)}>
+    <TouchableOpacity style={[styles.card, { backgroundColor: isDay ? 'white' : '#282C35' }]} onPress={() => handlePress(item)}>
       <Image source={item.image} style={styles.cardImage} />
       <TouchableOpacity style={styles.favoriteIcon} onPress={() => toggleFavorite(item.id)}>
-        <Icon name={item.favorite ? 'heart' : 'heart-outline'} size={24} color={item.favorite ? 'red' : 'black'} />
+        <Icon name={item.favorite ? 'heart' : 'heart-outline'} size={24} color={item.favorite ? 'red' : (isDay ? 'black' : 'white')} />
       </TouchableOpacity>
-      <Text style={styles.cardTitle}>{item.title}</Text>
+      <Text style={[styles.cardTitle, { color: isDay ? 'black' : 'white' }]}>{item.title}</Text>
       <View style={styles.cardLocation}>
-        <Icon name="location-outline" size={16} color="black" />
-        <Text style={styles.cardLocationText}>{item.location}</Text>
+        <Icon name="location-outline" size={16} color={isDay ? 'black' : 'white'} />
+        <Text style={[styles.cardLocationText, { color: isDay ? 'black' : 'white' }]}>{item.location}</Text>
       </View>
-      <Text style={styles.cardPrice}>{item.price}</Text>
+      <Text style={[styles.cardPrice, { color: isDay ? 'black' : 'white' }]}>{item.price}</Text>
       <View style={styles.cardRating}>
         <Icon name="star" size={16} color="#f9a825" />
-        <Text style={styles.cardRatingText}>{item.rating}</Text>
-        <Text style={styles.cardReviews}>({item.reviews})</Text>
+        <Text style={[styles.cardRatingText, { color: isDay ? 'black' : 'white' }]}>{item.rating}</Text>
+        <Text style={[styles.cardReviews, { color: isDay ? 'black' : 'white' }]}>({item.reviews})</Text>
       </View>
     </TouchableOpacity>
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: isDay ? 'white' : '#282C35' }]}>
       <FlatList
         data={data}
         renderItem={renderItem}
@@ -139,7 +143,6 @@ const styles = StyleSheet.create({
     width: 200,
     height: 300,
     marginRight: 5,
-    backgroundColor: 'white',
     borderRadius: 10,
     overflow: 'hidden',
     elevation: 3,
@@ -158,7 +161,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     margin: 5,
-    color: 'black',
   },
   cardLocation: {
     flexDirection: 'row',
@@ -167,13 +169,11 @@ const styles = StyleSheet.create({
   },
   cardLocationText: {
     marginLeft: 5,
-    color: 'black',
   },
   cardPrice: {
     fontSize: 16,
     fontWeight: 'bold',
     margin: 10,
-    color: 'black',
   },
   cardRating: {
     flexDirection: 'row',
@@ -182,11 +182,9 @@ const styles = StyleSheet.create({
   },
   cardRatingText: {
     marginLeft: 5,
-    color: 'black',
   },
   cardReviews: {
     marginLeft: 5,
-    color: 'black',
   },
 });
 

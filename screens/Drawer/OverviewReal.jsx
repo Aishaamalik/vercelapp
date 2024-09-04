@@ -249,7 +249,7 @@ const OverviewScreen = ({ navigation }) => {
               </View>
             </View>
             <TextInput
-              style={[styles.searchBar, { backgroundColor: isDay ? 'white' : '#555', color: textColor }]}
+              style={[styles.searchBar, { backgroundColor: isDay ? 'white' : '#282C35', color: textColor }]}
               placeholder="Search"
               placeholderTextColor={isDay ? '#999' : '#aaa'}
             />
@@ -259,7 +259,7 @@ const OverviewScreen = ({ navigation }) => {
             </View>
 
             <Text style={[styles.sectionHeading, { color: textColor }]}>Frequently Visited</Text>
-            <View style={styles.sectionContainer}>
+            <View style={[styles.sectionContainer, { backgroundColor: isDay ? 'white' : '#282C35', color: textColor }]}>
               <FrequentVisits />
             </View>
 
