@@ -1,10 +1,54 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignInWithGmail = ({ navigation }) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [secureTextEntry, setSecureTextEntry] = useState(true);
+    const [rememberMe, setRememberMe] = useState(false);
+
+    useEffect(() => {
+        const loadCredentials = async () => {
+            try {
+                const savedEmail = await AsyncStorage.getItem('email');
+                const savedPassword = await AsyncStorage.getItem('password');
+                if (savedEmail && savedPassword) {
+                    setEmail(savedEmail);
+                    setPassword(savedPassword);
+                    setRememberMe(true);
+                }
+            } catch (error) {
+                console.log('Failed to load credentials', error);
+            }
+        };
+        loadCredentials();
+    }, []);
+
+    const handleSignIn = async () => {
+        if (email === 'abc@gmail.com' && password === '123') {
+            if (rememberMe) {
+                try {
+                    await AsyncStorage.setItem('email', email);
+                    await AsyncStorage.setItem('password', password);
+                } catch (error) {
+                    console.log('Failed to save credentials', error);
+                }
+            } else {
+                try {
+                    await AsyncStorage.removeItem('email');
+                    await AsyncStorage.removeItem('password');
+                } catch (error) {
+                    console.log('Failed to remove credentials', error);
+                }
+            }
+            navigation.navigate('one'); 
+        } else {
+            Alert.alert('Error', 'Invalid email or password');
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -21,6 +65,10 @@ const SignInWithGmail = ({ navigation }) => {
                     style={styles.input}
                     placeholder="Enter your email address"
                     placeholderTextColor="#cfd8dc"
+                    value={email}
+                    onChangeText={setEmail}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
                 />
             </View>
             <View style={styles.inputContainer}>
@@ -31,6 +79,8 @@ const SignInWithGmail = ({ navigation }) => {
                         placeholder="Enter your password"
                         placeholderTextColor="#cfd8dc"
                         secureTextEntry={secureTextEntry}
+                        value={password}
+                        onChangeText={setPassword}
                     />
                     <TouchableOpacity onPress={() => setSecureTextEntry(!secureTextEntry)}>
                         <Ionicons
@@ -43,13 +93,20 @@ const SignInWithGmail = ({ navigation }) => {
             </View>
             <View style={styles.optionsContainer}>
                 <View style={styles.rememberMeContainer}>
+                    <TouchableOpacity onPress={() => setRememberMe(!rememberMe)}>
+                        <Ionicons
+                            name={rememberMe ? "checkbox-outline" : "square-outline"}
+                            size={24}
+                            color="#757575"
+                        />
+                    </TouchableOpacity>
                     <Text style={styles.rememberMeText}>Remember Me</Text>
                 </View>
-                <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
+                <TouchableOpacity onPress={() => navigation.navigate('Forget Password')}>
                     <Text style={styles.forgotPasswordText}>Forgot Password</Text>
                 </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.signInButton}>
+            <TouchableOpacity style={styles.signInButton} onPress={handleSignIn}>
                 <Text style={styles.signInButtonText}>Sign In</Text>
             </TouchableOpacity>
             <View style={styles.orContainer}>
@@ -57,7 +114,7 @@ const SignInWithGmail = ({ navigation }) => {
                 <Text style={styles.orText}>Or continue with</Text>
                 <View style={styles.line} />
             </View>
-            <TouchableOpacity style={styles.socialButton}>
+            <TouchableOpacity style={styles.socialButton} onPress={() => navigation.navigate('SignIp')}>
                 <FontAwesome name="google" size={24} color="#DB4437" />
                 <Text style={styles.socialButtonText}>Continue with Google</Text>
             </TouchableOpacity>
@@ -128,6 +185,7 @@ const styles = StyleSheet.create({
     rememberMeText: {
         fontSize: 14,
         color: '#757575',
+        marginLeft: 5,
     },
     forgotPasswordText: {
         fontSize: 14,

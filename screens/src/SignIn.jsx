@@ -1,24 +1,38 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 
-const Signup = () => {
+const SignInScreen = () => {
     const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const navigation = useNavigation();
 
-    const handleContinue = () => {
-        if (email === 'abc@gmail.com') {
-            navigation.navigate('one'); 
-        } else {
-            console.log('Invalid email');
+    const handleContinue = async () => {
+        try {
+            const userDetails = await AsyncStorage.getItem('userDetails');
+            if (userDetails !== null) {
+                const parsedUserDetails = JSON.parse(userDetails);
+
+                if (email === parsedUserDetails.email) {
+                    navigation.navigate('one', { 
+                        firstName: parsedUserDetails.firstName, 
+                        lastName: parsedUserDetails.lastName 
+                    });
+                } else {
+                    Alert.alert('Error', 'Invalid email or password.');
+                }
+            } else {
+                Alert.alert('Error', 'No user found. Please sign up first.');
+            }
+        } catch (error) {
+            Alert.alert('Error', 'Failed to retrieve user data.');
         }
     };
 
     return (
         <View style={styles.container}>
-
             <View style={styles.content1}>
                 <Text style={styles.title}>Hi, Welcome Back!</Text>
                 <Text style={styles.subtitle}>Lorem ipsum dolor sit amet</Text>
@@ -52,9 +66,9 @@ const Signup = () => {
                     <Text style={[styles.buttonText, styles.appleButtonText]}>Continue with Apple</Text>
                 </TouchableOpacity>
                 <Text style={styles.footerText}>
-                    Already have an account? 
+                    Don't have an account? 
                     <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-                        <Text style={styles.loginText}>SignUp</Text>
+                        <Text style={styles.signupText}>Sign Up</Text>
                     </TouchableOpacity>
                 </Text>
             </View>
@@ -170,10 +184,11 @@ const styles = StyleSheet.create({
         color: '#757575',
         marginTop: 20,
     },
-    loginText: {
+    signupText: {
         color: '#2196F3',
-        fontWeight: 'bold',
+        fontWeight: '600',
+        marginLeft: 5,
     },
 });
 
-export default Signup;
+export default SignInScreen;

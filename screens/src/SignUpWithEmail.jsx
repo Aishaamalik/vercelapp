@@ -1,10 +1,39 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignUpScreen = ({ navigation }) => {
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [secureTextEntry, setSecureTextEntry] = useState(true);
     const [confirmSecureTextEntry, setConfirmSecureTextEntry] = useState(true);
+
+    
+    const handleSignUp = async () => {
+        if (password !== confirmPassword) {
+            Alert.alert("Error", "Passwords do not match.");
+            return;
+        }
+    
+        try {
+            const userDetails = {
+                firstName,
+                lastName,
+                email,
+                password,
+            };
+            await AsyncStorage.setItem('userDetails', JSON.stringify(userDetails));
+            Alert.alert("Success", "Account created successfully!");
+            navigation.navigate('SignIn', { email, password, firstName, lastName});
+        } catch (error) {
+            Alert.alert("Error", "Failed to save user data.");
+        }
+    };
+    
 
     return (
         <View style={styles.container}>
@@ -23,6 +52,8 @@ const SignUpScreen = ({ navigation }) => {
                     style={styles.input}
                     placeholder="Enter your first name"
                     placeholderTextColor="#cfd8dc"
+                    value={firstName}
+                    onChangeText={setFirstName}
                 />
             </View>
             <View style={styles.inputContainer}>
@@ -31,6 +62,8 @@ const SignUpScreen = ({ navigation }) => {
                     style={styles.input}
                     placeholder="Enter your last name"
                     placeholderTextColor="#cfd8dc"
+                    value={lastName}
+                    onChangeText={setLastName}
                 />
             </View>
             <View style={styles.inputContainer}>
@@ -39,6 +72,8 @@ const SignUpScreen = ({ navigation }) => {
                     style={styles.input}
                     placeholder="Enter your email address"
                     placeholderTextColor="#cfd8dc"
+                    value={email}
+                    onChangeText={setEmail}
                 />
             </View>
             <View style={styles.inputContainer}>
@@ -49,6 +84,8 @@ const SignUpScreen = ({ navigation }) => {
                         placeholder="Enter your password"
                         placeholderTextColor="#cfd8dc"
                         secureTextEntry={secureTextEntry}
+                        value={password}
+                        onChangeText={setPassword}
                     />
                     <TouchableOpacity onPress={() => setSecureTextEntry(!secureTextEntry)}>
                         <Ionicons
@@ -67,6 +104,8 @@ const SignUpScreen = ({ navigation }) => {
                         placeholder="Confirm your password"
                         placeholderTextColor="#cfd8dc"
                         secureTextEntry={confirmSecureTextEntry}
+                        value={confirmPassword}
+                        onChangeText={setConfirmPassword}
                     />
                     <TouchableOpacity onPress={() => setConfirmSecureTextEntry(!confirmSecureTextEntry)}>
                         <Ionicons
@@ -77,7 +116,7 @@ const SignUpScreen = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
             </View>
-            <TouchableOpacity style={styles.signUpButton}>
+            <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
                 <Text style={styles.signUpButtonText}>Sign Up</Text>
             </TouchableOpacity>
             <View style={styles.loginContainer}>
@@ -89,6 +128,7 @@ const SignUpScreen = ({ navigation }) => {
         </View>
     );
 };
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
