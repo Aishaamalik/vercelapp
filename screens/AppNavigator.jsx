@@ -57,7 +57,6 @@ import SearchDestination from './src/SearchDestination';
 import DetailTicket from './src/DetailTicket';
 import MainNotifications from './src/MainNotifications';
 import Splash3 from './src/Splash3';
-import OverviewScreen from './Drawer/OverviewReal';
 const Stack = createNativeStackNavigator();
 
 const AppNavigator = () => {
