@@ -59,7 +59,7 @@ const CustomDrawerContent = (props) => {
     iconContainer: {
       width: 35,
       height: 35,
-      backgroundColor: isDay ? '#007AFF' : '#555',
+      backgroundColor: '#007AFF',
       borderRadius: 18,
       justifyContent: 'center',
       alignItems: 'center',
@@ -114,7 +114,7 @@ const CustomDrawerContent = (props) => {
         <View style={dynamicStyles.iconContainer}>
           <Icon name="moon-outline" size={28} color="#fff" />
         </View>
-        <Text style={dynamicStyles.switchLabel}>Switch To Dark Mode</Text>
+        <Text style={dynamicStyles.switchLabel}>Switch Theme</Text>
         <Switch
           value={isDay}
           onValueChange={handleToggleSwitch}

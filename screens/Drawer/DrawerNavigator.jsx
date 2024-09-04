@@ -3,40 +3,52 @@ import * as React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import CustomDrawerContent from '../Drawer/CustomDrawer';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, useColorScheme } from 'react-native';
 import Overview from './Overview';
 import Pages from './Pages';
 import OverviewReal from './OverviewReal';
+import { useSelector } from 'react-redux';
 
 const Drawer = createDrawerNavigator();
 
-const IconWithCircle = ({ name, size }) => {
+const IconWithCircle = ({ name, size, color }) => {
   return (
-    <View style={styles.iconContainer}>
+    <View style={[styles.iconContainer, { backgroundColor: color }]}>
       <Icon name={name} color="white" size={size} />
     </View>
   );
 };
 
-const DrawerLabel = ({ label }) => {
+const DrawerLabel = ({ label, color }) => {
   return (
-    <Text style={styles.drawerLabel}>
+    <Text style={[styles.drawerLabel, { color }]}>
       {label}
     </Text>
   );
 };
 
 const DrawerNavigator = () => {
+  const isDay = useSelector(state => state.theme.isDay);
+  const backgroundColor = isDay ? '#ffffff' : '#333333';
+  const textColor = isDay ? '#000000' : '#ffffff';
+  const iconColor = isDay ? '#007AFF' : '#007AFF';
+
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       initialRouteName="Main"
       screenOptions={{
-        drawerActiveTintColor: '#000', 
-        drawerInactiveTintColor: '#000', 
-        drawerActiveBackgroundColor: 'transparent', 
+        drawerActiveTintColor: textColor,
+        drawerInactiveTintColor: textColor,
+        drawerActiveBackgroundColor: 'transparent',
         drawerInactiveBackgroundColor: 'transparent',
         headerShown: false,
+        drawerStyle: {
+          backgroundColor,
+        },
+        drawerLabelStyle: {
+          color: textColor,
+        },
       }}
     >
       <Drawer.Screen
@@ -44,9 +56,9 @@ const DrawerNavigator = () => {
         component={OverviewReal}
         options={{
           headerShown: false,
-          drawerLabel: () => <DrawerLabel label="Overview" />,
+          drawerLabel: () => <DrawerLabel label="Overview" color={textColor} />,
           drawerIcon: (props) => (
-            <IconWithCircle name="document-text-outline" size={24} />
+            <IconWithCircle name="document-text-outline" size={24} color={iconColor} />
           ),
         }}
       />
@@ -54,9 +66,9 @@ const DrawerNavigator = () => {
         name="Pages"
         component={Pages}
         options={{
-          drawerLabel: () => <DrawerLabel label="Pages" />,
+          drawerLabel: () => <DrawerLabel label="Pages" color={textColor} />,
           drawerIcon: (props) => (
-            <IconWithCircle name="folder-outline" size={24} />
+            <IconWithCircle name="folder-outline" size={24} color={iconColor} />
           ),
         }}
       />
@@ -77,13 +89,11 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#007AFF',
     justifyContent: 'center',
     alignItems: 'center',
   },
   drawerLabel: {
     fontSize: 16,
-    color: 'black', 
     fontWeight: '500',
   },
 });
