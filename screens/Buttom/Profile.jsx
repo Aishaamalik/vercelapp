@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList, Switch, Modal, Button } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { useNavigation, useRoute } from '@react-navigation/native'; 
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 const settings = [
     {
@@ -44,7 +45,8 @@ const settings = [
 const ProfileScreen = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const [isDarkMode, setIsDarkMode] = useState(false);
+    const isDay = useSelector(state => state.theme.isDay); // Get theme from Redux
+    const [isDarkMode, setIsDarkMode] = useState(isDay); // Initialize dark mode state
     const [profileName, setProfileName] = useState('Name Not Set');
     const [profileLocation, setProfileLocation] = useState('Location Not Set');
     const [profileImage, setProfileImage] = useState(require('../Assets/Profile/pic1.jpeg')); // Default image
@@ -61,11 +63,13 @@ const ProfileScreen = () => {
         }
     }, [route.params]);
 
-    const toggleSwitch = () => setIsDarkMode(previousState => !previousState);
+    const toggleSwitch = () => {
+        setIsDarkMode(previousState => !previousState);
+    };
 
     const renderOption = ({ item }) => (
         <TouchableOpacity
-            style={styles.option}
+            style={styles.option(isDay)}
             onPress={() => {
                 if (item.screen) {
                     navigation.navigate(item.screen); 
@@ -73,13 +77,13 @@ const ProfileScreen = () => {
             }}
         >
             <View style={styles.optionLeft}>
-                <Icon name={item.icon} size={24} color="black" />
-                <Text style={styles.optionText}>{item.name}</Text>
+                <Icon name={item.icon} size={24} color={isDay ? "black" : "white"} />
+                <Text style={styles.optionText(isDay)}>{item.name}</Text>
             </View>
             <View style={styles.optionRight}>
-                {item.extra && <Text style={styles.extraText}>{item.extra}</Text>}
+                {item.extra && <Text style={styles.extraText(isDay)}>{item.extra}</Text>}
                 {item.name !== 'Clear Cache' && (
-                    <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
+                    <MaterialIcons name="keyboard-arrow-right" size={24} color={isDay ? "black" : "white"} />
                 )}
             </View>
         </TouchableOpacity>
@@ -87,7 +91,7 @@ const ProfileScreen = () => {
 
     const renderCategory = ({ item }) => (
         <View>
-            <Text style={styles.category}>{item.category}</Text>
+            <Text style={styles.category(isDay)}>{item.category}</Text>
             <FlatList
                 data={item.options}
                 renderItem={renderOption}
@@ -97,17 +101,17 @@ const ProfileScreen = () => {
     );
 
     return (
-        <View style={styles.container}>
+        <View style={styles.container(isDay)}>
             <View style={styles.profileHeader}>
                 <Image source={profileImage} style={styles.profileImage} />
                 <View style={styles.profileInfo}>
-                    <Text style={styles.profileName}>{profileName}</Text>
-                    <Text style={styles.profileLocation}>
-                        <Icon name="map-marker" size={14} /> {profileLocation}
+                    <Text style={styles.profileName(isDay)}>{profileName}</Text>
+                    <Text style={styles.profileLocation(isDay)}>
+                        <Icon name="map-marker" size={14} color={isDay ? "black" : "white"} /> {profileLocation}
                     </Text>
                 </View>
-                <TouchableOpacity style={styles.editButton} onPress={()=> navigation.navigate('Edit Profile')}>
-                    <MaterialIcons name="edit" size={24} color='black' />
+                <TouchableOpacity style={styles.editButton} onPress={() => navigation.navigate('Edit Profile')}>
+                    <MaterialIcons name="edit" size={24} color={isDay ? 'black' : 'white'} />
                 </TouchableOpacity>
             </View>
             <FlatList
@@ -115,24 +119,11 @@ const ProfileScreen = () => {
                 renderItem={renderCategory}
                 keyExtractor={(item) => item.id}
             />
-            <View style={styles.option}>
-                <View style={styles.optionLeft}>
-                    <Icon name="moon-o" size={24} color="black" />
-                    <Text style={styles.optionText}>Dark Mode</Text>
-                </View>
-                <Switch
-                    trackColor={{ false: '#767577', true: '#81b0ff' }}
-                    thumbColor={isDarkMode ? '#f5dd4b' : '#f4f3f4'}
-                    ios_backgroundColor="#3e3e3e"
-                    onValueChange={toggleSwitch}
-                    value={isDarkMode}
-                />
-            </View>
             <TouchableOpacity
-                style={styles.logoutButton}
+                style={styles.logoutButton(isDay)}
                 onPress={() => setModalVisible(true)} 
             >
-                <Text style={styles.logoutButtonText}>Log Out</Text>
+                <Text style={styles.logoutButtonText(isDay)}>Log Out</Text>
             </TouchableOpacity>
             
             <Modal
@@ -142,8 +133,8 @@ const ProfileScreen = () => {
                 animationType="slide"
             >
                 <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                        <Text style={styles.modalText}>Are you sure you want to log out?</Text>
+                    <View style={styles.modalContent(isDay)}>
+                        <Text style={styles.modalText(isDay)}>Are you sure you want to log out?</Text>
                         <View style={styles.modalButtons}>
                             <Button title="Cancel" onPress={() => setModalVisible(false)} />
                             <Button title="Log Out" onPress={() => {
@@ -159,11 +150,11 @@ const ProfileScreen = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {
+    container: (isDay) => ({
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: isDay ? '#fff' : '#333',
         padding: 20,
-    },
+    }),
     profileHeader: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -178,84 +169,82 @@ const styles = StyleSheet.create({
         flex: 1,
         marginLeft: 10,
     },
-    profileName: {
+    profileName: (isDay) => ({
         fontSize: 18,
         fontWeight: 'bold',
-        color:'black',
-    },
-    profileLocation: {
-        color: '#777',
-    },
+        color: isDay ? 'black' : 'white',
+    }),
+    profileLocation: (isDay) => ({
+        color: isDay ? '#777' : '#aaa',
+    }),
     editButton: {
         padding: 5,
     },
-    category: {
+    category: (isDay) => ({
         fontSize: 16,
         fontWeight: 'bold',
         marginVertical: 10,
-        color:'black',
-    },
-    option: {
+        color: isDay ? 'black' : 'white',
+    }),
+    option: (isDay) => ({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingVertical: 15,
         borderBottomWidth: 1,
-        borderBottomColor: '#eee',
-    },
+        borderBottomColor: isDay ? '#eee' : '#555',
+    }),
     optionLeft: {
         flexDirection: 'row',
         alignItems: 'center',
     },
-    optionText: {
+    optionText: (isDay) => ({
         marginLeft: 10,
         fontSize: 16,
-        color:'black',
-    },
+        color: isDay ? 'black' : 'white',
+    }),
     optionRight: {
         flexDirection: 'row',
         alignItems: 'center',
     },
-    extraText: {
+    extraText: (isDay) => ({
         marginRight: 10,
-        color:'black',
-    },
-    logoutButton: {
+        color: isDay ? 'black' : 'white',
+    }),
+    logoutButton: (isDay) => ({
         marginTop: 20,
         paddingVertical: 15,
         borderWidth: 1,
-        borderColor: '#007BFF',
-        borderRadius: 25,
-        alignItems: 'center',
-    },
-    logoutButtonText: {
-        color: '#007BFF',
+        borderColor: isDay ? '#007BFF' : '#282C35',
+        backgroundColor: isDay ? '#007BFF' : '#282C35',
+        borderRadius: 5,
+    }),
+    logoutButtonText: (isDay) => ({
+        textAlign: 'center',
+        color: isDay ? 'white' : 'white',
         fontSize: 16,
-        fontWeight: 'bold',
-    },
+    }),
     modalContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: 'rgba(0,0,0,0.5)',
     },
-    modalContent: {
+    modalContent: (isDay) => ({
         width: '80%',
         padding: 20,
-        backgroundColor: 'white',
+        backgroundColor: isDay ? 'white' : '#444',
         borderRadius: 10,
         alignItems: 'center',
-    },
-    modalText: {
-        fontSize: 18,
-        color:'black',
+    }),
+    modalText: (isDay) => ({
         marginBottom: 20,
-    },
+        color: isDay ? 'black' : 'white',
+    }),
     modalButtons: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: '70%',
-        padding:20,
+        width: '100%',
     },
 });
 

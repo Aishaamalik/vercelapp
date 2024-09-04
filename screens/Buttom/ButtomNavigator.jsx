@@ -15,7 +15,7 @@ const Buttom = createBottomTabNavigator();
 const ButtomNavigator = () => {
   const isDay = useSelector(state => state.theme.isDay);
 
-  const tabBarActiveTintColor = isDay ? '#0077b6' : '#2196F3';
+  const tabBarActiveTintColor = isDay ? '#0077b6' : '#a9a9a9';
   const tabBarInactiveTintColor = isDay ? 'gray' : '#a9a9a9';
   const tabBarBackgroundColor = isDay ? '#ffffff' : '#282C35'; 
 
