@@ -57,7 +57,10 @@ const SignInScreen = () => {
                     <Text style={styles.orText}>Or continue with</Text>
                     <View style={styles.divider} />
                 </View>
-                <TouchableOpacity style={[styles.button, styles.googleButton]} onPress={()=> navigation.navigate('SignInWithEmail')}>
+                <TouchableOpacity 
+                    style={[styles.button, styles.googleButton]} 
+                    onPress={() => navigation.navigate('SignInWithEmail', { email, password })}
+                >
                     <FontAwesome name="google" size={20} color="#DB4437" style={styles.socialIcon} />
                     <Text style={[styles.buttonText, styles.googleButtonText]}>Continue with Google</Text>
                 </TouchableOpacity>
@@ -75,6 +78,7 @@ const SignInScreen = () => {
         </View>
     );
 };
+
 
 const styles = StyleSheet.create({
     container: {

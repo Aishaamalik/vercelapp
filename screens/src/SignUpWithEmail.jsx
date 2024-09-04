@@ -29,6 +29,7 @@ const SignUpScreen = ({ navigation }) => {
             await AsyncStorage.setItem('userDetails', JSON.stringify(userDetails));
             Alert.alert("Success", "Account created successfully!");
             navigation.navigate('SignIn', { email, password, firstName, lastName});
+            navigation.navigate('SignInWithEmail', { email, password, firstName, lastName});
         } catch (error) {
             Alert.alert("Error", "Failed to save user data.");
         }

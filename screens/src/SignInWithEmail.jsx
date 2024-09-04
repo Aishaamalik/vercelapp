@@ -4,9 +4,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const SignInWithGmail = ({ navigation }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+const SignInWithGmail = ({ route, navigation }) => {
+    const [email, setEmail] = useState(route.params?.email || '');
+    const [password, setPassword] = useState(route.params?.password || '');
     const [secureTextEntry, setSecureTextEntry] = useState(true);
     const [rememberMe, setRememberMe] = useState(false);
 
@@ -26,29 +26,40 @@ const SignInWithGmail = ({ navigation }) => {
         };
         loadCredentials();
     }, []);
-
     const handleSignIn = async () => {
-        if (email === 'abc@gmail.com' && password === '123') {
-            if (rememberMe) {
-                try {
-                    await AsyncStorage.setItem('email', email);
-                    await AsyncStorage.setItem('password', password);
-                } catch (error) {
-                    console.log('Failed to save credentials', error);
+        try {
+            const savedUserDetails = await AsyncStorage.getItem('userDetails');
+            if (savedUserDetails) {
+                const userDetails = JSON.parse(savedUserDetails);
+                if (userDetails.email === email && userDetails.password === password) {
+                    if (rememberMe) {
+                        try {
+                            await AsyncStorage.setItem('email', email);
+                            await AsyncStorage.setItem('password', password);
+                        } catch (error) {
+                            console.log('Failed to save credentials', error);
+                        }
+                    } else {
+                        try {
+                            await AsyncStorage.removeItem('email');
+                            await AsyncStorage.removeItem('password');
+                        } catch (error) {
+                            console.log('Failed to remove credentials', error);
+                        }
+                    }
+                    navigation.navigate('one'); // Navigate to the "one" screen
+                } else {
+                    Alert.alert('Error', 'Invalid email or password');
                 }
             } else {
-                try {
-                    await AsyncStorage.removeItem('email');
-                    await AsyncStorage.removeItem('password');
-                } catch (error) {
-                    console.log('Failed to remove credentials', error);
-                }
+                Alert.alert('Error', 'No user data found');
             }
-            navigation.navigate('one'); 
-        } else {
-            Alert.alert('Error', 'Invalid email or password');
+        } catch (error) {
+            console.log('Failed to load user data', error);
+            Alert.alert('Error', 'Failed to load user data');
         }
     };
+    
 
     return (
         <View style={styles.container}>
