@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput, FlatList, M
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon1 from 'react-native-vector-icons/Feather';
 import FrequentVisits from './FrequentVisits';
-import { toggleTheme } from '../Themes/ThemeAction';
 import { useSelector, useDispatch } from 'react-redux';
 
 

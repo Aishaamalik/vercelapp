@@ -1,27 +1,35 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon1 from 'react-native-vector-icons/AntDesign';
-import Home from './Home';
+import HomeTabNavigator from './Home';
 import Menu from './Menu';
 import Booked from './Booked';
 import Liked from './Liked';
 import Profile from './Profile';
-import { Drawer } from 'react-native-paper';
-import DrawerNavigator from '../Drawer/DrawerNavigator';
-import HomeTabNavigator from './Home';
 
 const Buttom = createBottomTabNavigator();
 
 const ButtomNavigator = () => {
+  const isDay = useSelector(state => state.theme.isDay);
+
+  const tabBarActiveTintColor = isDay ? '#0077b6' : '#2196F3';
+  const tabBarInactiveTintColor = isDay ? 'gray' : '#a9a9a9';
+  const tabBarBackgroundColor = isDay ? '#ffffff' : '#282C35'; 
+
+
   return (
     <Buttom.Navigator
       initialRouteName='Profile'
       screenOptions={{
-        tabBarActiveTintColor: '#0077b6',
-        tabBarInactiveTintColor: 'gray', 
+        tabBarActiveTintColor,
+        tabBarInactiveTintColor,
         headerShown: false,
+        tabBarStyle: {
+          backgroundColor: tabBarBackgroundColor,
+        },
       }}
     >
       <Buttom.Screen
