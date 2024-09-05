@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Animated } from 'react-native';
 import Icon from 'react-native-vector-icons/Fontisto';
+import { useSelector } from 'react-redux';
 
 const SplashScreen = ({ navigation }) => {
+  const isDay = useSelector(state => state.theme.isDay); 
   const spinValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -25,15 +27,15 @@ const SplashScreen = ({ navigation }) => {
   });
 
   return (
-    <View style={styles.container}>
-      <View style={styles.logoContainer}>
-        <Text style={styles.logoText}>Travgo</Text>
-        <Text style={styles.tagline}>Discover Your Destination</Text>
+    <View style={[styles.container, { backgroundColor: isDay ? '#007AFF' : '#004080' }]}>
+      <View style={[styles.logoContainer, { backgroundColor: isDay ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.3)' }]}>
+        <Text style={[styles.logoText, { color: isDay ? 'white' : '#e0e0e0' }]}>Travgo</Text>
+        <Text style={[styles.tagline, { color: isDay ? 'white' : '#b0b0b0' }]}>Discover Your Destination</Text>
       </View>
       
-      <Animated.View style={[styles.spinner, { transform: [{ rotate: spin }] }]}>
-          <Icon name="spinner" size={40} color="white" />
-        </Animated.View>
+      <Animated.View style={[styles.spinner, { transform: [{ rotate: spin }], backgroundColor: isDay ? 'transparent' : '#004080' }]}>
+        <Icon name="spinner" size={40} color={isDay ? 'white' : 'white'} />
+      </Animated.View>
     </View>
   );
 };
@@ -41,14 +43,12 @@ const SplashScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#007AFF',
     alignItems: 'center',
     justifyContent: 'center',
   },
   logoContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
     borderRadius: 100,
     width: 200,
     height: 200,
@@ -57,16 +57,14 @@ const styles = StyleSheet.create({
   logoText: {
     fontSize: 35,
     fontWeight: 'bold',
-    color: 'white',
   },
   tagline: {
     fontSize: 12,
-    color: 'white',
     marginTop: 10,
   },
   spinner: {
     position: 'absolute',
-    bottom: 60,  
+    bottom: 60,
   },
 });
 
