@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -37,7 +38,7 @@ const initialFinished = [
         rating: 4.4,
         reviews: 41,
         price: '$320',
-        status: 'Will Come',
+        status: 'Finished',
         image: require('../Assets/visits/mosque.jpeg'),
     },
     {
@@ -48,7 +49,7 @@ const initialFinished = [
         rating: 4.4,
         reviews: 41,
         price: '$320',
-        status: 'Will Come',
+        status: 'Finished',
         image: require('../Assets/visits/tajmahal.jpeg'),
     },
 ];
@@ -59,6 +60,7 @@ const Booked = () => {
     const [bookings, setBookings] = useState(initialBookings);
     const [finished, setFinished] = useState(initialFinished); 
     const navigation = useNavigation();
+    const isDay = useSelector(state => state.theme.isDay); // Access isDay from Redux
 
     useEffect(() => {
         if (route.params) {
@@ -77,71 +79,76 @@ const Booked = () => {
             setBookings((prevBookings) => [...prevBookings, newBooking]);
         }
     }, [route.params]);
-    const renderItem = ({ item }) => (
-        <View style={styles.card}>
-            <View style={styles.cardHeader}>
-                <Text style={styles.date}>{item.date}</Text>
-                <View style={styles.statusContainer}>
-                    <Text style={styles.status}>{item.status}</Text>
-                </View>
+const renderItem = ({ item }) => (
+    <View style={[styles.card, { backgroundColor: isDay ? '#fff' : '#444' }]}>
+        <View style={styles.cardHeader}>
+            <Text style={[styles.date, { color: isDay ? 'black' : 'white' }]}>{item.date}</Text>
+            <View style={styles.statusContainer}>
+                <Text style={[styles.status, { color: isDay ? '#ff0000' : '#ff6666' }]}>{item.status}</Text>
             </View>
-            <View style={styles.cardContent}>
-                <Image source={item.image} style={styles.image} />
-                <View style={styles.infoContainer}>
-                    <Text style={styles.title}>{item.title}</Text>
-                    <Text style={styles.location}><Icon name="map-marker" size={14} /> {item.location}</Text>
-                    <View style={styles.ratingContainer}>
-                        <Icon name="star" size={16} color="#ffd700" />
-                        <Text style={styles.rating}>{item.rating}</Text>
-                        <Text style={styles.reviews}>({item.reviews} Reviews)</Text>
-                    </View>
-                    <Text style={styles.priceLabel}>Total Price</Text>
-                    <Text style={styles.price}>{item.price}</Text>
-                </View>
-            </View>
-            <TouchableOpacity 
-                style={styles.detailButton} 
-                onPress={() => navigation.navigate('Detail Ticket', { bookingDetails: item })}
-            >
-                <Text style={styles.detailButtonText}>Detail</Text>
-            </TouchableOpacity>
         </View>
-    );
-    
+        <View style={styles.cardContent}>
+            <Image source={item.image} style={styles.image} />
+            <View style={styles.infoContainer}>
+                <Text style={[styles.title, { color: isDay ? 'black' : 'white' }]}>{item.title}</Text>
+                <Text style={[styles.location, { color: isDay ? 'black' : 'white' }]}>
+                    <Icon name="map-marker" size={14} /> {item.location}
+                </Text>
+                <View style={styles.ratingContainer}>
+                    <Icon name="star" size={16} color="#ffd700" />
+                    <Text style={[styles.rating, { color: isDay ? '#333' : '#ddd' }]}>{item.rating}</Text>
+                    <Text style={[styles.reviews, { color: isDay ? '#666' : '#bbb' }]}>({item.reviews} Reviews)</Text>
+                </View>
+                <Text style={[styles.priceLabel, { color: isDay ? 'black' : 'white' }]}>Total Price</Text>
+                <Text style={[styles.price, { color: isDay ? '#333' : '#ddd' }]}>{item.price}</Text>
+            </View>
+        </View>
+        <TouchableOpacity
+            style={styles.detailButton}
+            onPress={() => navigation.navigate('Detail Ticket', { bookingDetails: item })}
+        >
+            <Text style={styles.detailButtonText}>Detail</Text>
+        </TouchableOpacity>
+    </View>
+);
 
-    const renderItem1 = ({ item }) => (
-        <View style={styles.card}>
-            <View style={styles.cardHeader}>
-                <Text style={styles.date}>{item.date}</Text>
-                <View style={styles.statusContainer1}>
-                    <Text style={styles.status1}>{item.status}</Text>
-                </View>
+const renderItem1 = ({ item }) => (
+    <View style={[styles.card, { backgroundColor: isDay ? '#fff' : '#444' }]}>
+        <View style={styles.cardHeader}>
+            <Text style={[styles.date, { color: isDay ? 'black' : 'white' }]}>{item.date}</Text>
+            <View style={styles.statusContainer1}>
+                <Text style={[styles.status1, { color: isDay ? 'green' : 'white' }]}>Finished</Text>
             </View>
-            <View style={styles.cardContent}>
-                <Image source={item.image} style={styles.image} />
-                <View style={styles.infoContainer}>
-                    <Text style={styles.title}>{item.title}</Text>
-                    <Text style={styles.location}><Icon name="map-marker" size={14} /> {item.location}</Text>
-                    <View style={styles.ratingContainer}>
-                        <Icon name="star" size={16} color="#ffd700" />
-                        <Text style={styles.rating}>{item.rating}</Text>
-                        <Text style={styles.reviews}>({item.reviews} Reviews)</Text>
-                    </View>
-                    <Text style={styles.priceLabel}>Total Price</Text>
-                    <Text style={styles.price}>{item.price}</Text>
-                </View>
-            </View>
-            <TouchableOpacity style={styles.detailButton1}
-            
-            onPress={() => navigation.navigate('Detail Ticket', { bookingDetails: item })}>
-                <Text style={styles.detailButtonText1}>Detail</Text>
-            </TouchableOpacity>
         </View>
-    );
+        <View style={styles.cardContent}>
+            <Image source={item.image} style={styles.image} />
+            <View style={styles.infoContainer}>
+                <Text style={[styles.title, { color: isDay ? 'black' : 'white' }]}>{item.title}</Text>
+                <Text style={[styles.location, { color: isDay ? 'black' : 'white' }]}>
+                    <Icon name="map-marker" size={14} /> {item.location}
+                </Text>
+                <View style={styles.ratingContainer}>
+                    <Icon name="star" size={16} color="#ffd700" />
+                    <Text style={[styles.rating, { color: isDay ? '#333' : '#ddd' }]}>{item.rating}</Text>
+                    <Text style={[styles.reviews, { color: isDay ? '#666' : '#bbb' }]}>({item.reviews} Reviews)</Text>
+                </View>
+                <Text style={[styles.priceLabel, { color: isDay ? 'black' : 'white' }]}>Total Price</Text>
+                <Text style={[styles.price, { color: isDay ? '#333' : '#ddd' }]}>{item.price}</Text>
+            </View>
+        </View>
+        <TouchableOpacity
+            style={styles.detailButton1}
+            onPress={() => navigation.navigate('Detail Ticket', { bookingDetails: item })}
+        >
+            <Text style={styles.detailButtonText1}>Detail</Text>
+        </TouchableOpacity>
+    </View>
+);
+
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.header}>My Booked</Text>
+        <View style={[styles.container, { backgroundColor: isDay ? '#f8f8f8' : '#333' }]}>
+            <Text style={[styles.header, { color: isDay ? 'black' : 'white' }]}>My Booked</Text>
             <View style={styles.tabContainer}>
                 <TouchableOpacity 
                     style={[styles.tabButton, activeTab === 'Booked' && styles.activeTab]} 
@@ -174,10 +181,10 @@ const Booked = () => {
         </View>
     );
 };
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f8f8f8',
         padding: 10,
     },
     header: {
@@ -185,7 +192,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         marginVertical: 20,
-        color:'black',
     },
     tabContainer: {
         flexDirection: 'row',
@@ -219,18 +225,14 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 5,
         elevation: 5,
-        
     },
     cardHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 10,
-        color:'black',
-
     },
     date: {
-      color: 'black',
-
+        color: 'black',
     },
     statusContainer: {
         backgroundColor: '#ffe6e6',
@@ -266,68 +268,54 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: 'black',
-
     },
     location: {
-      color: 'black',
+        color: 'black',
         marginVertical: 5,
     },
     ratingContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginVertical: 5,
+        marginBottom: 5,
     },
     rating: {
+        color: '#333',
         marginLeft: 5,
-        fontSize: 14,
-        fontWeight: 'bold',
-        color: 'black',
-
     },
     reviews: {
+        color: '#666',
         marginLeft: 5,
-        fontSize: 14,
-        color: '#777',
     },
     priceLabel: {
-        color: '#777',
+        color: 'black',
+        fontSize: 14,
     },
     price: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: 'black',
-
+        color: '#333',
     },
     detailButton: {
-        alignSelf: 'flex-end',
+        backgroundColor: '#007BFF',
+        paddingVertical: 10,
+        borderRadius: 10,
         marginTop: 10,
-        paddingVertical: 5,
-        paddingHorizontal: 20,
-        borderRadius: 20,
-        borderWidth: 1,
-        borderColor: '#007BFF',
-        backgroundColor:'#007BFF',
     },
     detailButton1: {
+        backgroundColor: '#007BFF',
+        paddingVertical: 10,
+        borderRadius: 10,
         marginTop: 10,
-        paddingVertical: 5,
-        paddingHorizontal: 20,
-        borderRadius: 20,
-        borderWidth: 1,
-        borderColor: '#007BFF',
     },
     detailButtonText: {
-        color: 'white',
+        color: '#fff',
+        textAlign: 'center',
         fontWeight: 'bold',
-        alignSelf:'center',
     },
     detailButtonText1: {
-        color: '#007BFF',
+        color: '#fff',
+        textAlign: 'center',
         fontWeight: 'bold',
-        alignSelf:'center',
-    },
-    historyContainer: {
-        flex: 1,
     },
 });
 
