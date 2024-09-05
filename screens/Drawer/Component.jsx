@@ -28,7 +28,7 @@ const ComponentsScreen = ({ navigation }) => {
   }, [translateX, opacity]);
 
   return (
-    <View style={[styles.outerContainer, { backgroundColor: isDay ? '#f0f0f0' : '#333' }]}>
+    <View style={[styles.outerContainer, { backgroundColor: isDay ? 'transparent' : 'transparent' }]}>
       <Animated.View
         style={[
           styles.container,
