@@ -1,4 +1,4 @@
-import { useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -39,10 +39,11 @@ const Liked = () => {
       return updatedLikedItems;
     });
   }, []);
+
   const renderItem = useCallback(({ item }) => (
     <TouchableOpacity 
       style={[styles.card, { backgroundColor: isDay ? '#fff' : '#444', borderColor: isDay ? '#ddd' : '#666' }]} 
-      onPress={() => navigation.navigate('VecationDetails', {
+      onPress={() => navigation.navigate('VacationDetails', {
         image: item.image,
         title: item.title,
         location: item.location,
@@ -71,9 +72,6 @@ const Liked = () => {
       </View>
     </TouchableOpacity>
   ), [likedItems, isDay]);
-  
-  
-
 
   return (
     <View style={[styles.container, { backgroundColor: isDay ? '#f0f0f0' : '#333' }]}>
@@ -115,9 +113,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingRight: 20,
   },
-  themeButton: {
-    padding: 10,
-  },
   list: {
     paddingHorizontal: 15,
   },
@@ -128,7 +123,6 @@ const styles = StyleSheet.create({
     padding: 15,
     position: 'relative',
     borderWidth: 1,
-    borderColor: '#ddd',
     backgroundColor: '#fff',
     elevation: 5,
     shadowColor: '#000',
@@ -173,7 +167,6 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#f9a825',
     marginVertical: 5,
   },
   ratingContainer: {
