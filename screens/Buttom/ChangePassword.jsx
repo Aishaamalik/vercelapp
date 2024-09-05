@@ -1,9 +1,11 @@
+import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
 const ChangePasswordScreen = () => {
+  const isDay = useSelector(state => state.theme.isDay);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isValidPassword, setIsValidPassword] = useState(false);
@@ -27,27 +29,31 @@ const ChangePasswordScreen = () => {
     }
     Alert.alert('Success', 'Password changed successfully!');
   };
+
   const handleBackButtonPress = () => {
     navigation.goBack();
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.headerContainer}>
+    <View style={[styles.container, { backgroundColor: isDay ? '#fff' : '#000' }]}> 
+      <View style={[styles.headerContainer, { borderBottomColor: isDay ? '#ddd' : '#555' }]}> 
         <TouchableOpacity onPress={handleBackButtonPress}>
-          <Icon name="arrow-left" size={24} color="#000" />
+          <Icon name="arrow-left" size={24} color={isDay ? '#000' : '#fff'} /> 
         </TouchableOpacity>
-        <Text style={styles.headerText}>Change Password</Text>
+        <Text style={[styles.headerText, { color: isDay ? '#000' : '#fff' }]}>Change Password</Text> 
       </View>
 
-      <Text style={styles.subHeader}>The new password must be different from the current password</Text>
+      <Text style={[styles.subHeader, { color: isDay ? '#555' : '#ccc' }]}>
+        The new password must be different from the current password
+      </Text>
 
       <TextInput
-        style={styles.input}
+        style={[styles.input, { backgroundColor: isDay ? '#f9f9f9' : '#333', color: isDay ? '#000' : '#fff' }]}
         placeholder="Enter your password"
         secureTextEntry={true}
         value={password}
         onChangeText={handlePasswordChange}
+        placeholderTextColor={isDay ? '#999' : '#ccc'}
       />
 
       <View style={styles.validationContainer}>
@@ -60,14 +66,15 @@ const ChangePasswordScreen = () => {
       </View>
 
       <TextInput
-        style={styles.input}
+        style={[styles.input, { backgroundColor: isDay ? '#f9f9f9' : '#333', color: isDay ? '#000' : '#fff' }]}
         placeholder="Confirm your password"
         secureTextEntry={true}
         value={confirmPassword}
         onChangeText={handleConfirmPasswordChange}
+        placeholderTextColor={isDay ? '#999' : '#ccc'}
       />
 
-      <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+      <TouchableOpacity style={[styles.submitButton, { backgroundColor: isDay ? '#007BFF' : '#0056b3' }]} onPress={handleSubmit}>
         <Text style={styles.submitButtonText}>Submit</Text>
       </TouchableOpacity>
     </View>
@@ -77,24 +84,22 @@ const ChangePasswordScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     padding: 20,
   },
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
+    borderBottomWidth: 1,
   },
   headerText: {
     fontSize: 20,
     fontWeight: 'bold',
     marginLeft: 10,
-    color: '#000',
   },
   subHeader: {
     fontSize: 14,
     textAlign: 'center',
-    color: '#555',
     marginBottom: 20,
   },
   input: {
@@ -104,7 +109,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 10,
     marginBottom: 15,
-    backgroundColor: '#f9f9f9',
   },
   validationContainer: {
     marginBottom: 20,
@@ -120,7 +124,6 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   submitButton: {
-    backgroundColor: '#007BFF',
     borderRadius: 30,
     paddingVertical: 15,
     alignItems: 'center',

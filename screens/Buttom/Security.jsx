@@ -1,26 +1,39 @@
+import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, Text, Switch, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-
 
 const SecurityScreen = () => {
   const [isFaceIDEnabled, setFaceIDEnabled] = useState(true);
   const [isRememberPasswordEnabled, setRememberPasswordEnabled] = useState(true);
   const [isTouchIDEnabled, setTouchIDEnabled] = useState(true);
   const navigation = useNavigation();
+
+  const isDay = useSelector(state => state.theme.isDay);
+
+  const backgroundColor = isDay ? '#FFFFFF' : '#121212';
+  const cardBackgroundColor = isDay ? '#f7f7f7' : '#1e1e1e';
+  const textColor = isDay ? '#000' : '#FFFFFF';
+  const textColor1 = isDay ? '#000' : 'black';
+
+  const sectionTitleColor = isDay ? '#8e8e8e' : '#b3b3b3';
+  const dividerColor = isDay ? '#dcdcdc' : '#333';
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor }]}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={()=> navigation.goBack()}>
-          <Icon name="arrow-left" size={24} color="black" />
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+          <Icon name="arrow-left" size={24} color={textColor1} />
         </TouchableOpacity>
-        <Text style={styles.title}>Security</Text>
+        <Text style={[styles.title, { color: textColor }]}>Security</Text>
       </View>
-      <View style={styles.card}>
-        <Text style={styles.sectionTitle}>Messages Notifications</Text>
+
+      <View style={[styles.card, { backgroundColor: cardBackgroundColor }]}>
+        <Text style={[styles.sectionTitle, { color: sectionTitleColor }]}>Messages Notifications</Text>
+
         <View style={styles.optionContainer}>
-          <Text style={styles.optionText}>Face ID</Text>
+          <Text style={[styles.optionText, { color: textColor }]}>Face ID</Text>
           <Switch
             value={isFaceIDEnabled}
             onValueChange={setFaceIDEnabled}
@@ -28,9 +41,11 @@ const SecurityScreen = () => {
             thumbColor={isFaceIDEnabled ? "#00BFFF" : "#f4f3f4"}
           />
         </View>
-        <View style={styles.divider} />
+
+        <View style={[styles.divider, { borderBottomColor: dividerColor }]} />
+
         <View style={styles.optionContainer}>
-          <Text style={styles.optionText}>Remember Password</Text>
+          <Text style={[styles.optionText, { color: textColor }]}>Remember Password</Text>
           <Switch
             value={isRememberPasswordEnabled}
             onValueChange={setRememberPasswordEnabled}
@@ -38,9 +53,11 @@ const SecurityScreen = () => {
             thumbColor={isRememberPasswordEnabled ? "#00BFFF" : "#f4f3f4"}
           />
         </View>
-        <View style={styles.divider} />
+
+        <View style={[styles.divider, { borderBottomColor: dividerColor }]} />
+
         <View style={styles.optionContainer}>
-          <Text style={styles.optionText}>Touch ID</Text>
+          <Text style={[styles.optionText, { color: textColor }]}>Touch ID</Text>
           <Switch
             value={isTouchIDEnabled}
             onValueChange={setTouchIDEnabled}
@@ -56,7 +73,6 @@ const SecurityScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
     padding: 20,
   },
   header: {
@@ -73,10 +89,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#000',
   },
   card: {
-    backgroundColor: '#f7f7f7',
     borderRadius: 10,
     padding: 20,
     elevation: 3,
@@ -84,7 +98,6 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#8e8e8e',
     marginBottom: 15,
   },
   optionContainer: {
@@ -95,10 +108,8 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 16,
-    color: '#000',
   },
   divider: {
-    borderBottomColor: '#dcdcdc',
     borderBottomWidth: 1,
     marginVertical: 10,
   },

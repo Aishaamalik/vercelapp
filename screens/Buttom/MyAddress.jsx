@@ -1,8 +1,9 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 const AddressScreen = () => {
   const [addresses, setAddresses] = useState([]);
@@ -10,6 +11,7 @@ const AddressScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const newAddress = route.params?.newAddress;
+  const isDay = useSelector(state => state.theme.isDay);
 
   useEffect(() => {
     const loadAddresses = async () => {
@@ -50,15 +52,14 @@ const AddressScreen = () => {
   };
 
   return (
-    
-    <View style={styles.container}>
-      <View style={styles.header}>
+    <View style={[styles.container, { backgroundColor: isDay ? '#fff' : '#333' }]}>
+      <View style={[styles.header, { borderBottomColor: isDay ? '#ddd' : '#555' }]}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-left" size={24} color="#000" />
+          <Icon name="arrow-left" size={24} color={isDay ? '#000' : '#fff'} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>My Address</Text>
+        <Text style={[styles.headerTitle, { color: isDay ? '#000' : '#fff' }]}>My Address</Text>
         <TouchableOpacity onPress={() => navigation.navigate('New Address')}>
-          <Icon name="plus-square-o" size={24} color="#000" />
+          <Icon name="plus-square-o" size={24} color={isDay ? '#000' : '#fff'} />
         </TouchableOpacity>
       </View>
 
@@ -71,32 +72,33 @@ const AddressScreen = () => {
             address={address.address}
             isSelected={selectedAddress === address.name}
             onSelect={handleSelectAddress}
+            isDay={isDay}
           />
         ))}
       </ScrollView>
 
-      <TouchableOpacity style={styles.selectButton}>
+      <TouchableOpacity style={[styles.selectButton, { backgroundColor: isDay ? '#3498db' : '#1E90FF' }]}>
         <Text style={styles.selectButtonText}>Select Address</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-const AddressItem = ({ name, phone, address, isSelected, onSelect }) => {
+const AddressItem = ({ name, phone, address, isSelected, onSelect, isDay }) => {
   return (
-    <TouchableOpacity style={styles.addressItem} onPress={() => onSelect(name)}>
+    <TouchableOpacity style={[styles.addressItem, { borderBottomColor: isDay ? '#ddd' : '#555' }]} onPress={() => onSelect(name)}>
       <View style={styles.addressInfo}>
-        <Text style={styles.name}>{name}</Text>
-        <Text style={styles.phone}>{phone}</Text>
-        <Text style={styles.address}>{address}</Text>
-        <TouchableOpacity style={styles.changeButton}>
-          <Text style={styles.changeButtonText}>Change Address</Text>
+        <Text style={[styles.name, { color: isDay ? '#333' : '#ccc' }]}>{name}</Text>
+        <Text style={[styles.phone, { color: isDay ? '#555' : '#aaa' }]}>{phone}</Text>
+        <Text style={[styles.address, { color: isDay ? '#555' : '#aaa' }]}>{address}</Text>
+        <TouchableOpacity style={[styles.changeButton, { borderColor: isDay ? '#3498db' : '#1E90FF' }]}>
+          <Text style={[styles.changeButtonText, { color: isDay ? '#3498db' : '#1E90FF' }]}>Change Address</Text>
         </TouchableOpacity>
       </View>
       {isSelected ? (
         <Icon name="check-circle" size={24} color="#3498db" />
       ) : (
-        <Icon name="circle-thin" size={24} color="#ccc" />
+        <Icon name="circle-thin" size={24} color={isDay ? '#ccc' : '#555'} />
       )}
     </TouchableOpacity>
   );
@@ -105,7 +107,6 @@ const AddressItem = ({ name, phone, address, isSelected, onSelect }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
@@ -115,13 +116,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
     marginBottom: 20,
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#000',
   },
   addressList: {
     flexGrow: 1,
@@ -131,7 +130,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
     paddingVertical: 15,
   },
   addressInfo: {
@@ -141,32 +139,26 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#333',
   },
   phone: {
     fontSize: 14,
-    color: '#555',
     marginTop: 5,
   },
   address: {
     fontSize: 14,
-    color: '#555',
     marginTop: 5,
   },
   changeButton: {
     marginTop: 10,
     borderWidth: 1,
-    borderColor: '#3498db',
     paddingVertical: 5,
     paddingHorizontal: 15,
     borderRadius: 5,
   },
   changeButtonText: {
-    color: '#3498db',
     fontSize: 14,
   },
   selectButton: {
-    backgroundColor: '#3498db',
     paddingVertical: 15,
     borderRadius: 10,
     alignItems: 'center',

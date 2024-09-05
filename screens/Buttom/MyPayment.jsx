@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
@@ -5,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const PaymentScreen = () => {
+    const isDay = useSelector(state => state.theme.isDay); 
     const [paymentMethods, setPaymentMethods] = useState([]);
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
     const navigation = useNavigation();
@@ -72,14 +74,14 @@ const PaymentScreen = () => {
 
     const renderPaymentMethod = ({ item }) => (
         <TouchableOpacity
-            style={styles.paymentMethod}
+            style={[styles.paymentMethod, { backgroundColor: isDay ? '#F4F6FB' : '#333' }]} 
             onPress={() => setSelectedPaymentMethod(item.id)}
         >
             <Image source={item.logo} style={styles.paymentLogo} />
             <View style={styles.paymentDetails}>
-                <Text style={styles.bankName}>{item.bank}</Text>
-                <Text style={styles.cardNumber}>•••• •••• •••• {item.lastDigits}</Text>
-                <Text style={styles.ownerName}>{item.owner}</Text>
+                <Text style={[styles.bankName, { color: isDay ? '#000' : '#fff' }]}>{item.bank}</Text> 
+                <Text style={[styles.cardNumber, { color: isDay ? '#777' : '#ccc' }]}>{`•••• •••• •••• ${item.lastDigits}`}</Text>
+                <Text style={[styles.ownerName, { color: isDay ? '#777' : '#ccc' }]}>{item.owner}</Text> 
             </View>
             <View style={styles.radioButtonContainer}>
                 {selectedPaymentMethod === item.id && (
@@ -90,14 +92,14 @@ const PaymentScreen = () => {
     );
 
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
+        <View style={[styles.container, { backgroundColor: isDay ? '#fff' : '#000' }]}>
+            <View style={[styles.header, { borderBottomColor: isDay ? '#E0E0E0' : '#555' }]}> 
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <MaterialIcons name="arrow-back" size={24} color="black"/>
+                    <MaterialIcons name="arrow-back" size={24} color={isDay ? 'black' : 'white'}/>
                 </TouchableOpacity>
-                <Text style={styles.headerTitle}>My Payment</Text>
+                <Text style={[styles.headerTitle, { color: isDay ? 'black' : 'white' }]}>My Payment</Text>
                 <TouchableOpacity onPress={() => navigation.navigate("Add Card")}>
-                    <MaterialIcons name="add" size={24} color="black"/>
+                    <MaterialIcons name="add" size={24} color={isDay ? 'black' : 'white'}/> 
                 </TouchableOpacity>
             </View>
             <FlatList
@@ -117,7 +119,6 @@ const PaymentScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
     },
     header: {
         flexDirection: 'row',
@@ -125,12 +126,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 15,
         borderBottomWidth: 1,
-        borderBottomColor: '#E0E0E0',
     },
     headerTitle: {
         fontSize: 18,
         fontWeight: 'bold',
-        color:'black',
     },
     paymentList: {
         flex: 1,
@@ -138,9 +137,8 @@ const styles = StyleSheet.create({
     paymentMethod: {
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 30,
+        padding: 15,
         borderBottomWidth: 1,
-        borderBottomColor: '#E0E0E0',
     },
     paymentLogo: {
         width: 40,
@@ -153,16 +151,12 @@ const styles = StyleSheet.create({
     bankName: {
         fontSize: 16,
         fontWeight: 'bold',
-        color:'black',
-
     },
     cardNumber: {
         fontSize: 14,
-        color: '#777',
     },
     ownerName: {
         fontSize: 14,
-        color: '#777',
     },
     radioButtonContainer: {
         width: 24,
