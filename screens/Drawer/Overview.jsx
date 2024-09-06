@@ -13,7 +13,7 @@ const TravelScreen = ({ navigation }) => {
   const toggleTheme = () => {
     dispatch({ type: 'TOGGLE_THEME' });
   };
-
+  
   const dynamicStyles = StyleSheet.create({
     container: {
       flex: 1,
