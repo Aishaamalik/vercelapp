@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import Icon from 'react-native-vector-icons/Feather';
-import { useNavigation } from '@react-navigation/native';  
+import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 const { width, height } = Dimensions.get('window');
 
@@ -36,17 +37,18 @@ const slides = [
 const SliderScreen = () => {
   const [activeSlide, setActiveSlide] = useState(0);
   const navigation = useNavigation();
+  const isDay = useSelector(state => state.theme.isDay);
 
   const renderItem = ({ item }) => (
-    <View style={styles.slide}>
+    <View style={[styles.slide, { backgroundColor: isDay ? '#fff' : '#333' }]}>
       <Image source={item.image} style={styles.image} resizeMode="cover" />
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.description}>{item.description}</Text>
+      <View style={[styles.textContainer, { backgroundColor: isDay ? '#fff' : '#333' }]}>
+        <Text style={[styles.title, { color: isDay ? '#000' : '#fff' }]}>{item.title}</Text>
+        <Text style={[styles.description, { color: isDay ? '#000' : '#ccc' }]}>{item.description}</Text>
 
         {item.number === 4 && (
           <TouchableOpacity 
-            style={styles.getStartedButton} 
+            style={[styles.getStartedButton, { backgroundColor: isDay ? '#007AFF' : '#1E90FF' }]} 
             onPress={() => navigation.navigate('Screen1')} 
           >
             <Text style={styles.getStartedButtonText}>Get Started</Text>
@@ -57,7 +59,7 @@ const SliderScreen = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: isDay ? '#fff' : '#000' }]}>
       <Carousel
         data={slides}
         renderItem={renderItem}
@@ -70,7 +72,7 @@ const SliderScreen = () => {
         dotsLength={slides.length}
         activeDotIndex={activeSlide}
         containerStyle={styles.paginationContainer}
-        dotStyle={styles.dot}
+        dotStyle={[styles.dot, { backgroundColor: isDay ? '#007AFF' : '#1E90FF' }]}
         inactiveDotStyle={styles.inactiveDot}
         inactiveDotOpacity={0.4}
         inactiveDotScale={0.6}
@@ -78,10 +80,13 @@ const SliderScreen = () => {
       
       {(activeSlide === 0 || activeSlide === 1 || activeSlide === 2) && (
         <>
-          <TouchableOpacity style={styles.skipButton} onPress={() => setActiveSlide(3)}>
-            <Icon name="arrow-right" size={24} color="white" />
+          <TouchableOpacity 
+            style={[styles.skipButton, { backgroundColor: isDay ? '#007AFF' : '#1E90FF' }]} 
+            onPress={() => setActiveSlide(3)}
+          >
+            <Icon name="arrow-right" size={24} color={isDay ? '#fff' : '#000'} />
           </TouchableOpacity>
-          <Text style={styles.skipText}>Skip</Text>
+          <Text style={[styles.skipText, { color: isDay ? '#007AFF' : '#1E90FF' }]}>Skip</Text>
         </>
       )}
     </View>
@@ -91,7 +96,6 @@ const SliderScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
   },
   slide: {
     width: width,
@@ -108,7 +112,6 @@ const styles = StyleSheet.create({
     height: '50%',
     paddingHorizontal: 20,
     paddingVertical: 10,
-    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -117,12 +120,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: 10,
-    color: 'black',
   },
   description: {
     fontSize: 16,
     textAlign: 'center',
-    color: 'black',
     marginBottom: 20,
   },
   paginationContainer: {
@@ -135,13 +136,11 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: '#007AFF',
   },
   inactiveDot: {
     backgroundColor: 'gray',
   },
   skipButton: {
-    backgroundColor: '#007AFF',
     width: 50,
     height: 50,
     borderRadius: 25,
@@ -153,7 +152,6 @@ const styles = StyleSheet.create({
   },
   skipText: {
     fontSize: 16,
-    color: '#007AFF',
     position: 'absolute',
     bottom: 30,
     left: 80,
@@ -162,7 +160,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     paddingVertical: 15,
     paddingHorizontal: 30,
-    backgroundColor: '#007AFF',
     borderRadius: 25,
   },
   getStartedButtonText: {

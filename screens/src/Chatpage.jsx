@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, FlatList, Image } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -12,6 +13,7 @@ const messages = [
 
 const ChatScreen = ({ navigation }) => {
     const [message, setMessage] = useState('');
+    const isDay = useSelector(state => state.theme.isDay); 
 
     const renderMessage = ({ item }) => (
         <View style={[styles.messageContainer, item.sender === 'me' ? styles.myMessage : styles.otherMessage]}>
@@ -25,14 +27,14 @@ const ChatScreen = ({ navigation }) => {
     );
 
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
+        <View style={[styles.container, { backgroundColor: isDay ? '#e3f2fd' : '#212121' }]}>
+            <View style={[styles.header, { backgroundColor: isDay ? '#2196f3' : '#121212' }]}>
                 <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-                    <Ionicons name="arrow-back" size={24} color="#000" />
+                    <Ionicons name="arrow-back" size={24} color={isDay ? "#fff" : "#b0bec5"} />
                 </TouchableOpacity>
-                <Text style={styles.headerTitle}>Richar Kandowen</Text>
+                <Text style={[styles.headerTitle, { color: isDay ? "#fff" : "#b0bec5" }]}>Richar Kandowen</Text>
                 <TouchableOpacity style={styles.moreButton}>
-                    <Ionicons name="ellipsis-vertical" size={24} color="#000" />
+                    <Ionicons name="ellipsis-vertical" size={24} color={isDay ? "#fff" : "#b0bec5"} />
                 </TouchableOpacity>
             </View>
             <FlatList
@@ -41,13 +43,13 @@ const ChatScreen = ({ navigation }) => {
                 keyExtractor={(item) => item.id}
                 style={styles.chatList}
             />
-            <View style={styles.inputContainer}>
+            <View style={[styles.inputContainer, { backgroundColor: isDay ? '#37474f' : '#121212' }]}>
                 <TextInput
-                    style={styles.input}
+                    style={[styles.input, { backgroundColor: isDay ? '#546e7a' : '#37474f', color: isDay ? "#fff" : "#b0bec5" }]}
                     placeholder="Message"
                     value={message}
                     onChangeText={setMessage}
-                    placeholderTextColor={"black"}
+                    placeholderTextColor={isDay ? "#b0bec5" : "#90a4ae"}
                 />
                 <TouchableOpacity style={styles.sendButton}>
                     <Ionicons name="send" size={24} color="#fff" />
@@ -56,10 +58,10 @@ const ChatScreen = ({ navigation }) => {
         </View>
     );
 };
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f0f8ff',
     },
     header: {
         flexDirection: 'row',
@@ -68,8 +70,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         paddingVertical: 15,
         borderBottomWidth: 1,
-        borderBottomColor: '#d1e7ff',
-        backgroundColor: '#ffffff',
+        borderBottomColor: '#90a4ae',
     },
     backButton: {
         justifyContent: 'center',
@@ -78,7 +79,6 @@ const styles = StyleSheet.create({
     headerTitle: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: 'black',
     },
     moreButton: {
         justifyContent: 'center',
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     },
     myMessage: {
         alignSelf: 'flex-end',
-        backgroundColor: '#e1f5fe',
+        backgroundColor: '#1e88e5',
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
         borderBottomLeftRadius: 10,
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     },
     otherMessage: {
         alignSelf: 'flex-start',
-        backgroundColor: '#d1e7ff',
+        backgroundColor: '#90a4ae',
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
         borderBottomRightRadius: 10,
@@ -125,11 +125,11 @@ const styles = StyleSheet.create({
     },
     messageText: {
         fontSize: 16,
-        color: '#333',
+        color: '#fff',
     },
     messageTime: {
         fontSize: 12,
-        color: '#888',
+        color: '#b0bec5',
         textAlign: 'right',
         marginTop: 5,
     },
@@ -139,29 +139,25 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         borderTopWidth: 1,
-        borderTopColor: '#d1e7ff',
-        backgroundColor: '#ffffff',
+        borderTopColor: '#37474f',
     },
     input: {
         flex: 1,
         height: 40,
         borderWidth: 1,
-        borderColor: '#d1e7ff',
+        borderColor: '#37474f',
         borderRadius: 20,
         paddingHorizontal: 15,
-        backgroundColor: '#f0f8ff',
-        color:'black',
     },
     sendButton: {
         width: 40,
         height: 40,
-        backgroundColor: '#007bff',
+        backgroundColor: '#1e88e5',
         borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 10,
     },
 });
-
 
 export default ChatScreen;

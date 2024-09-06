@@ -1,48 +1,50 @@
+import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-
 const { width } = Dimensions.get('window');
 
 const CallScreen = () => {
+    const isDay = useSelector(state => state.theme.isDay);
     const navigation = useNavigation();
+
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: isDay ? '#fff' : '#212121' }]}>
             <View style={styles.videoContainer}>
                 <Image
-                    source={ require('../Assets/Tourguide/p4.jpg')}
+                    source={require('../Assets/Tourguide/p4.jpg')}
                     style={styles.remoteVideo}
                 />
                 <Image
-                    source={ require('../Assets/Tourguide/p2.jpg')}
+                    source={require('../Assets/Tourguide/p2.jpg')}
                     style={styles.localVideo}
                 />
             </View>
-            <View style={styles.callInfo}>
+            <View style={[styles.callInfo, { backgroundColor: isDay ? '#1976d2' : '#000' }]}>
                 <View style={styles.callInfoContent}>
                     <Image
-                    source={ require('../Assets/Tourguide/p4.jpg')}
-                    style={styles.avatar}
+                        source={require('../Assets/Tourguide/p4.jpg')}
+                        style={styles.avatar}
                     />
                     <View style={styles.callTextContainer}>
-                        <Text style={styles.callName}>Richar Kandowen</Text>
-                        <Text style={styles.callSubtext}>Richar Kandowen</Text>
+                        <Text style={[styles.callName, { color: isDay ? '#fff' : '#b0bec5' }]}>Richar Kandowen</Text>
+                        <Text style={[styles.callSubtext, { color: isDay ? '#fff' : '#b0bec5' }]}>Richar Kandowen</Text>
                     </View>
                     <Text style={styles.callTime}>07:23</Text>
                 </View>
             </View>
-            <View style={styles.callControls}>
-                <TouchableOpacity style={styles.controlButton}>
-                    <Ionicons name="mic-outline" size={24} color="#000" />
+            <View style={[styles.callControls, { backgroundColor: isDay ? '#fff' : '#37474f' }]}>
+                <TouchableOpacity style={[styles.controlButton, { backgroundColor: isDay ? '#f0f0f0' : '#424242' }]}>
+                    <Ionicons name="mic-outline" size={24} color={isDay ? "#000" : "#fff"} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.controlButton}>
-                    <Ionicons name="volume-high-outline" size={24} color="#000" />
+                <TouchableOpacity style={[styles.controlButton, { backgroundColor: isDay ? '#f0f0f0' : '#424242' }]}>
+                    <Ionicons name="volume-high-outline" size={24} color={isDay ? "#000" : "#fff"} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.controlButton}>
-                    <Ionicons name="videocam-outline" size={24} color="#000" />
+                <TouchableOpacity style={[styles.controlButton, { backgroundColor: isDay ? '#f0f0f0' : '#424242' }]}>
+                    <Ionicons name="videocam-outline" size={24} color={isDay ? "#000" : "#fff"} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.endCallButton}>
                     <MaterialIcons name="call-end" size={24} color="#fff" />
@@ -55,12 +57,11 @@ const CallScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
     },
     videoContainer: {
         flex: 1,
-        flexDirection:'column',
-        alignSelf:'center',
+        flexDirection: 'column',
+        alignSelf: 'center',
     },
     remoteVideo: {
         flex: 1,
@@ -71,7 +72,6 @@ const styles = StyleSheet.create({
         margin: 5,
     },
     callInfo: {
-        backgroundColor: '#000',
         paddingVertical: 10,
         paddingHorizontal: 15,
         borderTopLeftRadius: 20,
@@ -92,12 +92,10 @@ const styles = StyleSheet.create({
         marginLeft: 10,
     },
     callName: {
-        color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
     },
     callSubtext: {
-        color: '#fff',
         fontSize: 14,
     },
     callTime: {
@@ -109,13 +107,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         alignItems: 'center',
         paddingVertical: 20,
-        backgroundColor: '#fff',
     },
     controlButton: {
         width: 60,
         height: 60,
         borderRadius: 30,
-        backgroundColor: '#f0f0f0',
         justifyContent: 'center',
         alignItems: 'center',
     },

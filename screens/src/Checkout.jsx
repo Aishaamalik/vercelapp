@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput, ScrollView, Modal, Button } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput, ScrollView, Modal } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useSelector } from 'react-redux';
 
 const CheckoutScreen = ({ route, navigation }) => {
     const [selectedCard, setSelectedCard] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
+    
+    const isDay = useSelector(state => state.theme.isDay);
 
     const {
         hotelName = 'Hotel Name Unavailable',
@@ -21,6 +24,7 @@ const CheckoutScreen = ({ route, navigation }) => {
     const handlePayNow = () => {
         setModalVisible(true);
     };
+    
     const handleCloseModal = () => {
         navigation.navigate('Booked', {
             hotelName,
@@ -34,116 +38,115 @@ const CheckoutScreen = ({ route, navigation }) => {
             customerEmail
         });
     };
-    
 
     return (
-        <ScrollView style={styles.container}>
-            <View style={styles.header}>
+        <ScrollView style={styles(isDay).container}>
+            <View style={styles(isDay).header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Ionicons name="arrow-back" size={24} color="#000" />
+                    <Ionicons name="arrow-back" size={24} color={isDay ? "#000" : "#FFF"} />
                 </TouchableOpacity>
-                <Text style={styles.headerTitle}>Checkout</Text>
+                <Text style={styles(isDay).headerTitle}>Checkout</Text>
             </View>
             
-            <View style={styles.hotelInfo}>
+            <View style={styles(isDay).hotelInfo}>
                 <Image
                     source={hotelImage}
-                    style={styles.hotelImage}
+                    style={styles(isDay).hotelImage}
                 />
-                <View style={styles.hotelDetails}>
-                    <Text style={styles.hotelName}>{hotelName}</Text>
-                    <Text style={styles.hotelLocation}>{hotelLocation}</Text>
-                    <View style={styles.rating}>
+                <View style={styles(isDay).hotelDetails}>
+                    <Text style={styles(isDay).hotelName}>{hotelName}</Text>
+                    <Text style={styles(isDay).hotelLocation}>{hotelLocation}</Text>
+                    <View style={styles(isDay).rating}>
                         <Ionicons name="star" size={16} color="#FFD700" />
-                        <Text style={styles.ratingText}>4.4 (41)</Text>
+                        <Text style={styles(isDay).ratingText}>4.4 (41)</Text>
                     </View>
                 </View>
             </View>
             
-            <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Customer Info</Text>
-                <View style={styles.infoRow}>
-                    <Text style={styles.infoLabel}>Name</Text>
-                    <Text style={styles.infoValue}>{customerName}</Text>
+            <View style={styles(isDay).section}>
+                <Text style={styles(isDay).sectionTitle}>Customer Info</Text>
+                <View style={styles(isDay).infoRow}>
+                    <Text style={styles(isDay).infoLabel}>Name</Text>
+                    <Text style={styles(isDay).infoValue}>{customerName}</Text>
                 </View>
-                <View style={styles.infoRow}>
-                    <Text style={styles.infoLabel}>Email</Text>
-                    <Text style={styles.infoValue}>{customerEmail}</Text>
-                </View>
-            </View>
-            
-            <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Order Info</Text>
-                <View style={styles.infoRow}>
-                    <Text style={styles.infoLabel}>Length of Stay</Text>
-                    <Text style={styles.infoValue}>{startDate} to {endDate}</Text>
-                </View>
-                <View style={styles.infoRow}>
-                    <Text style={styles.infoLabel}>Check In</Text>
-                    <Text style={styles.infoValue}>{startDate}</Text>
-                </View>
-                <View style={styles.infoRow}>
-                    <Text style={styles.infoLabel}>Check Out</Text>
-                    <Text style={styles.infoValue}>{endDate}</Text>
-                </View>
-                <View style={styles.infoRow}>
-                    <Text style={styles.infoLabel}>Type Room</Text>
-                    <Text style={styles.infoValue}>Presidential Suite</Text>
+                <View style={styles(isDay).infoRow}>
+                    <Text style={styles(isDay).infoLabel}>Email</Text>
+                    <Text style={styles(isDay).infoValue}>{customerEmail}</Text>
                 </View>
             </View>
             
-            <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Promo Code</Text>
-                <View style={styles.promoCodeContainer}>
+            <View style={styles(isDay).section}>
+                <Text style={styles(isDay).sectionTitle}>Order Info</Text>
+                <View style={styles(isDay).infoRow}>
+                    <Text style={styles(isDay).infoLabel}>Length of Stay</Text>
+                    <Text style={styles(isDay).infoValue}>{startDate} to {endDate}</Text>
+                </View>
+                <View style={styles(isDay).infoRow}>
+                    <Text style={styles(isDay).infoLabel}>Check In</Text>
+                    <Text style={styles(isDay).infoValue}>{startDate}</Text>
+                </View>
+                <View style={styles(isDay).infoRow}>
+                    <Text style={styles(isDay).infoLabel}>Check Out</Text>
+                    <Text style={styles(isDay).infoValue}>{endDate}</Text>
+                </View>
+                <View style={styles(isDay).infoRow}>
+                    <Text style={styles(isDay).infoLabel}>Type Room</Text>
+                    <Text style={styles(isDay).infoValue}>Presidential Suite</Text>
+                </View>
+            </View>
+            
+            <View style={styles(isDay).section}>
+                <Text style={styles(isDay).sectionTitle}>Promo Code</Text>
+                <View style={styles(isDay).promoCodeContainer}>
                     <TextInput
-                        style={styles.promoCodeInput}
+                        style={styles(isDay).promoCodeInput}
                         placeholder="Input code"
-                        placeholderTextColor={"black"}
+                        placeholderTextColor={isDay ? "black" : "white"}
                     />
-                    <TouchableOpacity style={styles.applyButton}>
-                        <Text style={styles.applyButtonText}>Apply</Text>
+                    <TouchableOpacity style={styles(isDay).applyButton}>
+                        <Text style={styles(isDay).applyButtonText}>Apply</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.infoRow}>
-                    <Text style={styles.infoLabel}>Promo</Text>
-                    <Text style={styles.promoValue}>-$20</Text>
+                <View style={styles(isDay).infoRow}>
+                    <Text style={styles(isDay).infoLabel}>Promo</Text>
+                    <Text style={styles(isDay).promoValue}>-$20</Text>
                 </View>
-                <View style={styles.infoRow}>
-                    <Text style={styles.infoLabel}>Total Pay</Text>
-                    <Text style={styles.totalValue}>${price - 20}</Text>
+                <View style={styles(isDay).infoRow}>
+                    <Text style={styles(isDay).infoLabel}>Total Pay</Text>
+                    <Text style={styles(isDay).totalValue}>${price - 20}</Text>
                 </View>
             </View>
             
-            <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Payment Method</Text>
-                <TouchableOpacity style={styles.paymentMethod} onPress={() => setSelectedCard('visa')}>
+            <View style={styles(isDay).section}>
+                <Text style={styles(isDay).sectionTitle}>Payment Method</Text>
+                <TouchableOpacity style={styles(isDay).paymentMethod} onPress={() => setSelectedCard('visa')}>
                     <Image
                         source={require('../Assets/bank/visa.png')}
-                        style={styles.cardImage}
+                        style={styles(isDay).cardImage}
                     />
-                    <Text style={styles.cardNumber}>•••• •••• •••• 87652</Text>
+                    <Text style={styles(isDay).cardNumber}>•••• •••• •••• 87652</Text>
                     <Ionicons
                         name={selectedCard === 'visa' ? 'radio-button-on' : 'radio-button-off'}
                         size={24}
-                        color="#000"
+                        color={isDay ? "#000" : "#FFF"}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.paymentMethod} onPress={() => setSelectedCard('mastercard')}>
+                <TouchableOpacity style={styles(isDay).paymentMethod} onPress={() => setSelectedCard('mastercard')}>
                     <Image
                         source={require('../Assets/bank/visa.png')}
-                        style={styles.cardImage}
+                        style={styles(isDay).cardImage}
                     />
-                    <Text style={styles.cardNumber}>•••• •••• •••• 87652</Text>
+                    <Text style={styles(isDay).cardNumber}>•••• •••• •••• 87652</Text>
                     <Ionicons
                         name={selectedCard === 'mastercard' ? 'radio-button-on' : 'radio-button-off'}
                         size={24}
-                        color="#000"
+                        color={isDay ? "#000" : "#FFF"}
                     />
                 </TouchableOpacity>
             </View>
             
-            <TouchableOpacity style={styles.payNowButton} onPress={handlePayNow}>
-                <Text style={styles.payNowButtonText}>Pay Now</Text>
+            <TouchableOpacity style={styles(isDay).payNowButton} onPress={handlePayNow}>
+                <Text style={styles(isDay).payNowButtonText}>Pay Now</Text>
             </TouchableOpacity>
 
             <Modal
@@ -152,12 +155,12 @@ const CheckoutScreen = ({ route, navigation }) => {
                 visible={modalVisible}
                 onRequestClose={handleCloseModal}
             >
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                        <Text style={styles.modalTitle}>Order Successful</Text>
-                        <Text style={styles.modalMessage}>Your Order has been processed successfully.</Text>
-                        <TouchableOpacity style={styles.modalButton} onPress={handleCloseModal}>
-                            <Text style={styles.modalButtonText}>Continue</Text>
+                <View style={styles(isDay).modalContainer}>
+                    <View style={styles(isDay).modalContent}>
+                        <Text style={styles(isDay).modalTitle}>Order Successful</Text>
+                        <Text style={styles(isDay).modalMessage}>Your Order has been processed successfully.</Text>
+                        <TouchableOpacity style={styles(isDay).modalButton} onPress={handleCloseModal}>
+                            <Text style={styles(isDay).modalButtonText}>Continue</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -166,170 +169,178 @@ const CheckoutScreen = ({ route, navigation }) => {
     );
 };
 
-const styles = StyleSheet.create({
+const styles = (isDay) =>
+  StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        paddingHorizontal: 20,
+      flex: 1,
+      backgroundColor: isDay ? '#fff' : '#000',
+      paddingHorizontal: 20,
     },
     header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginVertical: 20,
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginVertical: 20,
     },
     headerTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginLeft: 10,
-        color: 'black',
+      fontSize: 20,
+      fontWeight: 'bold',
+      marginLeft: 10,
+      color: isDay ? 'black' : 'white',
     },
     hotelInfo: {
-        flexDirection: 'row',
-        marginBottom: 20,
-        backgroundColor: '#f8f8f8',
-        borderRadius: 10,
-        padding: 10,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.1,
-        shadowRadius: 1,
-        elevation: 2,
+      flexDirection: 'row',
+      marginBottom: 20,
+      backgroundColor: isDay ? '#f8f8f8' : '#333',
+      borderRadius: 10,
+      padding: 10,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.1,
+      shadowRadius: 1,
+      elevation: 2,
     },
     hotelImage: {
-        width: 100,
-        height: 100,
-        borderRadius: 10,
-        marginRight: 10,
+      width: 100,
+      height: 100,
+      borderRadius: 10,
+      marginRight: 10,
     },
     hotelDetails: {
-        flex: 1,
-        justifyContent: 'center',
+      flex: 1,
+      justifyContent: 'center',
     },
     hotelName: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: 'black',
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: isDay ? 'black' : 'white',
     },
     hotelLocation: {
-        color: '#555',
+      color: isDay ? '#555' : '#aaa',
     },
     rating: {
-        flexDirection: 'row',
-        alignItems: 'center',
+      flexDirection: 'row',
+      alignItems: 'center',
     },
     ratingText: {
-        marginLeft: 5,
-        color: '#555',
+      marginLeft: 5,
+      color: isDay ? '#555' : '#aaa',
     },
     section: {
-        marginBottom: 20,
+      marginBottom: 20,
     },
     sectionTitle: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: 'black',
-        marginBottom: 10,
+      fontSize: 16,
+      fontWeight: 'bold',
+      marginBottom: 10,
+      color: isDay ? 'black' : 'white',
     },
     infoRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginVertical: 5,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: 10,
     },
     infoLabel: {
-        fontWeight: 'bold',
-        color: 'black',
+      color: isDay ? '#555' : '#aaa',
     },
     infoValue: {
-        color: '#555',
+      fontWeight: 'bold',
+      color: isDay ? 'black' : 'white',
     },
     promoCodeContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginVertical: 10,
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 10,
     },
     promoCodeInput: {
-        flex: 1,
-        borderColor: '#ccc',
-        borderWidth: 1,
-        borderRadius: 5,
-        padding: 10,
-        color: 'black',
+      flex: 1,
+      borderColor: isDay ? '#ddd' : '#666',
+      borderWidth: 1,
+      borderRadius: 5,
+      padding: 10,
+      color: isDay ? 'black' : 'white',
     },
     applyButton: {
-        backgroundColor: '#007BFF',
-        padding: 10,
-        borderRadius: 5,
-        marginLeft: 10,
+      backgroundColor: '#f0ad4e',
+      paddingVertical: 10,
+      paddingHorizontal: 15,
+      borderRadius: 5,
+      marginLeft: 10,
     },
     applyButtonText: {
-        color: 'white',
+      color: '#fff',
+      fontWeight: 'bold',
     },
     promoValue: {
-        color: '#FF0000',
+      fontWeight: 'bold',
+      color: '#e74c3c',
     },
     totalValue: {
-        fontWeight: 'bold',
-        color: 'black',
+      fontWeight: 'bold',
+      color: '#27ae60',
     },
     paymentMethod: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingVertical: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingVertical: 10,
+      borderBottomColor: isDay ? '#ddd' : '#666',
+      borderBottomWidth: 1,
+      marginBottom: 10,
     },
     cardImage: {
-        width: 40,
-        height: 25,
-        marginRight: 10,
+      width: 40,
+      height: 25,
+      marginRight: 10,
     },
     cardNumber: {
-        flex: 1,
-        color: 'black',
+      flex: 1,
+      color: isDay ? 'black' : 'white',
     },
     payNowButton: {
-        backgroundColor: '#007BFF',
-        padding: 15,
-        borderRadius: 10,
-        alignItems: 'center',
+      backgroundColor: '#28a745',
+      paddingVertical: 15,
+      borderRadius: 10,
+      alignItems: 'center',
+      marginBottom: 20,
     },
     payNowButtonText: {
-        color: 'white',
-        fontWeight: 'bold',
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
     },
     modalContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.5)',
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: isDay ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.7)',
     },
     modalContent: {
-        width: '80%',
-        padding: 20,
-        backgroundColor: 'white',
-        borderRadius: 10,
-        alignItems: 'center',
+      backgroundColor: isDay ? '#fff' : '#333',
+      padding: 20,
+      borderRadius: 10,
+      alignItems: 'center',
+      width: '80%',
     },
     modalTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 10,
-        color:'black',
+      fontSize: 18,
+      fontWeight: 'bold',
+      marginBottom: 10,
+      color: isDay ? 'black' : 'white',
     },
     modalMessage: {
-        fontSize: 16,
-        marginBottom: 20,
-        textAlign: 'center',
-        color:'black',
+      fontSize: 16,
+      marginBottom: 20,
+      color: isDay ? '#555' : '#aaa',
     },
     modalButton: {
-        backgroundColor: '#007BFF',
-        padding: 10,
-        borderRadius: 5,
+      backgroundColor: '#007bff',
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      borderRadius: 5,
     },
     modalButtonText: {
-        color: 'white',
+      color: '#fff',
+      fontWeight: 'bold',
     },
-});
+  });
 
 export default CheckoutScreen;

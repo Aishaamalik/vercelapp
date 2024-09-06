@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useSelector } from 'react-redux';
 
 const reviews = [
   {
@@ -41,16 +42,18 @@ const reviews = [
 ];
 
 const ReviewScreen = ({ navigation }) => {
+  const isDay = useSelector(state => state.theme.isDay);
+
   const renderReview = ({ item }) => (
-    <View style={styles.reviewContainer}>
+    <View style={[styles.reviewContainer, { backgroundColor: isDay ? '#FFFFFF' : '#333333', borderColor: isDay ? '#E0E0E0' : '#555555' }]}>
       <View style={styles.reviewHeader}>
         <Image
           source={require('../Assets/Profile/pic1.jpeg')}
           style={styles.profileImage}
         />
         <View style={styles.reviewHeaderText}>
-          <Text style={styles.reviewerName}>{item.name}</Text>
-          <Text style={styles.reviewDate}>{item.date}</Text>
+          <Text style={[styles.reviewerName, { color: isDay ? '#333333' : '#FFFFFF' }]}>{item.name}</Text>
+          <Text style={[styles.reviewDate, { color: isDay ? '#888888' : '#AAAAAA' }]}>{item.date}</Text>
         </View>
       </View>
       <View style={styles.ratingContainer}>
@@ -58,7 +61,7 @@ const ReviewScreen = ({ navigation }) => {
           <Icon key={index} name="star" size={16} color="#FFD700" />
         ))}
       </View>
-      <Text style={styles.reviewComment}>{item.comment}</Text>
+      <Text style={[styles.reviewComment, { color: isDay ? '#666666' : '#CCCCCC' }]}>{item.comment}</Text>
       {item.images && item.images.length > 0 && (
         <View style={styles.reviewImagesContainer}>
           {item.images.map((image, index) => (
@@ -70,13 +73,13 @@ const ReviewScreen = ({ navigation }) => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: isDay ? '#F5F5F5' : '#1E1E1E' }]}>
       {/* Header */}
-      <View style={styles.header}>
+      <View style={[styles.header, { backgroundColor: isDay ? '#FFFFFF' : '#333333' }]}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-          <Icon name="arrow-back" size={24} color="black" />
+          <Icon name="arrow-back" size={24} color={isDay ? '#000000' : '#FFFFFF'} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Review</Text>
+        <Text style={[styles.headerTitle, { color: isDay ? '#333333' : '#FFFFFF' }]}>Review</Text>
       </View>
 
       {/* Reviews List */}
@@ -93,7 +96,6 @@ const ReviewScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
   },
   header: {
     flexDirection: 'row',
@@ -101,8 +103,6 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
-    backgroundColor: '#FFFFFF',
   },
   backButton: {
     padding: 10,
@@ -112,18 +112,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     fontWeight: '700',
-    color: '#333',
   },
   reviewsList: {
     padding: 15,
   },
   reviewContainer: {
-    backgroundColor: '#FFFFFF',
     padding: 15,
     marginVertical: 10,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#E0E0E0',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -145,10 +142,8 @@ const styles = StyleSheet.create({
   reviewerName: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#333',
   },
   reviewDate: {
-    color: '#888',
     fontSize: 14,
   },
   ratingContainer: {
@@ -156,7 +151,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   reviewComment: {
-    color: '#666',
     fontSize: 14,
   },
   reviewImagesContainer: {

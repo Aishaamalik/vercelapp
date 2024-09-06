@@ -1,7 +1,8 @@
+import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'; 
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const hotels = [
   {
@@ -18,7 +19,7 @@ const hotels = [
     duration: '5 days 4 nights',
     location: 'India',
     price: '$18/Person',
-    image: require('../Assets/visits/endigadabeach.jpeg'), 
+    image: require('../Assets/visits/endigadabeach.jpeg'),
   },
   {
     id: '3',
@@ -26,7 +27,7 @@ const hotels = [
     duration: '5 days 4 nights',
     location: 'USA',
     price: '$14/Person',
-    image: require('../Assets/visits/tower.jpeg'), 
+    image: require('../Assets/visits/tower.jpeg'),
   },
   {
     id: '4',
@@ -34,7 +35,7 @@ const hotels = [
     duration: '5 days 4 nights',
     location: 'India',
     price: '$21/Person',
-    image: require('../Assets/visits/royalpalace.jpeg'), 
+    image: require('../Assets/visits/royalpalace.jpeg'),
   },
   {
     id: '5',
@@ -42,7 +43,7 @@ const hotels = [
     duration: '5 days 4 nights',
     location: 'China',
     price: '$17/Person',
-    image: require('../Assets/visits/mall.jpeg'), 
+    image: require('../Assets/visits/mall.jpeg'),
   },
   {
     id: '6',
@@ -50,35 +51,36 @@ const hotels = [
     duration: '5 days 4 nights',
     location: 'Australia',
     price: '$20/Person',
-    image: require('../Assets/visits/hotel.jpeg'), 
+    image: require('../Assets/visits/hotel.jpeg'),
   },
 ];
 
 const HotelListScreen = () => {
     const navigation = useNavigation();
+    const isDay = useSelector(state => state.theme.isDay);
 
     const renderItem = ({ item }) => (
-        <View style={styles.itemContainer}>
+        <View style={[styles.itemContainer, { borderBottomColor: isDay ? '#ddd' : '#444' }]}>
             <Image source={item.image} style={styles.image} />
             <View style={styles.textContainer}>
-                <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.duration}>{item.duration}</Text>
+                <Text style={[styles.name, { color: isDay ? 'black' : 'white' }]}>{item.name}</Text>
+                <Text style={[styles.duration, { color: isDay ? 'black' : 'white' }]}>{item.duration}</Text>
                 <View style={styles.locationContainer}>
-                    <Icon name="location-outline" size={14} color="#555" />
-                    <Text style={styles.location}>{item.location}</Text>
+                    <Icon name="location-outline" size={14} color={isDay ? '#555' : '#aaa'} />
+                    <Text style={[styles.location, { color: isDay ? 'black' : 'white' }]}>{item.location}</Text>
                 </View>
             </View>
-            <Text style={styles.price}>{item.price}</Text>
+            <Text style={[styles.price, { color: isDay ? 'black' : 'white' }]}>{item.price}</Text>
         </View>
     );
 
     return (
-        <View style={styles.container}>
-            <View style={styles.headerContainer}>
+        <View style={[styles.container, { backgroundColor: isDay ? '#fff' : 'black' }]}>
+            <View style={[styles.headerContainer, { backgroundColor: isDay ? '#f8f8f8' : 'black' }]}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Icon name="arrow-back-outline" size={30} color="#000" />
+                    <Icon name="arrow-back-outline" size={30} color={isDay ? '#000' : '#fff'} />
                 </TouchableOpacity>
-                <Text style={styles.header}>Hotels</Text>
+                <Text style={[styles.header, { color: isDay ? 'black' : 'white' }]}>Hotels</Text>
             </View>
             <FlatList
                 data={hotels}
@@ -94,14 +96,12 @@ const HotelListScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
         paddingHorizontal: 16,
     },
     headerContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         paddingVertical: 20,
-        backgroundColor: '#f8f8f8',
         elevation: 3,
     },
     header: {
@@ -109,7 +109,6 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: 'bold',
         textAlign: 'center',
-        color: 'black',
     },
     listContainer: {
         paddingBottom: 16,
@@ -120,7 +119,6 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         paddingVertical: 10,
         borderBottomWidth: 1,
-        borderBottomColor: '#ddd',
     },
     image: {
         width: 90,
@@ -134,10 +132,8 @@ const styles = StyleSheet.create({
     name: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: 'black',
     },
     duration: {
-        color: 'black',
         marginVertical: 4,
     },
     locationContainer: {
@@ -145,13 +141,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     location: {
-        color: 'black',
         marginLeft: 4,
     },
     price: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: 'black',
     },
 });
 

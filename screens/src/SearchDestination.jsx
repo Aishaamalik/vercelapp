@@ -3,6 +3,8 @@ import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, FlatList, M
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Slider from '@react-native-community/slider';
+import { useSelector } from 'react-redux';
+
 
 const destinations = [
     {
@@ -73,14 +75,15 @@ const popularFilters = [
 const starRatings = [1, 2, 3, 4, 5];
 
 const SearchDestinationScreen = ({ navigation }) => {
-    
+    const isDay = useSelector(state => state.theme.isDay);
+
     const [modalVisible, setModalVisible] = useState(false);
     const [sliderValue, setSliderValue] = useState(0);
     const [selectedFilters, setSelectedFilters] = useState([]);
     const [selectedRatings, setSelectedRatings] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredDestinations, setFilteredDestinations] = useState(destinations);
-  
+
     const filteredData = filteredDestinations.filter(item =>
         item.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -147,16 +150,16 @@ const SearchDestinationScreen = ({ navigation }) => {
         <TouchableOpacity
             style={[
                 styles.filterItem,
-                selectedFilters.includes(item.label) && styles.selectedFilterItem,
+                selectedFilters.includes(item.label) && styles.selectedFilterItem(isDay),
             ]}
             onPress={() => toggleFilter(item.label)}
         >
-            <Text style={styles.filterItemText}>{item.label}</Text>
+            <Text style={styles.filterItemText(isDay)}>{item.label}</Text>
         </TouchableOpacity>
     );
   
     const renderItem = ({ item }) => (
-        <TouchableOpacity style={styles.card} onPress={() => handlePress(item)}>
+        <TouchableOpacity style={styles.card(isDay)} onPress={() => handlePress(item)}>
             <Image source={item.image} style={styles.cardImage} />
             <TouchableOpacity
                 style={styles.favoriteButton}
@@ -168,35 +171,35 @@ const SearchDestinationScreen = ({ navigation }) => {
                     color={item.favorite ? 'red' : '#00BFFF'}
                 />
             </TouchableOpacity>
-            <View style={styles.cardContent}>
-                <Text style={styles.cardTitle}>{item.name}</Text>
-                <View style={styles.cardLocation}>
+            <View style={styles.cardContent(isDay)}>
+                <Text style={styles.cardTitle(isDay)}>{item.name}</Text>
+                <View style={styles.cardLocation(isDay)}>
                     <Ionicons name="location-outline" size={16} color="gray" />
-                    <Text style={styles.cardLocationText}>{item.location}</Text>
+                    <Text style={styles.cardLocationText(isDay)}>{item.location}</Text>
                 </View>
-                <Text style={styles.cardPrice}>{item.price}</Text>
-                <View style={styles.cardRating}>
+                <Text style={styles.cardPrice(isDay)}>{item.price}</Text>
+                <View style={styles.cardRating(isDay)}>
                     <Ionicons name="star" size={16} color="#FFD700" />
-                    <Text style={styles.cardRatingText}>{item.rating}</Text>
-                    <Text style={styles.cardReviews}>({item.reviews})</Text>
+                    <Text style={styles.cardRatingText(isDay)}>{item.rating}</Text>
+                    <Text style={styles.cardReviews(isDay)}>({item.reviews})</Text>
                 </View>
             </View>
         </TouchableOpacity>
     );
 
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
+        <View style={styles.container(isDay)}>
+            <View style={styles.header(isDay)}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Ionicons name="arrow-back" size={24} color="#000" />
+                    <Ionicons name="arrow-back" size={24} color={isDay ? '#000' : '#fff'} />
                 </TouchableOpacity>
-                <Text style={styles.headerTitle}>Search Destination</Text>
+                <Text style={styles.headerTitle(isDay)}>Search Destination</Text>
             </View>
 
-            <View style={styles.searchContainer}>
+            <View style={styles.searchContainer(isDay)}>
                 <Ionicons name="search" size={20} color="#888" style={styles.searchIcon} />
                 <TextInput
-                    style={styles.searchInput}
+                    style={styles.searchInput(isDay)}
                     placeholder="Search..."
                     value={searchQuery}
                     onChangeText={setSearchQuery}
@@ -207,20 +210,20 @@ const SearchDestinationScreen = ({ navigation }) => {
             </View>
 
             <View style={styles.filterContainer}>
-                <TouchableOpacity style={styles.filterButton}>
+                <TouchableOpacity style={styles.filterButton(isDay)}>
                     <MaterialIcons name="date-range" size={20} color="#888" />
-                    <Text style={styles.filterText}>Date</Text>
+                    <Text style={styles.filterText(isDay)}>Date</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.filterButton}>
+                <TouchableOpacity style={styles.filterButton(isDay)}>
                     <Ionicons name="location-outline" size={20} color="#888" />
-                    <Text style={styles.filterText}>Location</Text>
+                    <Text style={styles.filterText(isDay)}>Location</Text>
                 </TouchableOpacity>
             </View>
 
             <View style={styles.recommendationHeader}>
-                <Text style={styles.recommendationTitle}>Recommendation</Text>
+                <Text style={styles.recommendationTitle(isDay)}>Recommendation</Text>
                 <TouchableOpacity>
-                    <Text style={styles.seeAllText}>See All</Text>
+                    <Text style={styles.seeAllText(isDay)}>See All</Text>
                 </TouchableOpacity>
             </View>
 
@@ -231,223 +234,272 @@ const SearchDestinationScreen = ({ navigation }) => {
                 renderItem={renderItem}
                 showsVerticalScrollIndicator={false}
             />
-            <Modal
-        transparent={true}
-        visible={modalVisible}
-        animationType="slide"
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Filter</Text>
-            <View style={styles.sliderContainer}>
-              <Text>Price Range</Text>
-              <Slider
-                style={styles.slider}
-                minimumValue={0}
-                maximumValue={1000}
-                step={10}
-                minimumTrackTintColor="#00BFFF"
-                maximumTrackTintColor="#C0C0C0"
-                onValueChange={(value) => setSliderValue(value)}
-                value={sliderValue}
-              />
-              <Text style={styles.sliderValue}>${sliderValue.toFixed(2)} - 1000$</Text>
-            </View>
-            <Text style={styles.sectionTitle}>Popular Filters</Text>
-            <FlatList
-              data={popularFilters}
-              renderItem={renderFilterItem}
-              keyExtractor={(item) => item.id}
-              horizontal={false}
-              numColumns={2}
-              contentContainerStyle={styles.filterList}
-            />
-            <Text style={styles.sectionTitle}>Star Rating</Text>
-            <View style={styles.starRatingContainer}>
-              {starRatings.map((rating) => (
-                <TouchableOpacity
-                  key={rating}
-                  style={[
-                    styles.starButton,
-                    selectedRatings.includes(rating) && styles.selectedStarButton,
-                  ]}
-                  onPress={() => toggleRating(rating)}
-                >
-                  <Ionicons name="star" size={20} color={selectedRatings.includes(rating) ? '#FFD700' : '#d3d3d3'} />
-                </TouchableOpacity>
-              ))}
-            </View>
-            <TouchableOpacity style={styles.applyButton} onPress={applyFilters}>
-              <Text style={styles.applyButtonText}>Apply Filter</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.clearButton}
-              onPress={() => {
-                setSelectedFilters([]);
-                setSelectedRatings([]);
-                setSliderValue(0);
-                setFilteredDestinations(destinations);
-                setModalVisible(false);
-              }}
-            >
-              <Text style={styles.clearButtonText}>Clear All</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
             
+            <Modal
+                transparent={true}
+                visible={modalVisible}
+                animationType="slide"
+                onRequestClose={() => setModalVisible(false)}
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalContent(isDay)}>
+                        <Text style={styles.modalTitle(isDay)}>Filter</Text>
+                        <View style={styles.sliderContainer}>
+                            <Text>Price Range</Text>
+                            <Slider
+                                style={styles.slider}
+                                minimumValue={0}
+                                maximumValue={1000}
+                                step={10}
+                                minimumTrackTintColor="#00BFFF"
+                                maximumTrackTintColor="#C0C0C0"
+                                onValueChange={(value) => setSliderValue(value)}
+                                value={sliderValue}
+                            />
+                            <Text style={styles.sliderValue}>${sliderValue.toFixed(2)} - 1000$</Text>
+                        </View>
+                        <Text style={styles.sectionTitle(isDay)}>Popular Filters</Text>
+                        <FlatList
+                            data={popularFilters}
+                            renderItem={renderFilterItem}
+                            keyExtractor={(item) => item.id}
+                            horizontal={false}
+                            numColumns={2}
+                            contentContainerStyle={styles.filterList}
+                        />
+                        <Text style={styles.sectionTitle(isDay)}>Star Rating</Text>
+                        <View style={styles.starRatingContainer}>
+                            {starRatings.map((rating) => (
+                                <TouchableOpacity
+                                    key={rating}
+                                    style={[
+                                        styles.starButton,
+                                        selectedRatings.includes(rating) && styles.selectedStarButton,
+                                    ]}
+                                    onPress={() => toggleRating(rating)}
+                                >
+                                    <Ionicons name="star" size={20} color={selectedRatings.includes(rating) ? '#FFD700' : '#d3d3d3'} />
+                                </TouchableOpacity>
+                            ))}
+                        </View>
+                        <TouchableOpacity style={styles.applyButton(isDay)} onPress={applyFilters}>
+                            <Text style={styles.applyButtonText}>Apply Filter</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.clearButton} onPress={() => {
+                            setSelectedFilters([]);
+                            setSelectedRatings([]);
+                            setSliderValue(0);
+                            setFilteredDestinations(destinations);
+                            setModalVisible(false);
+                        }}>
+                            <Text style={styles.clearButtonText}>Clear All</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
         </View>
     );
 };
+
 const styles = StyleSheet.create({
-    container: {
+    container: (isDay) => ({
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: isDay ? '#fff' : '#000',
         paddingHorizontal: 20,
         paddingTop: 40,
-    },
-    header: {
+    }),
+    header: (isDay) => ({
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-between',
         marginBottom: 20,
-    },
-    headerTitle: {
+    }),
+    headerTitle: (isDay) => ({
         fontSize: 20,
         fontWeight: 'bold',
-        marginLeft: 10,
-    },
-    searchContainer: {
+        color: isDay ? '#000' : '#fff',
+    }),
+    searchContainer: (isDay) => ({
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#f0f0f0',
-        borderRadius: 10,
+        backgroundColor: isDay ? '#f0f0f0' : '#333',
+        borderRadius: 8,
         paddingHorizontal: 10,
         marginBottom: 20,
-    },
+    }),
+    searchInput: (isDay) => ({
+        flex: 1,
+        fontSize: 16,
+        color: isDay ? '#000' : '#fff',
+    }),
     searchIcon: {
         marginRight: 10,
-    },
-    searchInput: {
-        flex: 1,
-        paddingVertical: 10,
     },
     filterContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 20,
     },
-    filterButton: {
+    filterButton: (isDay) => ({
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#f0f0f0',
-        borderRadius: 10,
-        paddingHorizontal: 10,
-        paddingVertical: 10,
-        flex: 1,
-        marginHorizontal: 5,
-    },
-    filterText: {
-        marginLeft: 5,
-        color: '#888',
-    },
+        backgroundColor: isDay ? '#e0e0e0' : '#555',
+        borderRadius: 8,
+        padding: 10,
+    }),
+    filterText: (isDay) => ({
+        marginLeft: 10,
+        color: isDay ? '#000' : '#fff',
+    }),
     recommendationHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 10,
+        marginBottom: 20,
     },
-    recommendationTitle: {
+    recommendationTitle: (isDay) => ({
         fontSize: 18,
         fontWeight: 'bold',
-    },
-    seeAllText: {
-        color: '#007BFF',
-    },
-    card: {
-        backgroundColor: '#fff',
+        color: isDay ? '#000' : '#fff',
+    }),
+    seeAllText: (isDay) => ({
+        color: isDay ? '#00BFFF' : '#1E90FF',
+    }),
+    card: (isDay) => ({
+        flex: 1,
+        margin: 10,
+        backgroundColor: isDay ? '#fff' : '#333',
         borderRadius: 10,
         overflow: 'hidden',
-        marginBottom: 10,
-        flex: 1,
-        marginHorizontal: 5,
-    },
+        elevation: 5,
+    }),
     cardImage: {
         width: '100%',
-        height: 120,
+        height: 150,
     },
     favoriteButton: {
         position: 'absolute',
         top: 10,
         right: 10,
-        backgroundColor: 'rgba(0,0,0,0.5)',
-        borderRadius: 20,
-        padding: 5,
     },
-    cardContent: {
+    cardContent: (isDay) => ({
         padding: 10,
-    },
-    cardTitle: {
+    }),
+    cardTitle: (isDay) => ({
         fontSize: 16,
         fontWeight: 'bold',
-        marginBottom: 5,
-    },
-    cardLocation: {
+        color: isDay ? '#000' : '#fff',
+    }),
+    cardLocation: (isDay) => ({
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 5,
-    },
-    cardLocationText: {
+        marginVertical: 5,
+    }),
+    cardLocationText: (isDay) => ({
         marginLeft: 5,
-        color: '#888',
-    },
-    cardPrice: {
-        fontSize: 16,
+        color: isDay ? '#000' : '#ccc',
+    }),
+    cardPrice: (isDay) => ({
+        fontSize: 14,
         fontWeight: 'bold',
-        marginBottom: 5,
-    },
-    cardRating: {
+        color: isDay ? '#000' : '#fff',
+    }),
+    cardRating: (isDay) => ({
         flexDirection: 'row',
         alignItems: 'center',
-    },
-    cardRatingText: {
+    }),
+    cardRatingText: (isDay) => ({
         marginLeft: 5,
-        color: '#888',
-    },
+        color: isDay ? '#000' : '#fff',
+    }),
+    cardReviews: (isDay) => ({
+        marginLeft: 5,
+        color: isDay ? '#888' : '#aaa',
+    }),
     modalContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0,0,0,0.5)',
-      },
-      modalContent: {
+    },
+    modalContent: (isDay) => ({
         width: '90%',
-        backgroundColor: 'white',
+        backgroundColor: isDay ? '#fff' : '#333',
         borderRadius: 10,
         padding: 20,
-      },
-  modalTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 10 },
-  sliderContainer: { marginBottom: 20 },
-  slider: { width: '100%', height: 40 },
-  sliderValue: { textAlign: 'center', marginTop: 10 },
-  sectionTitle: { fontSize: 16, fontWeight: 'bold', marginBottom: 10 },
-  filterList: { marginBottom: 20 },
-  filterItem: {
-    padding: 10,
-    margin: 5,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#ddd',
-  },
-    
-  selectedFilterItem: { backgroundColor: '#00BFFF', borderColor: '#00BFFF' },
-  filterItemText: { color: '#000' },
-  starRatingContainer: { flexDirection: 'row', justifyContent: 'space-around', marginBottom: 20 },
-  starButton: { padding: 5 },
-  selectedStarButton: { backgroundColor: '#F5F5F5' },
-  applyButton: { backgroundColor: '#00BFFF', padding: 15, borderRadius: 5, alignItems: 'center' },
-  applyButtonText: { color: 'white', fontWeight: 'bold' },
-  clearButton: { marginTop: 10, alignItems: 'center' },
-  clearButtonText: { color: '#FF6347', fontWeight: 'bold' },
+        alignItems: 'center',
+    }),
+    modalTitle: (isDay) => ({
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        color: isDay ? '#000' : '#fff',
+    }),
+    sliderContainer: {
+        width: '100%',
+        marginBottom: 20,
+    },
+    slider: {
+        width: '100%',
+        height: 40,
+    },
+    sliderValue: {
+        textAlign: 'center',
+        marginVertical: 10,
+    },
+    sectionTitle: (isDay) => ({
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        color: isDay ? '#000' : '#fff',
+    }),
+    filterList: {
+        marginBottom: 20,
+    },
+    filterItem: {
+        padding: 10,
+        borderRadius: 5,
+        margin: 5,
+        borderWidth: 1,
+        borderColor: '#ddd',
+    },
+    selectedFilterItem: (isDay) => ({
+        backgroundColor: isDay ? '#00BFFF' : '#1E90FF',
+        borderColor: isDay ? '#00BFFF' : '#1E90FF',
+    }),
+    filterItemText: (isDay) => ({
+        color: isDay ? '#000' : '#fff',
+    }),
+    starRatingContainer: {
+        flexDirection: 'row',
+        marginBottom: 20,
+    },
+    starButton: {
+        margin: 5,
+    },
+    selectedStarButton: {
+        borderWidth: 2,
+        borderColor: '#FFD700',
+    },
+    applyButton: (isDay) => ({
+        backgroundColor: isDay ? '#00BFFF' : '#1E90FF',
+        borderRadius: 8,
+        padding: 10,
+        marginBottom: 10,
+    }),
+    applyButtonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+    },
+    clearButton: {
+        backgroundColor: '#ff4d4d',
+        borderRadius: 8,
+        padding: 10,
+    },
+    clearButtonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+    },
 });
 
 export default SearchDestinationScreen;

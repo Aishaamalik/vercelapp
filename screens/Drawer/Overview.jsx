@@ -1,13 +1,18 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, SafeAreaView, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Image, SafeAreaView, Dimensions, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon1 from 'react-native-vector-icons/Feather';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 const { height } = Dimensions.get('window');
 
 const TravelScreen = ({ navigation }) => {
   const isDay = useSelector(state => state.theme.isDay);
+  const dispatch = useDispatch();
+
+  const toggleTheme = () => {
+    dispatch({ type: 'TOGGLE_THEME' });
+  };
 
   const dynamicStyles = StyleSheet.create({
     container: {
@@ -28,6 +33,7 @@ const TravelScreen = ({ navigation }) => {
     },
     headerIcons: {
       flexDirection: 'row',
+      
     },
     icon: {
       marginRight: 15,
@@ -55,28 +61,45 @@ const TravelScreen = ({ navigation }) => {
       color: isDay ? 'gray' : 'lightgray',
       marginTop: 10,
     },
+    headerIcon: {
+      marginLeft: 15,
+    },
   });
 
   return (
     <SafeAreaView style={dynamicStyles.container}>
       <View style={dynamicStyles.header}>
-        <Icon 
-          name="menu" 
-          size={30} 
-          color="white" 
-          onPress={() => navigation.openDrawer()} 
+        <Icon
+          name="menu"
+          size={30}
+          color="white"
+          onPress={() => navigation.openDrawer()}
         />
         <View style={dynamicStyles.headerIcons}>
-          <Icon1 name="moon" size={25} color="white" style={dynamicStyles.icon} />
-          <Icon name="person-outline" size={25} color="white" onPress={() => navigation.navigate('Buttontabs')} />
+          <TouchableOpacity onPress={toggleTheme}>
+            <Icon1
+              name={isDay ? 'sun' : 'moon'}
+              size={24}
+              color="white"
+              style={dynamicStyles.headerIcon}
+            />
+          </TouchableOpacity>
+          <Icon
+            name="person-outline"
+            size={25}
+            color="white"
+            onPress={() => navigation.navigate('Buttontabs')}
+          />
         </View>
       </View>
       <Image
-        source={require('../Assets/Mainscreen/splash1.webp')} 
+        source={require('../Assets/Mainscreen/splash1.webp')}
         style={dynamicStyles.image}
         resizeMode="cover"
       />
-      <Text style={dynamicStyles.title}>Best travel destinations in the world</Text>
+      <Text style={dynamicStyles.title}>
+        Best travel destinations in the world
+      </Text>
       <Text style={dynamicStyles.description}>
         Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id semiru forgive you.
       </Text>

@@ -2,6 +2,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useSelector } from 'react-redux';  
 
 const defaultImage = require('../Assets/Tourguide/background.jpg');
 const defaultTitle = 'Amazing Vacation Spot';
@@ -54,7 +55,8 @@ const guide = [
 ];
 
 const VacationDetailsScreen = ({ route, navigation }) => {
-  // Destructuring route params with default values
+  
+  const isDay = useSelector(state => state.theme.isDay);  
   const {
     image = defaultImage,
     title = defaultTitle,
@@ -63,11 +65,9 @@ const VacationDetailsScreen = ({ route, navigation }) => {
     rating = defaultRating,
     reviews = defaultReviews,
     favorite = false,
-  } = route.params || {}; // Added fallback in case route.params is undefined
-
-  // Render method for FlatList tour guide items
+  } = route.params || {}; 
   const renderGuideItem = ({ item }) => (
-    <View style={styles.cardContainer}>
+    <View style={[styles.cardContainer,{backgroundColor: isDay ? 'white' :'gray'}]}>
       <Image source={item.image} style={styles.cardImage} />
       <View style={styles.ratingContainer}>
         <Icon name="star" size={16} color="#FFD700" />
@@ -83,10 +83,10 @@ const VacationDetailsScreen = ({ route, navigation }) => {
       </View>
     </View>
   );
+  
 
   return (
-    <View style={styles.container}>
-      {/* Header Section */}
+    <View style={[styles.container, { backgroundColor: isDay ? 'white' : 'black'}]}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <Icon name="arrow-back" size={24} color="white" />
@@ -94,40 +94,36 @@ const VacationDetailsScreen = ({ route, navigation }) => {
         <Text style={styles.headerTitle}>Vacation Details</Text>
       </View>
 
-      {/* Main Image */}
       <Image source={image} style={styles.mainImage} />
 
-      {/* Content Section */}
-      <ScrollView contentContainerStyle={styles.detailsContainer}>
-        {/* Title and Favorite Icon */}
+      <ScrollView contentContainerStyle={[styles.detailsContainer, { backgroundColor: isDay ? 'white' : 'black'}]}>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>{title}</Text>
+          <Text style={[styles.title, { color: isDay ? 'black' : 'white'}]}>{title}</Text>
           <Icon
             name={favorite ? "heart" : "heart-outline"}
             size={24}
-            color={favorite ? "red" : "black"}
+            color={favorite ? "red" : "blue"}
           />
         </View>
 
-        {/* Location and Rating */}
         <View style={styles.locationContainer}>
           <Icon name="location-outline" size={16} color="black" />
-          <Text style={styles.locationText}>{location}</Text>
+          <Text style={[styles.locationText, { color: isDay ? 'black' : 'white'}]}>{location}</Text>
           <Icon name="star" size={16} color="#FFD700" style={styles.starIcon} />
-          <Text style={styles.ratingText}>{rating} ({reviews})</Text>
+          <Text style={[styles.ratingText, { color: isDay ? 'black' : 'white'}]}>{rating} ({reviews})</Text>
         </View>
         
         {/* Price Information */}
-        <Text style={styles.price}>Price: {price}</Text>
+        <Text style={[styles.price, { color: isDay ? 'black' : 'white'}]}>Price: {price}</Text>
 
         {/* Details Section */}
-        <Text style={styles.sectionTitle}>Details</Text>
-        <Text style={styles.detailsText}>
+        <Text style={[styles.sectionTitle, { color: isDay ? 'black' : 'white'}]}>Details</Text>
+        <Text style={[styles.detailsText, { color: isDay ? 'black' : 'white'}]}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tortor ac lorem ipsum dolor sit amet.
         </Text>
 
         {/* Tour Guide Section */}
-        <Text style={styles.sectionTitle}>Tour Guide</Text>
+        <Text style={[styles.sectionTitle, { color: isDay ? 'black' : 'white'}]}>Tour Guide</Text>
         <View style={styles.tourGuideCard}>
           <FlatList
             data={guide}
@@ -141,7 +137,7 @@ const VacationDetailsScreen = ({ route, navigation }) => {
 
         {/* On Budget Tour Section */}
         <View style={styles.budgetSection}>
-          <Text style={styles.sectionTitle}>On Budget Tour</Text>
+          <Text style={[styles.sectionTitle, { color: isDay ? 'black' : 'white'}]}>On Budget Tour</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Review')} style={styles.seeAllButton}>
             <Text style={styles.seeAllText}>See All</Text>
           </TouchableOpacity>
@@ -156,16 +152,16 @@ const VacationDetailsScreen = ({ route, navigation }) => {
                 style={styles.profileImage}
               />
               <View style={styles.reviewHeaderText}>
-                <Text style={styles.reviewerName}>Jhone Kenoady</Text>
-                <Text style={styles.reviewDate}>23 Nov 2022</Text>
+                <Text style={[styles.reviewerName, { color: isDay ? 'black' : 'white'}]}>Jhone Kenoady</Text>
+                <Text style={[styles.reviewDate, { color: isDay ? 'black' : 'white'}]}>23 Nov 2022</Text>
               </View>
             </View>
-            <View style={styles.ratingContainer}>
+            <View style={[styles.ratingContainer, { backgroundColor: isDay ? 'black' : 'white'}]}>
               {[...Array(5)].map((_, index) => (
                 <Icon key={index} name="star" size={16} color="#FFD700" />
               ))}
             </View>
-            <Text style={styles.reviewComment}>
+            <Text style={[styles.reviewComment, { color: isDay ? 'black' : 'white'}]}>
               Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.
             </Text>
           </View>
@@ -173,19 +169,19 @@ const VacationDetailsScreen = ({ route, navigation }) => {
 
         {/* Location Section */}
         <View style={styles.location}>
-          <Text style={styles.sectionTitle}>Location</Text>
+          <Text style={[styles.sectionTitle, { color: isDay ? 'black' : 'white'}]}>Location</Text>
         </View>
 
         {/* Maps Placeholder */}
         <View style={styles.container2}>
-          <Text style={{ color: 'black' }}>Maps</Text>
+          <Text style={{ color: isDay ? 'black' : 'white'}}>Maps</Text>
         </View>
       </ScrollView>
 
       {/* Footer Section */}
       <View style={styles.footer}>
-        <Text style={styles.price}>$32</Text>
-        <Text style={styles.price1}>/Person</Text>
+        <Text style={[styles.price,{color: isDay ? 'black' : 'white'}]}>$32</Text>
+        <Text style={[styles.price1,{color: isDay ? 'black' : 'white'}]}>/Person</Text>
         <TouchableOpacity style={styles.bookButton}>
           <Text style={styles.bookButtonText}>Book Now</Text>
         </TouchableOpacity>

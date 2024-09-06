@@ -1,15 +1,181 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const CheckoutVacation = ({ navigation }) => {
     const [selectedCard, setSelectedCard] = useState(null);
+    const isDay = useSelector(state => state.theme.isDay);
+
+    const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            backgroundColor: isDay ? '#fff' : '#333',
+            paddingHorizontal: 20,
+        },
+        header: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginVertical: 20,
+        },
+        headerTitle: {
+            fontSize: 20,
+            fontWeight: 'bold',
+            marginLeft: 10,
+            color: isDay ? '#000' : '#fff',
+        },
+        hotelInfo: {
+            flexDirection: 'row',
+            marginBottom: 20,
+            backgroundColor: isDay ? '#f8f8f8' : '#444',
+            borderRadius: 10,
+            padding: 10,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 1 },
+            shadowOpacity: 0.1,
+            shadowRadius: 1,
+            elevation: 2,
+        },
+        hotelImage: {
+            width: 100,
+            height: 100,
+            borderRadius: 10,
+            marginRight: 10,
+        },
+        hotelDetails: {
+            flex: 1,
+            justifyContent: 'center',
+        },
+        hotelName: {
+            fontWeight: 'bold',
+            fontSize: 16,
+            color: isDay ? '#333' : '#ddd',
+        },
+        hotelLocation: {
+            color: isDay ? '#888' : '#bbb',
+            marginBottom: 5,
+        },
+        rating: {
+            flexDirection: 'row',
+            alignItems: 'center',
+        },
+        ratingText: {
+            marginLeft: 5,
+            color: isDay ? '#888' : '#bbb',
+        },
+        section: {
+            marginBottom: 20,
+            padding: 10,
+            backgroundColor: isDay ? '#f8f8f8' : '#444',
+            borderRadius: 10,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 1 },
+            shadowOpacity: 0.1,
+            shadowRadius: 1,
+            elevation: 2,
+        },
+        sectionTitle: {
+            fontSize: 16,
+            fontWeight: 'bold',
+            marginBottom: 10,
+            color: isDay ? '#333' : '#fff',
+        },
+        infoRow: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginBottom: 10,
+            borderBottomWidth: 1,
+            borderBottomColor: isDay ? '#ddd' : '#666',
+            paddingBottom: 5,
+        },
+        infoLabel: {
+            color: isDay ? '#888' : '#bbb',
+            fontSize: 14,
+        },
+        infoValue: {
+            fontWeight: 'bold',
+            color: isDay ? '#333' : '#ddd',
+            fontSize: 14,
+        },
+        promoValue: {
+            fontWeight: 'bold',
+            color: 'red',
+            fontSize: 14,
+        },
+        totalValue: {
+            fontWeight: 'bold',
+            fontSize: 18,
+            color: isDay ? '#333' : '#ddd',
+        },
+        promoCodeContainer: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            borderWidth: 1,
+            borderColor: isDay ? '#ddd' : '#666',
+            borderRadius: 5,
+            overflow: 'hidden',
+            marginBottom: 10,
+        },
+        promoCodeInput: {
+            flex: 1,
+            padding: 10,
+            backgroundColor: isDay ? '#fff' : '#555',
+        },
+        applyButton: {
+            backgroundColor: '#007BFF',
+            paddingVertical: 10,
+            paddingHorizontal: 20,
+        },
+        applyButtonText: {
+            color: '#fff',
+            fontWeight: 'bold',
+            fontSize: 14,
+        },
+        paymentMethod: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            borderWidth: 1,
+            borderColor: isDay ? '#ddd' : '#666',
+            borderRadius: 5,
+            padding: 10,
+            marginBottom: 10,
+            backgroundColor: isDay ? '#fff' : '#555',
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 1 },
+            shadowOpacity: 0.1,
+            shadowRadius: 1,
+            elevation: 2,
+        },
+        cardImage: {
+            width: 40,
+            height: 25,
+            resizeMode: 'contain',
+            marginRight: 10,
+        },
+        cardNumber: {
+            flex: 1,
+            fontSize: 14,
+            color: isDay ? '#333' : '#ddd',
+        },
+        payNowButton: {
+            backgroundColor: '#007BFF',
+            paddingVertical: 15,
+            alignItems: 'center',
+            borderRadius: 5,
+            marginTop: 20,
+        },
+        payNowButtonText: {
+            color: '#fff',
+            fontWeight: 'bold',
+            fontSize: 16,
+        },
+    });
 
     return (
         <ScrollView style={styles.container}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Ionicons name="arrow-back" size={24} color="#000" />
+                    <Ionicons name="arrow-back" size={24} color={isDay ? '#000' : '#fff'} />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>Checkout</Text>
             </View>
@@ -90,194 +256,21 @@ const CheckoutVacation = ({ navigation }) => {
                         style={styles.cardImage}
                     />
                     <Text style={styles.cardNumber}>•••• •••• •••• 87652</Text>
-                    <Ionicons
-                        name={selectedCard === 'visa' ? 'radio-button-on' : 'radio-button-off'}
-                        size={24}
-                        color="#000"
-                    />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.paymentMethod} onPress={() => setSelectedCard('mastercard')}>
                     <Image
                         source={require('../Assets/bank/visa.png')}
                         style={styles.cardImage}
                     />
-                    <Text style={styles.cardNumber}>•••• •••• •••• 87652</Text>
-                    <Ionicons
-                        name={selectedCard === 'mastercard' ? 'radio-button-on' : 'radio-button-off'}
-                        size={24}
-                        color="#000"
-                    />
+                    <Text style={styles.cardNumber}>•••• •••• •••• 54321</Text>
                 </TouchableOpacity>
             </View>
             
-            <TouchableOpacity style={styles.payNowButton}>
+            <TouchableOpacity style={styles.payNowButton} onPress={() => {/* Handle payment */}}>
                 <Text style={styles.payNowButtonText}>Pay Now</Text>
             </TouchableOpacity>
         </ScrollView>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        paddingHorizontal: 20,
-    },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginVertical: 20,
-    },
-    headerTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginLeft: 10,
-    },
-    hotelInfo: {
-        flexDirection: 'row',
-        marginBottom: 20,
-        backgroundColor: '#f8f8f8',
-        borderRadius: 10,
-        padding: 10,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.1,
-        shadowRadius: 1,
-        elevation: 2,
-    },
-    hotelImage: {
-        width: 100,
-        height: 100,
-        borderRadius: 10,
-        marginRight: 10,
-    },
-    hotelDetails: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    hotelName: {
-        fontWeight: 'bold',
-        fontSize: 16,
-        color: '#333',
-    },
-    hotelLocation: {
-        color: '#888',
-        marginBottom: 5,
-    },
-    rating: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    ratingText: {
-        marginLeft: 5,
-        color: '#888',
-    },
-    section: {
-        marginBottom: 20,
-        padding: 10,
-        backgroundColor: '#f8f8f8',
-        borderRadius: 10,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.1,
-        shadowRadius: 1,
-        elevation: 2,
-    },
-    sectionTitle: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginBottom: 10,
-        color: '#333',
-    },
-    infoRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ddd',
-        paddingBottom: 5,
-    },
-    infoLabel: {
-        color: '#888',
-        fontSize: 14,
-    },
-    infoValue: {
-        fontWeight: 'bold',
-        color: '#333',
-        fontSize: 14,
-    },
-    promoValue: {
-        fontWeight: 'bold',
-        color: 'red',
-        fontSize: 14,
-    },
-    totalValue: {
-        fontWeight: 'bold',
-        fontSize: 18,
-        color: '#333',
-    },
-    promoCodeContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderColor: '#ddd',
-        borderRadius: 5,
-        overflow: 'hidden',
-        marginBottom: 10,
-    },
-    promoCodeInput: {
-        flex: 1,
-        padding: 10,
-        backgroundColor: '#fff',
-    },
-    applyButton: {
-        backgroundColor: '#007BFF',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-    },
-    applyButtonText: {
-        color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 14,
-    },
-    paymentMethod: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderColor: '#ddd',
-        borderRadius: 5,
-        padding: 10,
-        marginBottom: 10,
-        backgroundColor: '#fff',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.1,
-        shadowRadius: 1,
-        elevation: 2,
-    },
-    cardImage: {
-        width: 40,
-        height: 25,
-        resizeMode: 'contain',
-        marginRight: 10,
-    },
-    cardNumber: {
-        flex: 1,
-        fontSize: 14,
-        color: '#333',
-    },
-    payNowButton: {
-        backgroundColor: '#007BFF',
-        paddingVertical: 15,
-        alignItems: 'center',
-        borderRadius: 5,
-        marginTop: 20,
-    },
-    payNowButtonText: {
-        color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 16,
-    },
-});
 
 export default CheckoutVacation;

@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, FlatList, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useSelector } from 'react-redux';
 
 const categories = [
   { title: 'AC', icon: require('../Assets/Iconsfacilities/ac.png') },
   { title: 'Restaurant', icon: require('../Assets/Iconsfacilities/restaurant.png') },
-  { title: 'Swiming Pool', icon: require('../Assets/Iconsfacilities/swimming.png') },
+  { title: 'Swimming Pool', icon: require('../Assets/Iconsfacilities/swimming.png') },
   { title: '24-hours Front Desk', icon: require('../Assets/Iconsfacilities/24-hours.png') },
 ];
 
 const services = [
   { name: 'Ac', image: require('../Assets/Iconsfacilities/ac.png'), screen: 'AC' },
-  { name: 'Restraurant', image: require('../Assets/Iconsfacilities/restaurant.png'), screen: 'Restaurant' },
-  { name: 'Swiming Pool', image: require('../Assets/Iconsfacilities/swimming.png'), screen: 'Swimming Pool' },
+  { name: 'Restaurant', image: require('../Assets/Iconsfacilities/restaurant.png'), screen: 'Restaurant' },
+  { name: 'Swimming Pool', image: require('../Assets/Iconsfacilities/swimming.png'), screen: 'Swimming Pool' },
   { name: '24-hours Front Desk', image: require('../Assets/Iconsfacilities/24-hours.png'), screen: '24-hours Front Desk' },
   { name: 'Modern Room', image: require('../Assets/Iconsfacilities/room.png'), screen: 'Modern Room' },
   { name: '24-Hours Security', image: require('../Assets/Iconsfacilities/customer-service.png'), screen: '24-Hours Security' },
@@ -21,6 +22,7 @@ const services = [
 ];
 
 const HotelDetailsScreen = ({ route, navigation }) => {
+  const isDay = useSelector(state => state.theme.isDay);
   const defaultImage = require('../Assets/visits/hotel.jpeg');
   const defaultHotelName = 'Hotel Name Unavailable';
 
@@ -51,31 +53,31 @@ const HotelDetailsScreen = ({ route, navigation }) => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: isDay ? 'white' : '#333' }]}>
       <ScrollView>
-        <View style={styles.header}>
+        <View style={[styles.header, { backgroundColor: isDay ? 'rgba(0, 0, 0, 0.5)' : 'rgba(0, 0, 0, 0.8)' }]}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-            <Icon name="arrow-back" size={24} color="white" />
+            <Icon name="arrow-back" size={24} color={isDay ? 'white' : 'lightgray'} />
           </TouchableOpacity>
 
-          <Text style={styles.headerTitle}>Hotel Details</Text>
+          <Text style={[styles.headerTitle, { color: isDay ? 'white' : 'lightgray' }]}>Hotel Details</Text>
         </View>
         <Image source={hotelImage} style={styles.mainImage} />
 
-        <View style={styles.detailsContainer}>
+        <View style={[styles.detailsContainer, { backgroundColor: isDay ? 'white' : '#444' }]}>
           <View style={styles.hotelInfo}>
-            <Text style={styles.hotelName}>{hotelName}</Text>
+            <Text style={[styles.hotelName, { color: isDay ? 'black' : 'white' }]}>{hotelName}</Text>
             <TouchableOpacity>
               <Icon name="heart-outline" size={24} color="red" />
             </TouchableOpacity>
           </View>
 
-          <Text style={styles.hotelLocation}>
-            <Icon name="location-outline" size={16} /> {hotelLocation}
+          <Text style={[styles.hotelLocation, { color: isDay ? 'black' : 'white' }]}>
+            <Icon name="location-outline" size={16} color={isDay ? 'black' : 'lightgray'} /> {hotelLocation}
             {'  '} <Icon name="star" size={16} color="#FFD700" /> 4.4 (41 Reviews)
           </Text>
 
-          <Text style={styles.commonFacilitiesTitle}>Common Facilities</Text>
+          <Text style={[styles.commonFacilitiesTitle, { color: isDay ? 'black' : 'white' }]}>Common Facilities</Text>
 
           <View style={styles.categories}>
             {categories.map((category) => renderCategoryItem({ item: category }))}
@@ -85,14 +87,14 @@ const HotelDetailsScreen = ({ route, navigation }) => {
             <Text style={styles.seeAllText}>See All</Text>
           </TouchableOpacity>
 
-          <Text style={styles.detailsTitle}>Details</Text>
-          <Text style={styles.detailsText}>
+          <Text style={[styles.detailsTitle, { color: isDay ? 'black' : 'white' }]}>Details</Text>
+          <Text style={[styles.detailsText, { color: isDay ? 'black' : 'lightgray' }]}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tortor ac leo lorem nisl.
             Viverra vulputate sodales quis et dui, lacus. Iaculis eu egestas leo egestas vel.
-            <Text style={styles.moreDetails}> More Details</Text>
+            <Text style={[styles.moreDetails, { color: isDay ? '#1E90FF' : '#00BFFF' }]}> More Details</Text>
           </Text>
 
-          <Text style={styles.reviewsTitle}>Reviews</Text>
+          <Text style={[styles.reviewsTitle, { color: isDay ? 'black' : 'white' }]}>Reviews</Text>
           <View style={styles.reviewItem}>
             <Image
               source={require('../Assets/Tourguide/p1.jpg')}
@@ -100,26 +102,26 @@ const HotelDetailsScreen = ({ route, navigation }) => {
             />
             <View style={styles.reviewContent}>
               <View style={styles.reviewHeader}>
-                <Text style={styles.reviewName}>Jhone Kenoady</Text>
-                <Text style={styles.reviewDate}>23 Nov 2022</Text>
+                <Text style={[styles.reviewName, { color: isDay ? 'black' : 'white' }]}>Jhone Kenoady</Text>
+                <Text style={[styles.reviewDate, { color: isDay ? '#777' : '#999' }]}>23 Nov 2022</Text>
               </View>
               <View style={styles.reviewRating}>
                 {Array(5).fill().map((_, i) => (
                   <Icon key={i} name="star" size={16} color="#FFD700" />
                 ))}
               </View>
-              <Text style={styles.reviewText}>
+              <Text style={[styles.reviewText, { color: isDay ? '#777' : '#999' }]}>
                 Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.
                 Velit officia consequat duis enim velit mollit.
               </Text>
             </View>
           </View>
 
-          <Text style={styles.locationTitle}>Location</Text>
+          <Text style={[styles.locationTitle, { color: isDay ? 'black' : 'white' }]}>Location</Text>
 
           <View style={styles.priceContainer}>
-            <Text style={styles.price}>$32</Text>
-            <Text style={styles.originalPrice}>$312</Text>
+            <Text style={[styles.price, { color: isDay ? '#32CD32' : '#00FF7F' }]}>$32</Text>
+            <Text style={[styles.originalPrice, { color: isDay ? '#777' : '#999' }]}>$312</Text>
           </View>
 
           <TouchableOpacity style={styles.bookButton} onPress={() => navigation.navigate('Book Hotel', {
@@ -140,7 +142,7 @@ const HotelDetailsScreen = ({ route, navigation }) => {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.bottomSheetHeading}>Facilities</Text>
+            <Text style={[styles.bottomSheetHeading, { color: isDay ? 'black' : 'white' }]}>Facilities</Text>
             <FlatList
               data={services}
               renderItem={renderServiceItem}
@@ -161,6 +163,8 @@ const HotelDetailsScreen = ({ route, navigation }) => {
     </View>
   );
 };
+
+
 
 
 
@@ -404,6 +408,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     color: 'black',
+  },
+  seeAllButton:{
+    color:'blue',
   },
 });
 

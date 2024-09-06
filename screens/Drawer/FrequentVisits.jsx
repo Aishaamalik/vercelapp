@@ -75,7 +75,7 @@ const FrequentVisitScreen = () => {
   const isDay = useSelector(state => state.theme.isDay);  
 
   const handlePress = (item) => {
-    navigation.navigate('VacationDetails', {
+    navigation.navigate('VecationDetails', {
       image: item.image,
       title: item.title,
       location: item.location,
