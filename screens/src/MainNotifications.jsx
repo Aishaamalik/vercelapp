@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, Image } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useSelector } from 'react-redux';
 
 // Replace the URLs with require statements for local images
 const notifications = [
@@ -42,33 +43,42 @@ const notifications = [
 ];
 
 const NotificationScreen = ({ navigation }) => {
+    const isDay = useSelector(state => state.theme.isDay);
+
+    const backgroundColor = isDay ? '#fff' : '#121212';
+    const headerTextColor = isDay ? '#333' : '#fff';
+    const sectionTitleColor = isDay ? '#000' : '#fff';
+    const notificationMessageColor = isDay ? '#000' : '#fff';
+    const notificationTimeColor = isDay ? '#888' : '#aaa';
+    const backButtonColor = isDay ? '#f0f0f0' : '#333';
+
     const renderItem = ({ item }) => (
         <View style={styles.notificationContainer}>
             <Image source={item.avatar} style={styles.avatar} />
             <View style={styles.notificationTextContainer}>
-                <Text style={styles.notificationMessage}>{item.message}</Text>
-                <Text style={styles.notificationTime}>{item.time}</Text>
+                <Text style={[styles.notificationMessage, { color: notificationMessageColor }]}>{item.message}</Text>
+                <Text style={[styles.notificationTime, { color: notificationTimeColor }]}>{item.time}</Text>
             </View>
         </View>
     );
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor }]}>
             <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                    <Ionicons name="arrow-back" size={24} color="#000" />
+                <TouchableOpacity onPress={() => navigation.goBack()} style={[styles.backButton, { backgroundColor: backButtonColor }]}>
+                    <Ionicons name="arrow-back" size={24} color={headerTextColor} />
                 </TouchableOpacity>
-                <Text style={styles.headerTitle}>Notification</Text>
+                <Text style={[styles.headerTitle, { color: headerTextColor }]}>Notification</Text>
             </View>
 
-            <Text style={styles.sectionTitle}>Today</Text>
+            <Text style={[styles.sectionTitle, { color: sectionTitleColor }]}>Today</Text>
             <FlatList
                 data={notifications.filter(notification => notification.type === 'today')}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
             />
 
-            <Text style={styles.sectionTitle}>Yesterday</Text>
+            <Text style={[styles.sectionTitle, { color: sectionTitleColor }]}>Yesterday</Text>
             <FlatList
                 data={notifications.filter(notification => notification.type === 'yesterday')}
                 renderItem={renderItem}
@@ -81,7 +91,6 @@ const NotificationScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
         paddingHorizontal: 20,
         paddingTop: 40,
     },
@@ -92,20 +101,17 @@ const styles = StyleSheet.create({
     },
     backButton: {
         marginRight: 10,
-        backgroundColor: '#f0f0f0',
         borderRadius: 20,
         padding: 8,
     },
     headerTitle: {
         fontSize: 20,
         fontWeight: 'bold',
-        color:'black',
     },
     sectionTitle: {
         fontSize: 18,
         fontWeight: 'bold',
         marginVertical: 10,
-        color:'black',
     },
     notificationContainer: {
         flexDirection: 'row',
@@ -117,6 +123,7 @@ const styles = StyleSheet.create({
         height: 50,
         borderRadius: 25,
         marginRight: 10,
+        backgroundColor:'white',
     },
     notificationTextContainer: {
         flex: 1,
@@ -124,11 +131,9 @@ const styles = StyleSheet.create({
     notificationMessage: {
         fontSize: 16,
         marginBottom: 5,
-        color:'black',
     },
     notificationTime: {
         fontSize: 14,
-        color: '#888',
     },
 });
 

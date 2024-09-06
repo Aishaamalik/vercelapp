@@ -140,6 +140,10 @@ const OverviewScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const textColor = isDay ? 'black' : 'white';
 
+  const toggleTheme = () => {
+    dispatch({ type: 'TOGGLE_THEME' }); 
+  };
+
 
 
   const handleServicePress = (screen) => {
@@ -224,7 +228,9 @@ const OverviewScreen = ({ navigation }) => {
               <Icon name="menu" size={24} color="white" />
             </TouchableOpacity>
             <View style={styles.headerIcons}>
-              <Icon1 name={isDay ? 'sun' : 'moon'} size={24} color="white" style={styles.headerIcon} />
+                <TouchableOpacity onPress={toggleTheme}>
+                  <Icon1 name={isDay ? 'sun' : 'moon'} size={24} color="white" style={styles.headerIcon} />
+                </TouchableOpacity>
               <TouchableOpacity onPress={()=> navigation.navigate("Buttontabs")}>
                 <Icon name="person-outline" size={24} color="white" style={styles.headerIcon} />
               </TouchableOpacity>

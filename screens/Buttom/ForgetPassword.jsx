@@ -1,11 +1,14 @@
+import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather'; 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'; 
+
 const ForgotPasswordScreen = () => {
   const [email, setEmail] = useState('');
-  const navigation =useNavigation();
+  const navigation = useNavigation();
+  const isDay = useSelector(state => state.theme.isDay); // Redux selector for theme
 
   const handleEmailChange = (text) => {
     setEmail(text);
@@ -21,31 +24,61 @@ const ForgotPasswordScreen = () => {
 
   const handleBackButtonPress = () => {
     navigation.goBack();
-    
+  };
+
+  // Styles based on theme
+  const dynamicStyles = {
+    container: {
+      backgroundColor: isDay ? '#fff' : '#333',
+    },
+    headerText: {
+      color: isDay ? '#000' : '#fff',
+    },
+    infoContainer: {
+      backgroundColor: isDay ? '#f0f0f0' : '#444',
+    },
+    infoText: {
+      color: isDay ? '#555' : '#ddd',
+    },
+    label: {
+      color: isDay ? '#000' : '#fff',
+    },
+    input: {
+      backgroundColor: isDay ? '#fff' : '#555',
+      borderColor: isDay ? '#007BFF' : '#ddd',
+      color: isDay ? '#000' : '#fff',
+    },
+    submitButton: {
+      backgroundColor: isDay ? '#007BFF' : '#666',
+    },
+    submitButtonText: {
+      color: isDay ? '#fff' : '#000',
+    },
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, dynamicStyles.container]}>
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={handleBackButtonPress}>
-          <Icon name="arrow-left" size={24} color="#000" />
+          <Icon name="arrow-left" size={24} color={isDay ? '#000' : '#fff'} />
         </TouchableOpacity>
-        <Text style={styles.headerText}>Forgot Password</Text>
+        <Text style={[styles.headerText, dynamicStyles.headerText]}>Forgot Password</Text>
       </View>
 
       {/* Information Box */}
-      <View style={styles.infoContainer}>
-        <MaterialIcons name="info-outline" size={20} color="#555" />
-        <Text style={styles.infoText}>
+      <View style={[styles.infoContainer, dynamicStyles.infoContainer]}>
+        <MaterialIcons name="info-outline" size={20} color={isDay ? '#555' : '#ddd'} />
+        <Text style={[styles.infoText, dynamicStyles.infoText]}>
           We will send the OTP code to your email for security in forgetting your password.
         </Text>
       </View>
 
       {/* Email Input */}
-      <Text style={styles.label}>E-mail</Text>
+      <Text style={[styles.label, dynamicStyles.label]}>E-mail</Text>
       <TextInput
-        style={styles.input}
+        style={[styles.input, dynamicStyles.input]}
         placeholder="example@mail.com"
+        placeholderTextColor={isDay ? '#888' : '#ccc'}
         value={email}
         onChangeText={handleEmailChange}
         keyboardType="email-address"
@@ -53,8 +86,8 @@ const ForgotPasswordScreen = () => {
       />
 
       {/* Submit Button */}
-      <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-        <Text style={styles.submitButtonText}>Submit</Text>
+      <TouchableOpacity style={[styles.submitButton, dynamicStyles.submitButton]} onPress={handleSubmit}>
+        <Text style={[styles.submitButtonText, dynamicStyles.submitButtonText]}>Submit</Text>
       </TouchableOpacity>
     </View>
   );
@@ -63,7 +96,6 @@ const ForgotPasswordScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     padding: 20,
   },
   headerContainer: {
@@ -75,12 +107,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginLeft: 10,
-    color: '#000',
   },
   infoContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f0f0f0',
     padding: 10,
     borderRadius: 10,
     marginBottom: 20,
@@ -88,32 +118,26 @@ const styles = StyleSheet.create({
   infoText: {
     marginLeft: 10,
     fontSize: 14,
-    color: '#555',
     flexShrink: 1,
   },
   label: {
     fontSize: 14,
-    color: '#000',
     marginBottom: 5,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#007BFF',
     borderRadius: 30,
     paddingHorizontal: 15,
     paddingVertical: 10,
     marginBottom: 20,
-    backgroundColor: '#fff',
   },
   submitButton: {
-    backgroundColor: '#007BFF',
     borderRadius: 30,
     paddingVertical: 15,
     alignItems: 'center',
     justifyContent: 'center',
   },
   submitButtonText: {
-    color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },

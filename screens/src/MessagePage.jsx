@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, FlatList, Image } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { useSelector } from 'react-redux';
 
 const chatData = [
     {
@@ -43,18 +44,20 @@ const chatData = [
 ];
 
 const ChatListScreen = ({ navigation }) => {
+    const isDay = useSelector(state => state.theme.isDay);
+
     const renderItem = ({ item }) => (
-        <TouchableOpacity style={styles.chatItem}>
+        <TouchableOpacity style={[styles.chatItem, { backgroundColor: isDay ? '#fff' : '#333' }]}>
             <View style={styles.avatarContainer}>
                 <Image source={item.avatar} style={styles.avatar} />
                 {item.online && <View style={styles.onlineIndicator} />}
             </View>
             <View style={styles.chatInfo}>
-                <Text style={styles.chatName}>{item.name}</Text>
-                <Text style={styles.chatMessage}>{item.message}</Text>
+                <Text style={[styles.chatName, { color: isDay ? '#333' : '#fff' }]}>{item.name}</Text>
+                <Text style={[styles.chatMessage, { color: isDay ? '#666' : '#ccc' }]}>{item.message}</Text>
             </View>
             <View style={styles.chatMeta}>
-                <Text style={styles.chatTime}>{item.time}</Text>
+                <Text style={[styles.chatTime, { color: isDay ? '#888' : '#aaa' }]}>{item.time}</Text>
                 {item.unreadCount > 0 && (
                     <View style={styles.unreadBadge}>
                         <Text style={styles.unreadCount}>{item.unreadCount}</Text>
@@ -65,21 +68,21 @@ const ChatListScreen = ({ navigation }) => {
     );
 
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
+        <View style={[styles.container, { backgroundColor: isDay ? '#f7f7f7' : '#222' }]}>
+            <View style={[styles.header, { borderBottomColor: isDay ? '#dcdcdc' : '#444', backgroundColor: isDay ? '#fff' : '#333' }]}>
                 <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-                    <Ionicons name="arrow-back" size={24} color="#000" />
+                    <Ionicons name="arrow-back" size={24} color={isDay ? '#000' : 'black'} />
                 </TouchableOpacity>
-                <Text style={styles.headerTitle}>Message</Text>
+                <Text style={[styles.headerTitle, { color: isDay ? '#333' : '#fff' }]}>Message</Text>
             </View>
-            <View style={styles.searchContainer}>
-                <Ionicons name="search" size={20} color="#8e8e8e" style={styles.searchIcon} />
+            <View style={[styles.searchContainer, { backgroundColor: isDay ? '#fff' : '#444' }]}>
+                <Ionicons name="search" size={20} color={isDay ? '#8e8e8e' : '#bbb'} style={styles.searchIcon} />
                 <TextInput
-                    style={styles.searchInput}
+                    style={[styles.searchInput, { color: isDay ? '#333' : '#fff' }]}
                     placeholder="Search..."
-                    placeholderTextColor="#8e8e8e"
+                    placeholderTextColor={isDay ? '#8e8e8e' : '#bbb'}
                 />
-                <MaterialIcons name="tune" size={24} color="#8e8e8e" style={styles.filterIcon} />
+                <MaterialIcons name="tune" size={24} color={isDay ? '#8e8e8e' : '#bbb'} style={styles.filterIcon} />
             </View>
             <FlatList
                 data={chatData}
@@ -98,7 +101,6 @@ const ChatListScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f7f7f7', // Slightly different background color for better contrast
     },
     header: {
         flexDirection: 'row',
@@ -107,8 +109,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         paddingVertical: 10,
         borderBottomWidth: 1,
-        borderBottomColor: '#dcdcdc', // Lighter gray for subtle contrast
-        backgroundColor: '#fff', // Ensure background color matches container
     },
     backButton: {
         width: 40,
@@ -116,17 +116,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 20,
-        backgroundColor: '#e0e0e0', // Slight background color for the button
+        backgroundColor: '#e0e0e0',
     },
     headerTitle: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#333', // Darker color for better readability
     },
     searchContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#fff',
         borderRadius: 20,
         marginHorizontal: 15,
         marginVertical: 10,
@@ -144,7 +142,6 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 40,
         fontSize: 14,
-        color: '#333', // Darker text color for better readability
     },
     filterIcon: {
         marginLeft: 10,
@@ -153,7 +150,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     chatListContent: {
-        paddingBottom: 80, // Add padding to prevent overlap with FAB
+        paddingBottom: 80,
     },
     chatItem: {
         flexDirection: 'row',
@@ -161,8 +158,6 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         paddingHorizontal: 20,
         borderBottomWidth: 1,
-        borderBottomColor: '#dcdcdc',
-        backgroundColor: '#fff', // Match background with container
     },
     avatarContainer: {
         position: 'relative',
@@ -172,7 +167,7 @@ const styles = StyleSheet.create({
         height: 50,
         borderRadius: 25,
         borderWidth: 2,
-        borderColor: '#ddd', // Subtle border color around avatar
+        borderColor: '#ddd',
     },
     onlineIndicator: {
         position: 'absolute',
@@ -192,18 +187,15 @@ const styles = StyleSheet.create({
     chatName: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: '#333', // Darker color for better readability
     },
     chatMessage: {
         fontSize: 14,
-        color: '#666', // Slightly lighter gray for secondary text
     },
     chatMeta: {
         alignItems: 'flex-end',
     },
     chatTime: {
         fontSize: 12,
-        color: '#888', // Lighter gray for less emphasis
     },
     unreadBadge: {
         marginTop: 5,

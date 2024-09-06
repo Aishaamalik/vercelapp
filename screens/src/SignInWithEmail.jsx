@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -5,6 +6,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignInWithGmail = ({ route, navigation }) => {
+    const isDay = useSelector(state => state.theme.isDay); 
     const [email, setEmail] = useState(route.params?.email || '');
     const [password, setPassword] = useState(route.params?.password || '');
     const [secureTextEntry, setSecureTextEntry] = useState(true);
@@ -26,6 +28,7 @@ const SignInWithGmail = ({ route, navigation }) => {
         };
         loadCredentials();
     }, []);
+
     const handleSignIn = async () => {
         try {
             const savedUserDetails = await AsyncStorage.getItem('userDetails');
@@ -47,7 +50,7 @@ const SignInWithGmail = ({ route, navigation }) => {
                             console.log('Failed to remove credentials', error);
                         }
                     }
-                    navigation.navigate('one'); // Navigate to the "one" screen
+                    navigation.navigate('one'); 
                 } else {
                     Alert.alert('Error', 'Invalid email or password');
                 }
@@ -59,23 +62,22 @@ const SignInWithGmail = ({ route, navigation }) => {
             Alert.alert('Error', 'Failed to load user data');
         }
     };
-    
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: isDay ? '#fff' : '#333' }]}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Ionicons name="arrow-back" size={24} color="#000" />
+                    <Ionicons name="arrow-back" size={24} color={isDay ? "#000" : "#fff"} />
                 </TouchableOpacity>
-                <Text style={styles.headerTitle}>Sign In</Text>
-                <View style={{ width: 24 }} /> 
+                <Text style={[styles.headerTitle, { color: isDay ? '#000' : '#fff' }]}>Sign In</Text>
+                <View style={{ width: 24 }} />
             </View>
             <View style={styles.inputContainer}>
-                <Text style={styles.label}>Email Address</Text>
+                <Text style={[styles.label, { color: isDay ? '#757575' : '#ccc' }]}>Email Address</Text>
                 <TextInput
-                    style={styles.input}
+                    style={[styles.input, { backgroundColor: isDay ? '#f5f7fb' : '#444', color: isDay ? '#000' : '#fff' }]}
                     placeholder="Enter your email address"
-                    placeholderTextColor="#cfd8dc"
+                    placeholderTextColor={isDay ? "#cfd8dc" : "#888"}
                     value={email}
                     onChangeText={setEmail}
                     keyboardType="email-address"
@@ -83,12 +85,12 @@ const SignInWithGmail = ({ route, navigation }) => {
                 />
             </View>
             <View style={styles.inputContainer}>
-                <Text style={styles.label}>Password</Text>
+                <Text style={[styles.label, { color: isDay ? '#757575' : '#ccc' }]}>Password</Text>
                 <View style={styles.passwordContainer}>
                     <TextInput
-                        style={styles.input}
+                        style={[styles.input, { backgroundColor: isDay ? '#f5f7fb' : '#444', color: isDay ? '#000' : '#fff' }]}
                         placeholder="Enter your password"
-                        placeholderTextColor="#cfd8dc"
+                        placeholderTextColor={isDay ? "#cfd8dc" : "#888"}
                         secureTextEntry={secureTextEntry}
                         value={password}
                         onChangeText={setPassword}
@@ -97,7 +99,7 @@ const SignInWithGmail = ({ route, navigation }) => {
                         <Ionicons
                             name={secureTextEntry ? "eye-off" : "eye"}
                             size={24}
-                            color="#cfd8dc"
+                            color={isDay ? "#cfd8dc" : "#888"}
                         />
                     </TouchableOpacity>
                 </View>
@@ -108,21 +110,21 @@ const SignInWithGmail = ({ route, navigation }) => {
                         <Ionicons
                             name={rememberMe ? "checkbox-outline" : "square-outline"}
                             size={24}
-                            color="#757575"
+                            color={isDay ? "#757575" : "#ccc"}
                         />
                     </TouchableOpacity>
-                    <Text style={styles.rememberMeText}>Remember Me</Text>
+                    <Text style={[styles.rememberMeText, { color: isDay ? '#757575' : '#ccc' }]}>Remember Me</Text>
                 </View>
                 <TouchableOpacity onPress={() => navigation.navigate('Forget Password')}>
-                    <Text style={styles.forgotPasswordText}>Forgot Password</Text>
+                    <Text style={[styles.forgotPasswordText, { color: isDay ? '#FF0000' : '#FF6666' }]}>Forgot Password</Text>
                 </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.signInButton} onPress={handleSignIn}>
+            <TouchableOpacity style={[styles.signInButton, { backgroundColor: isDay ? '#1E90FF' : '#444' }]} onPress={handleSignIn}>
                 <Text style={styles.signInButtonText}>Sign In</Text>
             </TouchableOpacity>
             <View style={styles.orContainer}>
                 <View style={styles.line} />
-                <Text style={styles.orText}>Or continue with</Text>
+                <Text style={[styles.orText, { color: isDay ? '#757575' : '#ccc' }]}>Or continue with</Text>
                 <View style={styles.line} />
             </View>
             <TouchableOpacity style={styles.socialButton} onPress={() => navigation.navigate('SignIp')}>
@@ -134,9 +136,9 @@ const SignInWithGmail = ({ route, navigation }) => {
                 <Text style={styles.socialButtonText}>Continue with Apple</Text>
             </TouchableOpacity>
             <View style={styles.signUpContainer}>
-                <Text style={styles.signUpText}>Do not have an account?</Text>
+                <Text style={[styles.signUpText, { color: isDay ? '#757575' : '#ccc' }]}>Do not have an account?</Text>
                 <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-                    <Text style={styles.signUpLink}>Sign Up</Text>
+                    <Text style={[styles.signUpLink, { color: isDay ? '#1E90FF' : '#6699FF' }]}>Sign Up</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -146,7 +148,6 @@ const SignInWithGmail = ({ route, navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
         paddingHorizontal: 20,
         paddingTop: 30,
     },
@@ -159,27 +160,22 @@ const styles = StyleSheet.create({
     headerTitle: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#000',
     },
     inputContainer: {
         marginBottom: 20,
     },
     label: {
         fontSize: 14,
-        color: '#757575',
         marginBottom: 5,
     },
     input: {
         width: '100%',
         padding: 15,
         borderRadius: 10,
-        backgroundColor: '#f5f7fb',
-        color: '#000',
     },
     passwordContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#f5f7fb',
         borderRadius: 10,
         paddingRight: 10,
     },
@@ -195,15 +191,12 @@ const styles = StyleSheet.create({
     },
     rememberMeText: {
         fontSize: 14,
-        color: '#757575',
         marginLeft: 5,
     },
     forgotPasswordText: {
         fontSize: 14,
-        color: '#FF0000',
     },
     signInButton: {
-        backgroundColor: '#1E90FF',
         borderRadius: 10,
         paddingVertical: 15,
         alignItems: 'center',
@@ -222,40 +215,36 @@ const styles = StyleSheet.create({
     line: {
         flex: 1,
         height: 1,
-        backgroundColor: '#cfd8dc',
     },
     orText: {
         marginHorizontal: 10,
         fontSize: 14,
-        color: '#757575',
     },
     socialButton: {
         flexDirection: 'row',
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: '#cfd8dc',
+        borderColor: '#ddd',
+        padding: 15,
         borderRadius: 10,
-        paddingVertical: 15,
-        paddingHorizontal: 20,
-        marginBottom: 10,
+        marginBottom: 15,
     },
     socialButtonText: {
         marginLeft: 10,
         fontSize: 16,
-        color: '#000',
+        fontWeight: 'bold',
     },
     signUpContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: 20,
+        alignItems: 'center',
     },
     signUpText: {
         fontSize: 14,
-        color: '#757575',
     },
     signUpLink: {
         fontSize: 14,
-        color: '#1E90FF',
+        fontWeight: 'bold',
         marginLeft: 5,
     },
 });

@@ -1,25 +1,30 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useSelector } from 'react-redux';
 
 const GuideProfileScreen = ({ route, navigation }) => {
+    const isDay = useSelector(state => state.theme.isDay);
+
     const defaultImage = require('../Assets/Tourguide/p1.jpg'); 
     const defaultName = 'Default Guide Name';
 
     const { guideImage = defaultImage, guideName = defaultName } = route.params || {};
 
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
+        <View style={[styles.container, isDay ? styles.containerDay : styles.containerNight]}>
+            <View style={[styles.header, isDay ? styles.headerDay : styles.headerNight]}>
                 <TouchableOpacity
                     onPress={() => navigation.goBack()}
                     style={styles.backButton}
                     accessibilityLabel="Back"
                     accessibilityHint="Go back to the previous screen"
                 >
-                    <Icon name="arrow-back" size={24} color="#000" />
+                    <Icon name="arrow-back" size={24} color={isDay ? '#000' : 'black'} />
                 </TouchableOpacity>
-                <Text style={styles.headerText}>Profile</Text>
+                <Text style={[styles.headerText, isDay ? styles.headerTextDay : styles.headerTextNight]}>
+                    Profile
+                </Text>
             </View>
 
             <Image
@@ -32,11 +37,15 @@ const GuideProfileScreen = ({ route, navigation }) => {
                     source={guideImage}
                     style={styles.profileImage}
                 />
-                <Text style={styles.profileName}>{guideName}</Text>
-                <Text style={styles.profileSubtitle}>
+                <Text style={[styles.profileName, isDay ? styles.profileNameDay : styles.profileNameNight]}>
+                    {guideName}
+                </Text>
+                <Text style={[styles.profileSubtitle, isDay ? styles.profileSubtitleDay : styles.profileSubtitleNight]}>
                     International tour guide in <Text style={styles.highlightedText}>Pakistan</Text>
                 </Text>
-                <Text style={styles.profileSubtitle}>Travel and food vlogger</Text>
+                <Text style={[styles.profileSubtitle, isDay ? styles.profileSubtitleDay : styles.profileSubtitleNight]}>
+                    Travel and food vlogger
+                </Text>
             </View>
 
             <View style={styles.buttonContainer}>
@@ -50,22 +59,24 @@ const GuideProfileScreen = ({ route, navigation }) => {
 
             <View style={styles.infoContainer}>
                 <View style={styles.infoBox}>
-                    <Text style={styles.infoLabel}>Guide</Text>
+                    <Text style={[styles.infoLabel, isDay ? styles.infoLabelDay : styles.infoLabelNight]}>Guide</Text>
                     <Text style={styles.infoValue}>700+</Text>
                 </View>
                 <View style={styles.infoBox}>
-                    <Text style={styles.infoLabel}>Experience</Text>
+                    <Text style={[styles.infoLabel, isDay ? styles.infoLabelDay : styles.infoLabelNight]}>Experience</Text>
                     <Text style={styles.infoValue}>3 Years</Text>
                 </View>
                 <View style={styles.infoBox}>
-                    <Text style={styles.infoLabel}>Rate</Text>
+                    <Text style={[styles.infoLabel, isDay ? styles.infoLabelDay : styles.infoLabelNight]}>Rate</Text>
                     <Text style={styles.infoValue}>4.0/5</Text>
                 </View>
             </View>
 
             <View style={styles.aboutContainer}>
-                <Text style={styles.aboutTitle}>About Us</Text>
-                <Text style={styles.aboutText}>
+                <Text style={[styles.aboutTitle, isDay ? styles.aboutTitleDay : styles.aboutTitleNight]}>
+                    About Us
+                </Text>
+                <Text style={[styles.aboutText, isDay ? styles.aboutTextDay : styles.aboutTextNight]}>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tortor ac leo lorem nisl. Viverra
                     vulputate sodales quis et dui, lacus. Iaculis eu egestas leo egestas vel. Ultrices ut magna
                     nulla facilisi commodo enim, orci feugiat pharetra.
@@ -80,7 +91,12 @@ const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    containerDay: {
         backgroundColor: '#fff',
+    },
+    containerNight: {
+        backgroundColor: '#000',
     },
     header: {
         position: 'absolute',
@@ -92,26 +108,37 @@ const styles = StyleSheet.create({
         width: '100%',
         zIndex: 10,
     },
+    headerDay: {
+        backgroundColor: 'transparent',
+    },
+    headerNight: {
+        backgroundColor: 'transparent',
+    },
     backButton: {
         padding: 10,
     },
     headerText: {
-        color: 'black',
         fontSize: 20,
         fontWeight: 'bold',
+    },
+    headerTextDay: {
+        color: 'black',
+    },
+    headerTextNight: {
+        color: 'black',
     },
     backgroundImage: {
         position: 'absolute',
         top: 0,
         left: 0,
         right: 0,
-        height: height * 0.3, // Adjust height based on screen size
+        height: height * 0.3, 
         width: '100%',
         resizeMode: 'cover',
     },
     profileContainer: {
         alignItems: 'center',
-        marginTop: height * 0.3, // Adjust marginTop based on background image height
+        marginTop: height * 0.3, 
         paddingHorizontal: 20,
     },
     profileImage: {
@@ -125,13 +152,23 @@ const styles = StyleSheet.create({
         fontSize: 28,
         fontWeight: 'bold',
         marginTop: 15,
+    },
+    profileNameDay: {
         color: 'black',
+    },
+    profileNameNight: {
+        color: 'white',
     },
     profileSubtitle: {
         fontSize: 16, 
-        color: 'black',
         textAlign: 'center',
         marginTop: 5,
+    },
+    profileSubtitleDay: {
+        color: 'black',
+    },
+    profileSubtitleNight: {
+        color: 'white',
     },
     highlightedText: {
         color: '#FF5733',
@@ -175,8 +212,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     infoLabel: {
-        color: 'black',
         fontSize: 14,
+    },
+    infoLabelDay: {
+        color: 'black',
+    },
+    infoLabelNight: {
+        color: 'white',
     },
     infoValue: {
         fontSize: 18,
@@ -191,12 +233,22 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 10,
+    },
+    aboutTitleDay: {
         color: 'black',
+    },
+    aboutTitleNight: {
+        color: 'white',
     },
     aboutText: {
         fontSize: 16,
         lineHeight: 22,
+    },
+    aboutTextDay: {
         color: 'black',
+    },
+    aboutTextNight: {
+        color: 'white',
     },
 });
 

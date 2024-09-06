@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -5,6 +6,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 
 const SignInScreen = () => {
+    const isDay = useSelector(state => state.theme.isDay); 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigation = useNavigation();
@@ -31,30 +33,33 @@ const SignInScreen = () => {
         }
     };
 
+    const themeStyles = isDay ? styles.dayMode : styles.nightMode;
+    const themeStyles1 = isDay ? styles.dayMode : styles.nightMode1;
+
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, themeStyles]}>
             <View style={styles.content1}>
-                <Text style={styles.title}>Hi, Welcome Back!</Text>
-                <Text style={styles.subtitle}>Lorem ipsum dolor sit amet</Text>
+                <Text style={[styles.title, themeStyles]}>Hi, Welcome Back!</Text>
+                <Text style={[styles.subtitle, themeStyles]}>Lorem ipsum dolor sit amet</Text>
             </View>
             
-            <View style={styles.content}>
+            <View style={[styles.content, themeStyles1]}>
                 <View style={styles.inputContainer}>
-                    <Text style={styles.label}>Email</Text>
+                    <Text style={[styles.label, themeStyles1]}>Email</Text>
                     <TextInput
-                        style={styles.input}
+                        style={[styles.input, themeStyles]}
                         placeholder="Enter your email address"
-                        placeholderTextColor="#cfd8dc"
+                        placeholderTextColor={isDay ? "#cfd8dc" : "#4f5b62"}
                         value={email}
                         onChangeText={setEmail}
                     />
                 </View>
-                <TouchableOpacity style={styles.button} onPress={handleContinue}>
-                    <Text style={styles.buttonText}>Continue with Email</Text>
+                <TouchableOpacity style={[styles.button, themeStyles]} onPress={handleContinue}>
+                    <Text style={[styles.buttonText, themeStyles]}>Continue with Email</Text>
                 </TouchableOpacity>
                 <View style={styles.dividerContainer}>
                     <View style={styles.divider} />
-                    <Text style={styles.orText}>Or continue with</Text>
+                    <Text style={[styles.orText, themeStyles1]}>Or continue with</Text>
                     <View style={styles.divider} />
                 </View>
                 <TouchableOpacity 
@@ -68,10 +73,10 @@ const SignInScreen = () => {
                     <FontAwesome name="apple" size={20} color="#000" style={styles.socialIcon} />
                     <Text style={[styles.buttonText, styles.appleButtonText]}>Continue with Apple</Text>
                 </TouchableOpacity>
-                <Text style={styles.footerText}>
+                <Text style={[styles.footerText, themeStyles1]}>
                     Don't have an account? 
                     <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-                        <Text style={styles.signupText}>Sign Up</Text>
+                        <Text style={[styles.signupText, themeStyles1]}>Sign Up</Text>
                     </TouchableOpacity>
                 </Text>
             </View>
@@ -79,11 +84,21 @@ const SignInScreen = () => {
     );
 };
 
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#2196F3',
+    },
+    dayMode: {
+        backgroundColor: '#E0F7FA', 
+        color: '#000',
+    },
+    nightMode: {
+        backgroundColor: '#263238',
+        color: '#fff',
+    },
+    nightMode1: {
+        backgroundColor: 'black',
+        color: '#fff',
     },
     header: {
         flexDirection: 'row',
@@ -107,12 +122,10 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: '#000',
         marginTop: 20,
     },
     subtitle: {
         fontSize: 16,
-        color: '#757575',
         marginBottom: 30,
     },
     inputContainer: {
@@ -121,15 +134,12 @@ const styles = StyleSheet.create({
     },
     label: {
         fontSize: 14,
-        color: '#757575',
         marginBottom: 5,
     },
     input: {
         width: '100%',
         padding: 10,
         borderRadius: 5,
-        backgroundColor: '#f1f1f1',
-        color: '#000',
     },
     button: {
         width: '100%',
@@ -140,7 +150,6 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     buttonText: {
-        color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
     },
@@ -156,7 +165,6 @@ const styles = StyleSheet.create({
     },
     orText: {
         fontSize: 16,
-        color: '#757575',
         marginHorizontal: 10,
     },
     googleButton: {
@@ -185,7 +193,6 @@ const styles = StyleSheet.create({
     },
     footerText: {
         fontSize: 16,
-        color: '#757575',
         marginTop: 20,
     },
     signupText: {

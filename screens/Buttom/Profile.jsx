@@ -45,12 +45,12 @@ const settings = [
 const ProfileScreen = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const isDay = useSelector(state => state.theme.isDay); // Get theme from Redux
-    const [isDarkMode, setIsDarkMode] = useState(isDay); // Initialize dark mode state
+    const isDay = useSelector(state => state.theme.isDay); 
+    const [isDarkMode, setIsDarkMode] = useState(isDay); 
     const [profileName, setProfileName] = useState('Name Not Set');
     const [profileLocation, setProfileLocation] = useState('Location Not Set');
-    const [profileImage, setProfileImage] = useState(require('../Assets/Profile/pic1.jpeg')); // Default image
-    const [modalVisible, setModalVisible] = useState(false); // Modal visibility state
+    const [profileImage, setProfileImage] = useState(require('../Assets/Profile/pic1.jpeg'));
+    const [modalVisible, setModalVisible] = useState(false); 
 
     useEffect(() => {
         if (route.params) {
