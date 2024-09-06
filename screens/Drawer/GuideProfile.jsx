@@ -49,10 +49,10 @@ const GuideProfileScreen = ({ route, navigation }) => {
             </View>
 
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.messageButton} accessibilityLabel="Send Message">
+                <TouchableOpacity style={styles.messageButton} onPress={()=> navigation.navigate('Message')}>
                     <Text style={styles.buttonText}>Send Message</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.callButton} accessibilityLabel="Call Now">
+                <TouchableOpacity style={styles.callButton} onPress={()=> navigation.navigate('Audio Call')}>
                     <Text style={styles.buttonText1}>Call Now</Text>
                 </TouchableOpacity>
             </View>

@@ -141,8 +141,8 @@ const HotelDetailsScreen = ({ route, navigation }) => {
         onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={[styles.bottomSheetHeading, { color: isDay ? 'black' : 'white' }]}>Facilities</Text>
+          <View style={[styles.modalContent,{backgroundColor: isDay ? 'white' : 'gray'}]}>
+            <Text style={[styles.bottomSheetHeading, { color: isDay ? 'black' : 'black' }]}>Facilities</Text>
             <FlatList
               data={services}
               renderItem={renderServiceItem}
@@ -152,7 +152,7 @@ const HotelDetailsScreen = ({ route, navigation }) => {
               contentContainerStyle={styles.contentContainer}
             />
             <TouchableOpacity
-              style={styles.closeButton}
+              style={[styles.closeButton, { backgroundColor: isDay ? 'blue' :'#282C35'}]}
               onPress={() => setModalVisible(false)}
             >
               <Text style={styles.closeButtonText}>Close</Text>
