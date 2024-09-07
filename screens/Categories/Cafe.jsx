@@ -1,14 +1,24 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import WebView from 'react-native-webview';
 
 const Cafe = () => {
   return (
-    <View>
-      <Text>Cafe</Text>
+    <View style={styles.container}>
+      <WebView
+        source={{ uri: 'https://www.openstreetmap.org' }}
+        style={{ flex: 1 }}
+        javaScriptEnabled={true} 
+        domStorageEnabled={true} 
+      />
     </View>
-  )
-}
+  );
+};
 
-export default Cafe
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
-const styles = StyleSheet.create({})
+export default Cafe;
